@@ -19,20 +19,24 @@
 package org.omazon.CTO;
 
 
-import org.omazon.CTO.entities.Customer;
-
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import java.util.List;
 
-@ViewScoped
-@ManagedBean
+@ManagedBean(name = "startPage")
 public class StartPageModel {
+
 
     public StartPageModel() {
     }
 
-    public List<Customer> getCustomers() {
-        return (List<Customer>) HibernateSession.getAll(Customer.class);
+    private String value = "123";
+
+    public String getValue() {
+        return value;
     }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+
 }

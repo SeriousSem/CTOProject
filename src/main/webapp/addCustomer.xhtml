@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:rich="http://richfaces.org/rich"
         >
 
 <body>
@@ -33,7 +32,7 @@
             </h:inputTextarea>
         </h:panelGrid>
     </h:panelGrid>
-    <rich:commandButton id="subm" value="Submit" action="#{customerAdd.doAdd}"/>
+    <h:commandButton id="subm" value="Submit" action="#{customerAdd.doAdd(customer)}"/>
 </h:form>
 </body>
 </html>

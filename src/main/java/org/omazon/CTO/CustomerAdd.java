@@ -1,10 +1,12 @@
 package org.omazon.CTO;
 
+import org.omazon.CTO.DAO.interfaces.CustomerDAO;
 import org.omazon.CTO.entities.Customer;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,17 +14,21 @@ import javax.faces.bean.ViewScoped;
  * Date: 29.09.13
  * Time: 22:35
  */
-@ViewScoped
+
 @ManagedBean
+@RequestScoped
 public class CustomerAdd {
 
     @ManagedProperty("#{customer}")
     public Customer customer;
 
+    @Inject
+    private CustomerDAO customerDAO;
+
     private long id = 0;
 
-    public void setDoAdd(Object name) {
-        id = HibernateSession.save(customer);
+    public void doAdd(Customer name) {
+        customerDAO.save(customer);
     }
 
     public String getStatus() {

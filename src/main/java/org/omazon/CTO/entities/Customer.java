@@ -15,14 +15,14 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "customer")
-@ManagedBean(name = "customer")
 @SessionScoped
+@ManagedBean
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = -3009396611049889475L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customerId")
     private long customerId;
 

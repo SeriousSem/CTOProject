@@ -1,98 +1,40 @@
-========================================================================
+Some information about project:
 
-                      RichFaces - Ajax enabled JSF 2.0 component library
+Technologies, frameworks, etc:
 
-                                 RichFaces 5.0.0-SNAPSHOT ARCHETYPE PROJECT
-                                                    http://richfaces.org
-                                                              March 2011
-                     This software is distributed under the terms of the 
-                            FSF Lesser Gnu Public License (see lgpl.txt)
+1.Build manager - Maven
+2.Front-end - JSF MyFaces
+3.Servlet Server - Glassfish 4.0
+4.ORM - Hibernate
+5.Context and dependency injection - weld
+6.JSF component container - primeFaces (don't know whether we really need it.)
+7. Java EE 7
 
-========================================================================
+JPA , javax validation, annotation, etc.
 
-This archetype will create a basic application generated with richfaces.
-This file explains how to build and set up the project using Maven. If you
-find any issue related to RichFaces framework, please report the issue on
-the RichFaces user forum (http://community.jboss.org/en/richfaces) or
-jira (https://issues.jboss.org/browse/RF).
+How to build project:
 
+1.Download and install Java EE 7 SDK with glassfish.
+2.Glassfish will be started automatically. You should stop it: ../glassfish/bin/stopserv.bat
+    I've forgot about maven when I was at 15 item of this list :'( Don't want to change them all:
+    a) install maven 3.1
+    b) register in your system environments (you can make it from intellig/setting/mvn too)
+3.Download and install MariaDB 10
+4.MariaDB has internal tool for DB administration - HeidiSQL. Start it, by starting add password and login: root, root
+5.Create DB "ctodb". You don't need to create tables or smth else within. It will be done by Hibernate later automatically
+6.Register you in github.com, download and install git http://windows.github.com/
+7.Generate and register SSH for git https://help.github.com/articles/generating-ssh-keys
+8.Now go in IDE (hope it is Intellj, because I don't know how to make it in Eclipse :D).
+9.Go in settings and check whether your github/glassfish/hibernate/git/jsf/CDI/    plugins are installed (Settings/plugins)
+10.In settings/Version Control/Git provide your path to Git.exe. Git actually doesn't install normally (I mean path), that's why
+    for me it is smth like C:\Users\vishn_000\AppData\Local\GitHub\PortableGit_015aa71ef18c047ce8509ffb2f9e4bb0e3e73f13\bin and here you have git.exe
+11. In settings/Version Control/Github provide host: github.com, your login and password. Click test :)
+12. Panel Control - VCS - Checkout From Version Control - GitHub. Provide link to git   https://github.com/SeriousSem/CTOProject.git etc. OK
+13. Now you have a project. You should add Glassfish server plugin in your IDE. Right click on top package in Package tree - add new framework - server - glassfish 4.0.0 (smth like this).
+14. Now configure server. Panel Control - EditConfiguration - add glassfishServer - deployment - "+" - CTOProject:war.
+15. Now you can start your server. Project will be automatically deployed by clicking green play button
+16. Don't know your context path to project for me it is like this http://localhost:8080/CTOProject-1.0-SNAPSHOT/ . Go to this page http://localhost:8080/CTOProject-1.0-SNAPSHOT/addCustomer.jsf
+add some datas, click Submit. Your database schema should be automatically created and your data will be added in "Customer" table.
 
-SETTING UP THE APPLICATION
---------------------------
-
-1. Requirements
-
-In order to build the Examples applications you will need:
-    - Maven 3.0.x or later
-    - Servers: Apache Tomcat 6.0 or any JEE6 application server 
-      (e.g. Jboss AS 7/EAP6)
-    - JDK 1.6
-
-Also optional additional Software would make it easy for you to work 
-with the sources of the application:
-
-    - Eclipse IDE + JBoss Tools (to explore and run the application 
-      in IDE). You're obviously free to use any other IDE you wish, but
-      JBoss Tools is recommended. 
-
-2. Generate the project using the archetype.
-
-Maven will automatically create a project for you using the archetype
-command below.  Just provide the variables and maven will do the rest.
-
-   mvn archetype:generate \
-       -DarchetypeGroupId=org.richfaces.archetypes \
-       -DarchetypeArtifactId=richfaces-archetype-simpleapp \
-       -DarchetypeVersion=5.0.0-SNAPSHOT \
-       -DgroupId=<yourGroupId> \
-       -DartifactId=<yourArtifactId> \
-       -Dversion=<yourSnapshotVersion>
-
-3. Build/Deploy
-
-    - Deploying on Tomcat
-
-      To build the project for Tomcat you need to navigate to the 
-      /examples/richfaces-showcase and run:
-          
-          mvn clean package
-	
-      When you see the BUILD SUCCESSFUL message you can deploy the 
-      application on the server. To deploy it on Tomcat, copy the .war 
-      file from 'target' folder to TOMCAT_HOME/webapps folder. Then, 
-      launch the startup.sh or startup.bat script from TOMCAT_HOME/bin/ 
-      directory to start the server.
-
-    - Deploying on JEE6 server (JBoss AS 6)
-       	 
-      To build the project for a JEE6 server you need to navigate to the 
-      /examples/richfaces-showcase and run
-
-          mvn clean package -Pjee6
-
-      When you see the BUILD SUCCESSFUL message you can deploy the 
-      application on the server. To deploy it on the application server 
-      copy the .war file from 'target' folder to the JBOSS_HOME/server/default/deploy 
-      folder (or change "default/" to used profile folder). Then, launch 
-      the run.sh or run.bat script from JBOSS_HOME/bin/ directory to start 
-      the server.
-
-
-    - If you wan to create a binaries for both Tomcat 6 and JBoss 6 run
-
-          mvn clean package -P release
-
-
-After deploying the examples to your server open a browser and type 
-http://localhost:8080/projectName to execute the application.
-
-
-MORE INFORMATION AND RESOURCES
-------------------------------
-
-For more information on this project please contact the developer.
-
-For more information on RichFaces 4, please visit RichFaces 
-website at:
-
-    - http://richfaces.org
+That's all I think. Write me if you have questions.
+I really hope that you make it to Monday, because in this case we can start to discuss our project, but not a technical details like these.

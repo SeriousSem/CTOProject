@@ -1,26 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich"
         >
 
-<body>
-<ui:composition template="/templates/template.xhtml">
+<h:head>
+</h:head>
+<h:body>
+    <ui:composition template="/templates/template.xhtml">
 
-    <ui:define name="title">RichFaces Sample</ui:define>
+        <ui:define name="title">RichFaces Sample</ui:define>
 
-    <ui:define name="body">
-        <h:form>
-            <h:panelGrid columns="1">
-                <rich:commandLink value="create customer" action="addCustomer"/>
-                <rich:commandLink value="create order"/>
-            </h:panelGrid>
-        </h:form>
+        <ui:define name="body">
+            <h:form>
+                <h:panelGrid columns="1">
+                    <h:outputText>#{startPage.value}</h:outputText>
+                </h:panelGrid>
+            </h:form>
 
-        <br/>
-    </ui:define>
-</ui:composition>
-</body>
+            <br/>
+        </ui:define>
+    </ui:composition>
+</h:body>
 </html>

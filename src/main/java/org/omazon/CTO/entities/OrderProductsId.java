@@ -32,4 +32,24 @@ public class OrderProductsId implements Serializable {
     public void setProduct(int product) {
         this.product = product;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OrderProductsId)) return false;
+
+        OrderProductsId that = (OrderProductsId) o;
+
+        if (order != that.order) return false;
+        if (product != that.product) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = order;
+        result = 31 * result + product;
+        return result;
+    }
 }
