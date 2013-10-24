@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
         >
 
 <h:head>
@@ -11,16 +12,30 @@
 <h:body>
     <ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="title">RichFaces Sample</ui:define>
+        <ui:define name="title">Customers table</ui:define>
 
         <ui:define name="body">
             <h:form>
-                <h:panelGrid columns="1">
-                    <h:outputText>#{startPage.value}</h:outputText>
-                </h:panelGrid>
+                <h:dataTable value="#{startPageController.customers}" var="customerVar">
+                    <h:column>
+                        <f:facet name="header">name</f:facet>
+                        #{customerVar.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">surname</f:facet>
+                        #{customerVar.surname}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">email</f:facet>
+                        #{customerVar.email}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">address</f:facet>
+                        #{customerVar.address}
+                    </h:column>
+                </h:dataTable>
+                <h:commandButton value="add new customer" action="addCustomer"/>
             </h:form>
-
-            <br/>
         </ui:define>
     </ui:composition>
 </h:body>

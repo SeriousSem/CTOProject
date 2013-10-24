@@ -16,26 +16,29 @@
  * specific language governing permissions and limitations
  * under the License.
 */
-package org.omazon.CTO;
+package org.omazon.CTO.controllers;
 
+
+import org.omazon.CTO.DAO.interfaces.CustomerDAO;
+import org.omazon.CTO.entities.Customer;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import java.util.List;
 
-@ManagedBean(name = "startPage")
-public class StartPageModel {
+@ManagedBean(name = "startPageController")
+@RequestScoped
+public class StartPageController {
 
+    @Inject
+    private CustomerDAO customerDAO;
 
-    public StartPageModel() {
+    public StartPageController() {
     }
 
-    private String value = "123";
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
+    public List<Customer> getCustomers() {
+        return customerDAO.getAll();
     }
 
 

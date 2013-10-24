@@ -5,6 +5,7 @@ import org.hibernate.Transaction;
 import org.omazon.CTO.DAO.interfaces.IDao;
 import org.omazon.CTO.hibernateServices.HibernateSession;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
@@ -15,7 +16,12 @@ import java.util.List;
  */
 public abstract class GenericDAO<T> extends HibernateSession implements IDao<T> {
 
-    T daoClass;
+    private Class<T> persistentClass;
+
+    public GenericDAO() {
+        this.persistentClass = (Class<T>) ((ParameterizedType) getClass()
+                .getGenericSuperclass()).getActualTypeArguments()[0];
+    }
 
     @Override
     public void save(T object) {
@@ -41,14 +47,18 @@ public abstract class GenericDAO<T> extends HibernateSession implements IDao<T> 
 
     @Override
     public T getById(long id) {
-        T obj = (T) getSession().get(daoClass.getClass(), id);
+        Transaction transaction = getSession().beginTransaction();
+        T obj = (T) getSession().get(persistentClass, id);
+        transaction.commit();
         return obj;
     }
 
     @Override
     public List<T> getAll() {
-        Criteria criteria = getSession().createCriteria(daoClass.getClass());
+        Transaction transaction = getSession().beginTransaction();
+        Criteria criteria = getSession().createCriteria(persistentClass);
         List<T> objects = criteria.list();
+        transaction.commit();
         return objects;
     }
 }

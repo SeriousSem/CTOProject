@@ -13,26 +13,26 @@
     <h:panelGrid columns="2">
         <h:panelGrid columns="2">
             <h:outputText value="Name:"/>
-            <h:inputText value="#{customerAdd.customer.name}" required="true" label="Name">
+            <h:inputText value="#{addCustomer.customer.name}" required="true" label="Name">
                 <f:validateLength minimum="2" maximum="20"/>
             </h:inputText>
             <h:outputText value="Surname:"/>
-            <h:inputText value="#{customerAdd.customer.surname}" required="true" label="Surname">
+            <h:inputText value="#{addCustomer.customer.surname}" required="true" label="Surname">
                 <f:validateLength minimum="2" maximum="20"/>
             </h:inputText>
             <h:outputText value="Email:"/>
-            <h:inputText id="email" value="#{customerAdd.customer.email}" required="true" label="Email">
+            <h:inputText id="email" value="#{addCustomer.customer.email}" required="true" label="Email">
                 <f:validateRegex
                         pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
             </h:inputText>
             <h:outputText value="Address:"/>
-            <h:inputTextarea value="#{customerAdd.customer.address}" label="Address" required="true"
+            <h:inputTextarea value="#{addCustomer.customer.address}" label="Address" required="true"
                              rows="2">
                 <f:validateLength maximum="100"/>
             </h:inputTextarea>
         </h:panelGrid>
     </h:panelGrid>
-    <h:commandButton id="subm" value="Submit" action="#{customerAdd.doAdd(customer)}"/>
+    <h:commandButton id="subm" value="Submit" action="#{addCustomer.doAdd(customer)}"/>
 </h:form>
 </body>
 </html>

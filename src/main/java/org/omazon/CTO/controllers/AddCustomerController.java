@@ -1,4 +1,4 @@
-package org.omazon.CTO;
+package org.omazon.CTO.controllers;
 
 import org.omazon.CTO.DAO.interfaces.CustomerDAO;
 import org.omazon.CTO.entities.Customer;
@@ -15,9 +15,9 @@ import javax.inject.Inject;
  * Time: 22:35
  */
 
-@ManagedBean
+@ManagedBean(name = "addCustomer")
 @RequestScoped
-public class CustomerAdd {
+public class AddCustomerController {
 
     @ManagedProperty("#{customer}")
     public Customer customer;
@@ -25,17 +25,9 @@ public class CustomerAdd {
     @Inject
     private CustomerDAO customerDAO;
 
-    private long id = 0;
-
-    public void doAdd(Customer name) {
+    public String doAdd(Customer name) {
         customerDAO.save(customer);
-    }
-
-    public String getStatus() {
-        if (id != 0) {
-            return "success";
-        }
-        return "fail";
+        return "startPage";
     }
 
     public Customer getCustomer() {
