@@ -1,7 +1,7 @@
 package org.omazon.CTO.entities;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,7 +15,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "product")
-@SessionScoped
+@RequestScoped
 @ManagedBean(name = "product")
 public class Product implements Serializable {
 

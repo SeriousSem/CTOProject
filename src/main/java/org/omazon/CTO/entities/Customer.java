@@ -15,9 +15,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "customer")
-@SessionScoped
+@SessionScoped    //it means that this object will be accessible among users http sessions. If you
 @ManagedBean
-public class Customer implements Serializable {
+public class Customer extends UserAbstract implements Serializable {
 
     private static final long serialVersionUID = -3009396611049889475L;
 

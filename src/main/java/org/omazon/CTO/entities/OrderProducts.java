@@ -1,7 +1,7 @@
 package org.omazon.CTO.entities;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Table(name = "order_product")
 @IdClass(OrderProductsId.class)
 @ManagedBean(name = "orderProducts")
-@SessionScoped
+@RequestScoped
 public class OrderProducts implements Serializable {
 
 

@@ -3,7 +3,7 @@ package org.omazon.CTO.entities;
 import org.hibernate.annotations.Cascade;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -18,7 +18,7 @@ import java.util.Set;
 @Table(name = "orders")
 @Entity
 @ManagedBean(name = "order")
-@SessionScoped
+@RequestScoped
 public class Order implements Serializable {
 
 

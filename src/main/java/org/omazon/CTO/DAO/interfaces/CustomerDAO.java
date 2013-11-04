@@ -11,4 +11,7 @@ import org.omazon.CTO.entities.Customer;
  */
 public interface CustomerDAO extends IDao<Customer> {
     public Customer getBySurname(String name);
+
+    public Customer getCustomerByLogin(String login, String password);
+
 }
