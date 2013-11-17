@@ -15,7 +15,6 @@ import javax.inject.Inject;
  * User: vishn_000
  * Date: 04.11.13
  * Time: 13:03
- * To change this template use File | Settings | File Templates.
  */
 @ManagedBean
 @RequestScoped
@@ -44,6 +43,7 @@ public class LoginController {
         } else {
             //try one more time
         }
+        return null;
     }
 
 }
