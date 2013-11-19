@@ -38,7 +38,7 @@ public abstract class GenericDAO<T> extends HibernateSession implements IDao<T> 
     }
 
     @Override
-    public <T> void delete(T object) {
+    public void delete(T object) {
 
         Transaction transaction = getSession().beginTransaction();
         getSession().delete(object);

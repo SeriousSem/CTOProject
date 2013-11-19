@@ -19,9 +19,14 @@ import java.util.Set;
 @ManagedBean
 public class Customer extends UserAbstract implements Serializable {
 
-    private static final long serialVersionUID = -3009396611049889475L;
+   
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4999231716261831461L;
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customerId")
     private long customerId;

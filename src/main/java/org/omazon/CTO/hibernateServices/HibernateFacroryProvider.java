@@ -23,7 +23,6 @@ public final class HibernateFacroryProvider {
 
     static {
         try {
-            Configuration configuration = new Configuration();
             sessionFactory = new Configuration()
                     .configure("hibernate.cfg.xml")
                     .addPackage("com.omazon.CTOProject.entities")

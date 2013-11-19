@@ -32,6 +32,9 @@ public class LoginController {
 
     @Inject
     private EmployeeDAO employeeDAO;
+    
+    private String login;
+    private String password; 
 
 
     public Object doLogin(String userLogin, String password) {
@@ -44,6 +47,28 @@ public class LoginController {
         } else {
             //try one more time
         }
+		return null;
     }
+
+
+	public String getLogin() {
+		return login;
+	}
+
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+    
 
 }

@@ -3,6 +3,7 @@ package org.omazon.CTO.entities;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,8 +31,11 @@ public class Product implements Serializable {
 
     @Column(name = "description")
     private String description;
+    
+    @Column(name = "price")
+    private Long price;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
     private Set<OrderProducts> productOrders = new HashSet<OrderProducts>();
 
 
@@ -66,29 +70,61 @@ public class Product implements Serializable {
     public void setProductOrders(Set<OrderProducts> productOrders) {
         this.productOrders = productOrders;
     }
+    public Long getPrice() {
+ 		return price;
+ 	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
+ 	public void setPrice(Long price) {
+ 		this.price = price;
+ 	}
 
-        Product product = (Product) o;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + (int) (productId ^ (productId >>> 32));
+		result = prime * result
+				+ ((productOrders == null) ? 0 : productOrders.hashCode());
+		return result;
+	}
 
-        if (productId != product.productId) return false;
-        if (description != null ? !description.equals(product.description) : product.description != null) return false;
-        if (name != null ? !name.equals(product.name) : product.name != null) return false;
-        if (productOrders != null ? !productOrders.equals(product.productOrders) : product.productOrders != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (productId ^ (productId >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (productOrders != null ? productOrders.hashCode() : 0);
-        return result;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
+			return false;
+		if (productId != other.productId)
+			return false;
+		if (productOrders == null) {
+			if (other.productOrders != null)
+				return false;
+		} else if (!productOrders.equals(other.productOrders))
+			return false;
+		return true;
+	}
+ 	
+   
 }

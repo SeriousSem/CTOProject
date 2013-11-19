@@ -9,9 +9,16 @@
 </h:head>
 <h:body>
     <h1>Hello PrimeFaces</h1>
+<h:inputText value="#{LoginController.login}" required="true" label="Login">
+                <f:validateLength minimum="1" maximum="100"/>
+            </h:inputText>
 
+<h:inputText value="#{LoginController.password}" required="true" label="password">
+                <f:validateLength minimum="1" maximum="100"/>
+            </h:inputText>
+            
     <h:form>
-        <h:commandButton action="startPage" value="show me customers"/>
+        <h:commandButton action="#{LoginController.doLogin(LoginController.login, LoginController.password)}" value="show me customers"/>
     </h:form>
 
 </h:body>
