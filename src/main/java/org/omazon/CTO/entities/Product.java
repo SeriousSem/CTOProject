@@ -1,7 +1,7 @@
 package org.omazon.CTO.entities;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.*;
 
 import java.io.Serializable;
@@ -14,69 +14,73 @@ import java.util.Set;
  * Date: 29.09.13
  * Time: 00:51
  */
+/**
+ * @author ashleeeeee
+ * 
+ */
 @Entity
 @Table(name = "product")
-@RequestScoped
-@ManagedBean(name = "product")
-public class Product implements Serializable {
+@SessionScoped
+@ManagedBean
+public class Product extends UserAbstract implements Serializable {
 
-    private static final long serialVersionUID = 6401569395534494046L;
-    @Id
-    @GeneratedValue
+	private static final long serialVersionUID = 6401569395534494046L;
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "productId")
-    private long productId;
+	private long productId;
 
-    @Column(name = "name")
-    private String name;
+	@Column(name = "name")
+	private String name;
 
-    @Column(name = "description")
-    private String description;
-    
-    @Column(name = "price")
-    private Long price;
+	@Column(name = "description")
+	private String description;
+
+	@Column(name = "price")
+	private Long price;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
-    private Set<OrderProducts> productOrders = new HashSet<OrderProducts>();
+	private Set<OrderProducts> productOrders = new HashSet<OrderProducts>();
 
+	public long getProductId() {
+		return productId;
+	}
 
-    public long getProductId() {
-        return productId;
-    }
+	public void setProductId(long productId) {
+		this.productId = productId;
+	}
 
-    public void setProductId(long productId) {
-        this.productId = productId;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public Set<OrderProducts> getProductOrders() {
+		return productOrders;
+	}
 
-    public Set<OrderProducts> getProductOrders() {
-        return productOrders;
-    }
+	public void setProductOrders(Set<OrderProducts> productOrders) {
+		this.productOrders = productOrders;
+	}
 
-    public void setProductOrders(Set<OrderProducts> productOrders) {
-        this.productOrders = productOrders;
-    }
-    public Long getPrice() {
- 		return price;
- 	}
+	public Long getPrice() {
+		return price;
+	}
 
- 	public void setPrice(Long price) {
- 		this.price = price;
- 	}
+	public void setPrice(Long price) {
+		this.price = price;
+	}
 
 	@Override
 	public int hashCode() {
@@ -125,6 +129,5 @@ public class Product implements Serializable {
 			return false;
 		return true;
 	}
- 	
-   
+
 }
