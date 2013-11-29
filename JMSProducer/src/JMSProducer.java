@@ -12,42 +12,40 @@ import java.util.Properties;
 public class JMSProducer {
     public static void main(String[] args) {
         SendMessage sendMessage = new SendMessage();
-        sendMessage.produceMessages("asd");
+        sendMessage.produceMessages("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL");
     }
 }
 
 class SendMessage {
     public void produceMessages(String message) {
-        MessageProducer messageProducer;
-        TextMessage textMessage;
         try {
+            Properties ctx = new Properties();
+            ctx.setProperty("java.naming.factory.initial", "com.sun.enterprise.naming.SerialInitContextFactory");
+            ctx.setProperty("java.naming.factory.url.pkgs", "com.sun.enterprise.naming");
+            ctx.setProperty("java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
+            ctx.setProperty("org.omg.CORBA.ORBInitialHost", "127.0.0.1");
+            ctx.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
+            InitialContext initialContext = new InitialContext(ctx);
+            try {
+                QueueConnectionFactory qcf = (QueueConnectionFactory)initialContext.lookup("queueFactory");
+                Queue q = (Queue) initialContext.lookup("shipmentQueue");
+                QueueConnection qc = qcf.createQueueConnection();
+                QueueSession qs = qc.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+                QueueSender queueSender = qs.createSender(q);
+                TextMessage textMessage = qs.createTextMessage();
 
-            final Properties initialContextProperties = new Properties();
-            initialContextProperties.put("org.omg.CORBA.ORBInitialHost", "127.0.0.1");
-            initialContextProperties.put("org.omg.CORBA.ORBInitialPort", "3700");
-            initialContextProperties.put("java.naming.factory.initial","com.sun.enterprise.naming.SerialInitContextFactory");
-            //initialContextProperties.put("java.naming.factory.url.pkgs", "com.sun.enterprise.naming");
-            //initialContextProperties.put("java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
+                textMessage.setText(message);
+                System.out.println("Send: " + message);
 
-            InitialContext ctx = new InitialContext(initialContextProperties);
-            ConnectionFactory connectionFactory = (ConnectionFactory) ctx.lookup("jms/firstQueueFactory");
-            Queue queue = (Queue) ctx.lookup("jms/firstQueue");
-
-            Connection connection = connectionFactory.createConnection();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            messageProducer = session.createProducer(queue);
-            textMessage = session.createTextMessage();
-
-            textMessage.setText(message);
-            System.out.println(message);
-
-            messageProducer.send(textMessage);
-
-            messageProducer.close();
-            session.close();
-            connection.close();
+                queueSender.send(textMessage);
+                System.out.println("Sent");
+                qs.close();
+                qc.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 }

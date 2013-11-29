@@ -13,26 +13,20 @@ import javax.jms.TextMessage;
  * Time: 18:05
  */
 @MessageDriven(
+        mappedName = "shipmentQueue",
+        name = "ShipmentMessageListener",
         activationConfig = {
                 @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-                @ActivationConfigProperty(propertyName = "destination", propertyValue = "jms/firstQueue"),
-                @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge")},
-        mappedName = "jms/firstQueue")
-public class MessageConsumer implements MessageListener {
+                @ActivationConfigProperty(propertyName = "destination", propertyValue = "shipmentQueue"),
+                @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge")})
+public class ShipmentMessageListener implements MessageListener {
 
     public void onMessage(Message message) {
-
-        try {
-            message.acknowledge();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         TextMessage txtMessage = (TextMessage) message;
 
         try {
             //do something with message
-            System.out.println(txtMessage.getText());
+            System.out.println("Got message:" + txtMessage.getText());
         } catch (Exception e) {
             e.printStackTrace();
         }

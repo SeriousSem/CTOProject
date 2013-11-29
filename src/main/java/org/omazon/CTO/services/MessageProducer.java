@@ -19,8 +19,8 @@ public class MessageProducer {
         try {
 
             InitialContext ctx = new InitialContext();
-            ConnectionFactory connectionFactory = (ConnectionFactory) ctx.lookup("jms/firstQueueFactory");
-            Queue queue = (Queue) ctx.lookup("jms/firstQueue");
+            ConnectionFactory connectionFactory = (ConnectionFactory) ctx.lookup("queueFactory");
+            Queue queue = (Queue) ctx.lookup("shipmentQueue");
 
             Connection connection = connectionFactory.createConnection();
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
