@@ -1,6 +1,7 @@
 package org.omazon.CTO.DAO.impl;
 
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 import org.omazon.CTO.DAO.interfaces.EmployeeDAO;
 import org.omazon.CTO.entities.Employee;
 
@@ -20,5 +21,10 @@ public class EmployeeDAOImpl extends GenericDAO<Employee> implements EmployeeDAO
                 .setParameter("pass", password);
 
         return (Employee) query.uniqueResult();
+    }
+    
+    @Override
+    public Employee getBySurname(String surname) {
+        return (Employee) getSession().createCriteria(Employee.class).add(Restrictions.eqProperty("surname", surname)).uniqueResult();
     }
 }

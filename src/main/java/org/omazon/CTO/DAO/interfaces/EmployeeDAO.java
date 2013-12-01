@@ -11,4 +11,5 @@ import org.omazon.CTO.entities.Employee;
  */
 public interface EmployeeDAO extends IDao<Employee> {
     public Employee getEmployeeByLogin(String login, String password);
+    public Employee getBySurname(String name);
 }
