@@ -21,8 +21,8 @@ import java.util.Set;
 @RequestScoped
 public class Order implements Serializable {
 
+    private static final long serialVersionUID = 7294013076862412989L;
 
-    private static final long serialVersionUID = 1216805668289018398L;
     @Id
     @GeneratedValue
     private long orderId;
@@ -33,6 +33,9 @@ public class Order implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "order")
     private Set<OrderProducts> orderProductses = new HashSet<OrderProducts>();
+
+    @Column(name = "trackId")
+    private long trackId;
 
     public long getOrderId() {
         return orderId;
@@ -58,6 +61,14 @@ public class Order implements Serializable {
         this.orderProductses = orderProductses;
     }
 
+    public long getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(long trackId) {
+        this.trackId = trackId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,7 +77,8 @@ public class Order implements Serializable {
         Order order = (Order) o;
 
         if (orderId != order.orderId) return false;
-        if (customer != null ? !customer.equals(order.customer) : order.customer != null) return false;
+        if (trackId != order.trackId) return false;
+        if (!customer.equals(order.customer)) return false;
         if (orderProductses != null ? !orderProductses.equals(order.orderProductses) : order.orderProductses != null)
             return false;
 
@@ -76,8 +88,9 @@ public class Order implements Serializable {
     @Override
     public int hashCode() {
         int result = (int) (orderId ^ (orderId >>> 32));
-        result = 31 * result + (customer != null ? customer.hashCode() : 0);
+        result = 31 * result + customer.hashCode();
         result = 31 * result + (orderProductses != null ? orderProductses.hashCode() : 0);
+        result = 31 * result + (int) (trackId ^ (trackId >>> 32));
         return result;
     }
 }
