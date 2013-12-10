@@ -20,7 +20,13 @@ public class Employee extends UserAbstract {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "employeeId")
-    private long customerId;
+    private long employeeId;
+    
+    @Column(name = "username")
+    private String username;
+    
+    @Column(name = "psw")
+    private String psw;
 
     @Column(name = "surname")
     private String surname;
@@ -28,12 +34,20 @@ public class Employee extends UserAbstract {
     @Column(name = "name")
     private String name;
 
-    public long getCustomerId() {
-        return customerId;
+    public long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
+    public void setEmployeeId(long employeeId) {
+        this.employeeId = employeeId;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getSurname() {
@@ -59,7 +73,7 @@ public class Employee extends UserAbstract {
 
         Employee employee = (Employee) o;
 
-        if (customerId != employee.customerId) return false;
+        if (employeeId != employee.employeeId) return false;
         if (!name.equals(employee.name)) return false;
         if (!surname.equals(employee.surname)) return false;
 
@@ -68,7 +82,7 @@ public class Employee extends UserAbstract {
 
     @Override
     public int hashCode() {
-        int result = (int) (customerId ^ (customerId >>> 32));
+        int result = (int) (employeeId ^ (employeeId >>> 32));
         result = 31 * result + surname.hashCode();
         result = 31 * result + name.hashCode();
         return result;

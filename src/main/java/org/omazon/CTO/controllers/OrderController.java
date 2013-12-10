@@ -1,15 +1,14 @@
 package org.omazon.CTO.controllers;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.inject.Inject;
 
-import org.omazon.CTO.DAO.interfaces.OrderDAO;
+import org.omazon.CTO.entities.Customer;
 import org.omazon.CTO.entities.Order;
-import org.omazon.CTO.entities.Product;
+import org.omazon.CTO.entities.OrderProducts;
 
 
 @ManagedBean(name = "showOrder")
@@ -18,9 +17,6 @@ public class OrderController {
 	
 	@ManagedProperty("#{orders}")
     public Order order;
-
-    @Inject
-    private OrderDAO orderDAO;
 
 	public Order getOrder() {
 		System.out.println("TEST");
@@ -31,11 +27,41 @@ public class OrderController {
 		this.order = order;
 	}
 	
-	public String getProducts() {
-		List<Product> products = orderDAO.getOrderProducts(1L);
+	public Customer getCustomer() {
+		return order.getCustomer();
+	}
+	
+	public void setCustomer(Customer customer) {
+		order.setCustomer(customer);
+	}
+	
+	public Set<OrderProducts> getProducts() {
+		Set<OrderProducts> products = order.getOrderProductses();
 		System.out.println("TEST");
-		System.out.println(products.get(0).getName());
-		return "startPage";
+		System.out.println(products.size());
+		return products;
+	}
+	
+	public OrderProducts getOrderProduct(long productId) {
+		OrderProducts orderproduct = null;
+		Set<OrderProducts> products = order.getOrderProductses();
+		for (OrderProducts p : products) {
+			if (p.getProduct().getProductId() == productId) {
+				orderproduct = p;
+				break;
+			}
+		}
+		return orderproduct;
+	}
+	
+	public void setProductCount(long productId, int count) {
+		OrderProducts product = getOrderProduct(productId);
+		product.setCount(count);
+	}
+	
+	public int getProductCount(long productId) {
+		OrderProducts product = getOrderProduct(productId);
+		return product.getCount();
 	}
 	
 

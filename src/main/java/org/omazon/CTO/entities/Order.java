@@ -36,6 +36,9 @@ public class Order implements Serializable {
 
     @Column(name = "trackId")
     private long trackId;
+    
+    @Column(name = "status")
+    private String status;
 
     public long getOrderId() {
         return orderId;
@@ -67,6 +70,14 @@ public class Order implements Serializable {
 
     public void setTrackId(long trackId) {
         this.trackId = trackId;
+    }
+    
+    public String getShipmentStatus() {
+    	return status;
+    }
+    
+    public void setShipmentStatus(String status) {
+    	this.status = status;
     }
 
     @Override
