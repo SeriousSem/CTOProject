@@ -14,7 +14,7 @@ import javax.inject.Inject;
  * @author ashleeeeee
  *
  */
-@ManagedBean(name = "showAllProductController")
+@ManagedBean( name = "showAllProductController")
 @RequestScoped
 public class GetAllProductController {
 
@@ -24,5 +24,9 @@ public class GetAllProductController {
 
     public List<Product> getProducts() {
         return productDAO.getAll();
+    }
+    
+    public String addOrder(){
+    	return "products";
     }
 }

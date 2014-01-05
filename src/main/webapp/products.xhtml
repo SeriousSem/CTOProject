@@ -34,8 +34,11 @@
                         #{productVar.price}
                     </h:column>
                 </h:dataTable>
-                <h:commandButton value="add new order" action="addOrder"/>
+                <h:commandButton value="add new order" action="#{showAllProductController.addOrder}"/>
             </h:form>
+        		<h:form>
+			<h:commandButton action="showShipmentStatus" value="Show my shipment status"></h:commandButton>
+		</h:form>
         </ui:define>
     </ui:composition>
 </h:body>
