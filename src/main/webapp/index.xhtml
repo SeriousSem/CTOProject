@@ -1,18 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
         >
 
-<h:head>
-</h:head>
+<body>
 <h:body>
-    <h1>Hello PrimeFaces</h1>
+	<h1>Hello PrimeFaces</h1>
 
-    <h:form>
-        <h:commandButton action="startPage" value="show me customers"/>
-    </h:form>
+	<h:form>
+
+		<h:outputLabel for="UserId" value="UserId:" ></h:outputLabel>
+		
+		<h:inputText id="UserId" value="#{login.userId}">
+		<f:validateRegex pattern="[0-9]+"></f:validateRegex>
+		</h:inputText>
+		
+		<h:outputLabel value="Password:"></h:outputLabel>
+		<h:inputSecret value="#{login.password}" required = "true"></h:inputSecret>
+		<h:commandButton action="#{login.doLogin}" value="Sign in" />
+	</h:form>
 
 </h:body>
+</body>
 </html>
