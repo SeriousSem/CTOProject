@@ -57,8 +57,9 @@ public class LoginController {
     	if(customerDAO.getById(Long.valueOf(userId)) != null){
     		return "products";
     	}
+    	// go to employee first page
     	else if(employeeDAO.getById(Long.valueOf(userId)) != null){
-    		return "indext";
+    		return "index";
     	}
     	return "index";
 //        customer = customerDAO.getCustomerByLogin(userLogin, password);
