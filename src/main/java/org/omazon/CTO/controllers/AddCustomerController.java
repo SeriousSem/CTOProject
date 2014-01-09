@@ -22,8 +22,6 @@ public class AddCustomerController {
     @ManagedProperty("#{customer}")
     public Customer customer;
 
-    //COmmit
-private String tes=null;    
     @Inject
     private CustomerDAO customerDAO;
 

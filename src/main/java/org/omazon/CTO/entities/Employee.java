@@ -65,14 +65,6 @@ public class Employee extends UserAbstract {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public String getPsw() {
-        return psw;
-    }
-
-    public void setPsw(String psw) {
-        this.psw = psw;
-    }
 
     @Override
     public boolean equals(Object o) {

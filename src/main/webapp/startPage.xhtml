@@ -14,25 +14,35 @@
 
         <ui:define name="title">Customers table</ui:define>
 
-        <ui:define name="body">
-            <h:form>
-                <h:dataTable value="#{startPageController.customers}" var="customerVar">
-                    <h:column>
-                        <f:facet name="header">name</f:facet>
+		<ui:define name="body">
+			<h:form>
+				<h:dataTable value="#{startPageController.customers}"
+					var="customerVar">
+					<h:column>
+						<f:facet name="header">userId</f:facet>
+                        #{customerVar.customerId}
+                    </h:column>
+					<h:column>
+						<f:facet name="header">name</f:facet>
                         #{customerVar.name}
                     </h:column>
-                    <h:column>
-                        <f:facet name="header">surname</f:facet>
+					<h:column>
+						<f:facet name="header">surname</f:facet>
                         #{customerVar.surname}
                     </h:column>
-                    <h:column>
-                        <f:facet name="header">email</f:facet>
+					<h:column>
+						<f:facet name="header">email</f:facet>
                         #{customerVar.email}
                     </h:column>
-                    <h:column>
-                        <f:facet name="header">address</f:facet>
+					<h:column>
+						<f:facet name="header">address</f:facet>
                         #{customerVar.address}
                     </h:column>
+				</h:dataTable>
+				<h:commandButton value="add new customer" action="addCustomer" />
+			</h:form>
+		</ui:define>
+	</ui:composition>
                 </h:dataTable>
                 <h:commandButton value="add new customer" action="addCustomer"/>
                 <h:commandButton value="add new employee" action="addEmployee"/>
