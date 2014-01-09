@@ -4,6 +4,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.omazon.CTO.entities.Customer;
+import org.omazon.CTO.entities.Employee;
 import org.omazon.CTO.entities.Order;
 import org.omazon.CTO.entities.OrderProducts;
 import org.omazon.CTO.entities.Product;
@@ -30,6 +31,7 @@ public final class HibernateFacroryProvider {
                     .addAnnotatedClass(Order.class)
                     .addAnnotatedClass(Product.class)
                     .addAnnotatedClass(OrderProducts.class)
+                    .addAnnotatedClass(Employee.class)
                     .buildSessionFactory();
         } catch (HibernateException e) {
             e.printStackTrace();
