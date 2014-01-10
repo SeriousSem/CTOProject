@@ -23,7 +23,7 @@ public class CustomerDAOImpl extends GenericDAO<Customer> implements CustomerDAO
     @Override
     public Customer getCustomerByLogin(String login, String password) {
     	Transaction tx = getSession().beginTransaction();
-    	Query query = getSession().createQuery("select c from Customer c where c.customerId=:login and c.password=:pass")
+    	Query query = getSession().createQuery("select c from Customer c where c.customerId=:login and c.psw=:pass")
                 .setParameter("login", login)
                 .setParameter("pass", password);
     	tx.commit();

@@ -18,7 +18,7 @@
 
 			<h:outputLabel value="Password:"></h:outputLabel>
 			<h:inputSecret value="#{login.password}" required="true"></h:inputSecret>
-			<h:commandButton action="#{login.doLogin}" value="Sign in" />
+			<h:commandButton action="#{login.doCustomerLogin}" value="Sign in" />
 		</h:form>
 		<h:form>
 			<h:commandButton action="addCustomer" value="Registration now!"></h:commandButton>
@@ -34,7 +34,7 @@
 
 			<h:outputLabel value="Password:"></h:outputLabel>
 			<h:inputSecret value="#{login.password}" required="true"></h:inputSecret>
-			<h:commandButton action="#{login.doLogin}" value="Sign in" />
+			<h:commandButton action="#{login.doEmployeeLogin}" value="Sign in" />
 		</h:form>
 
 	</h:body>

@@ -37,6 +37,9 @@ public class Customer extends UserAbstract implements Serializable {
 
     @Column(name = "email")
     private String email;
+    
+    @Column(name = "psw")
+    private String psw;
 
     @OneToMany(targetEntity = Order.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<Order>();
@@ -79,6 +82,14 @@ public class Customer extends UserAbstract implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public String getPsw() {
+        return psw;
+    }
+
+    public void setPsw(String psw) {
+        this.psw = psw;
     }
 
     public Set<Order> getOrders() {

@@ -13,5 +13,4 @@ public abstract class HibernateSession {
     public Session getSession() {
         return HibernateFacroryProvider.getSessionFactory().getCurrentSession();
     }
-
 }

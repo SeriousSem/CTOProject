@@ -3,6 +3,8 @@ package org.omazon.CTO.hibernateServices;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.omazon.CTO.entities.Customer;
 import org.omazon.CTO.entities.Employee;
 import org.omazon.CTO.entities.Order;
@@ -18,21 +20,23 @@ import org.omazon.CTO.entities.Product;
  */
 public final class HibernateFacroryProvider {
     private static SessionFactory sessionFactory;
+    private static ServiceRegistry serviceRegistry;
 
     private HibernateFacroryProvider() {
     }
 
     static {
         try {
-            sessionFactory = new Configuration()
+            Configuration configuration = new Configuration()
                     .configure("hibernate.cfg.xml")
                     .addPackage("com.omazon.CTOProject.entities")
                     .addAnnotatedClass(Customer.class)
                     .addAnnotatedClass(Order.class)
                     .addAnnotatedClass(Product.class)
                     .addAnnotatedClass(OrderProducts.class)
-                    .addAnnotatedClass(Employee.class)
-                    .buildSessionFactory();
+                    .addAnnotatedClass(Employee.class);
+            serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         } catch (HibernateException e) {
             e.printStackTrace();
         }
