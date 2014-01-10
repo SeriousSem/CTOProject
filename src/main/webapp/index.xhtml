@@ -23,6 +23,19 @@
 		<h:form>
 			<h:commandButton action="addCustomer" value="Registration now!"></h:commandButton>
 		</h:form>
+		
+		<h:form>
+
+			<h:outputLabel for="EmployeeId" value="EmployeeId:"></h:outputLabel>
+
+			<h:inputText id="EmployeeId" value="#{login.userId}">
+				<f:validateRegex pattern="[0-9]+"></f:validateRegex>
+			</h:inputText>
+
+			<h:outputLabel value="Password:"></h:outputLabel>
+			<h:inputSecret value="#{login.password}" required="true"></h:inputSecret>
+			<h:commandButton action="#{login.doLogin}" value="Sign in" />
+		</h:form>
 
 	</h:body>
 </body>

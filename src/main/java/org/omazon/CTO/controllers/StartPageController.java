@@ -20,11 +20,14 @@ package org.omazon.CTO.controllers;
 
 
 import org.omazon.CTO.DAO.interfaces.CustomerDAO;
+import org.omazon.CTO.DAO.interfaces.EmployeeDAO;
 import org.omazon.CTO.entities.Customer;
+import org.omazon.CTO.entities.Employee;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
+
 import java.util.List;
 
 @ManagedBean(name = "startPageController")
@@ -33,12 +36,19 @@ public class StartPageController {
 
     @Inject
     private CustomerDAO customerDAO;
+    
+    @Inject
+    private EmployeeDAO employeeDAO;
 
     public StartPageController() {
     }
 
     public List<Customer> getCustomers() {
         return customerDAO.getAll();
+    }
+    
+    public List<Employee> getEmployees() {
+        return employeeDAO.getAll();
     }
 
 

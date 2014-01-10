@@ -1,6 +1,7 @@
 package org.omazon.CTO.DAO.impl;
 
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.omazon.CTO.DAO.interfaces.EmployeeDAO;
 import org.omazon.CTO.entities.Employee;
@@ -16,9 +17,11 @@ public class EmployeeDAOImpl extends GenericDAO<Employee> implements EmployeeDAO
 
     @Override
     public Employee getEmployeeByLogin(String login, String password) {
-        Query query = getSession().createQuery("SELECT * FROM employee WHERE userLogin = :login AND password = :pass")
+    	Transaction tx = getSession().beginTransaction();
+    	Query query = getSession().createQuery("select e from Employee e where e.employeeId=:login and e.psw=:pass")
                 .setParameter("login", login)
                 .setParameter("pass", password);
+    	tx.commit();
 
         return (Employee) query.uniqueResult();
     }

@@ -1,6 +1,7 @@
 package org.omazon.CTO.DAO.impl;
 
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.omazon.CTO.DAO.interfaces.CustomerDAO;
 import org.omazon.CTO.entities.Customer;
@@ -21,9 +22,11 @@ public class CustomerDAOImpl extends GenericDAO<Customer> implements CustomerDAO
 
     @Override
     public Customer getCustomerByLogin(String login, String password) {
-        Query query = getSession().createQuery("SELECT * FROM customer WHERE userLogin = :login AND password = :pass")
+    	Transaction tx = getSession().beginTransaction();
+    	Query query = getSession().createQuery("select c from Customer c where c.customerId=:login and c.password=:pass")
                 .setParameter("login", login)
                 .setParameter("pass", password);
+    	tx.commit();
 
         return (Customer) query.uniqueResult();
     }

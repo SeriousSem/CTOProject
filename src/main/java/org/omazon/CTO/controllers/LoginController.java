@@ -2,8 +2,11 @@ package org.omazon.CTO.controllers;
 
 import org.omazon.CTO.DAO.interfaces.CustomerDAO;
 import org.omazon.CTO.DAO.interfaces.EmployeeDAO;
+import org.omazon.CTO.entities.Customer;
+import org.omazon.CTO.entities.Employee;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 
@@ -18,12 +21,12 @@ import javax.inject.Inject;
 public class LoginController {
 	private String userId;
 	private String password;
-//
-//    @ManagedProperty("#{employee}")
-//    public Employee employee;
-//
-//    @ManagedProperty("#{customer}")
-//    public Customer customer;
+
+    @ManagedProperty("#{employee}")
+    public Employee employee;
+
+    @ManagedProperty("#{customer}")
+    public Customer customer;
 
     @Inject
     private CustomerDAO customerDAO;
@@ -49,29 +52,48 @@ public class LoginController {
 		this.employeeDAO = employeeDAO;
 	}
 
+	public Customer getCustomer() {
+		return customer;
+	}
 
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 
 
     public String doLogin() {
-    	System.out.println("Username = "+userId+"password = "+password);
-    	if(customerDAO.getById(Long.valueOf(userId)) != null){
-    		return "products";
-    	}
-    	// go to employee first page
-    	else if(employeeDAO.getById(Long.valueOf(userId)) != null){
-    		return "index";
-    	}
-    	return "index";
-//        customer = customerDAO.getCustomerByLogin(userLogin, password);
-//        employee = employeeDAO.getEmployeeByLogin(userLogin, password);
-//
-//        if (customer != null || employee != null) {
-//            //thats ok. you have now customer or employee which you can get on all pages by annotate your object with  @ManagedProperty("#{customer or employee}")
-//            //here you decide which page will be shown furhther: for employees or for customers
-//        } else {
-//            //try one more time
-//        }
-//        return null;
+//    	System.out.println("Username = "+userId+"password = "+password);
+//    	if(customerDAO.getById(Long.valueOf(userId)) != null){
+//    		return "products";
+//    	}
+//    	// go to employee first page
+//    	else if(employeeDAO.getById(Long.valueOf(userId)) != null){
+//    		return "index";
+//    	}
+//    	return "index";
+        customer = customerDAO.getCustomerByLogin(userId, password);
+        employee = employeeDAO.getEmployeeByLogin(userId, password);
+
+        if (customer != null) {
+            //thats ok. you have now customer or employee which you can get on all pages by annotate your object with  @ManagedProperty("#{customer or employee}")
+            //here you decide which page will be shown furhther: for employees or for customers
+        	return "customerStartPage";
+        } else if (employee != null) {
+            return "employeeStartPage";
+        } else {
+        	return null;
+        }
     }
 
 
