@@ -26,10 +26,10 @@
 		
 		<h:form>
 
-			<h:outputLabel for="EmployeeId" value="EmployeeId:"></h:outputLabel>
+			<h:outputLabel for="Username" value="Username:"></h:outputLabel>
 
-			<h:inputText id="EmployeeId" value="#{login.userId}">
-				<f:validateRegex pattern="[0-9]+"></f:validateRegex>
+			<h:inputText id="username" value="#{login.username}">
+<!-- 				<f:validateRegex pattern="[0-9]+"></f:validateRegex> -->
 			</h:inputText>
 
 			<h:outputLabel value="Password:"></h:outputLabel>

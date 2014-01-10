@@ -10,11 +10,11 @@
     <f:facet name="header">
         <h:outputText value="Employee Details Panel"/>
     </f:facet>
-    <h:inputHidden value="#{employee.employeeId}" immediate="true"/>
+    <h:inputHidden value="#{editEmployee.employeeId}" immediate="true"/>
     <h:panelGrid columns="2">
         <h:panelGrid columns="2">
             <h:outputText value="Name:"/>
-            <h:inputText value="#{employee.name}" required="true" label="Name">
+            <h:inputText value="#{editEmployee.employeeName}" required="true" label="Name">
                 <f:validateLength minimum="2" maximum="20"/>
             </h:inputText>
             <h:outputText value="Surname:"/>

@@ -13,6 +13,7 @@ import org.omazon.CTO.entities.Employee;
 @RequestScoped
 public class EditEmployeeController {
 	
+	
 	@ManagedProperty("#{employee}")
     public Employee employee;
 
@@ -25,6 +26,22 @@ public class EditEmployeeController {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+	
+	public void setEmployeeId(String id) {
+		this.employee.setEmployeeId(Long.parseLong(id, 10));
+	}
+	
+	public String getEmployeeId() {
+		return String.valueOf(employee.getEmployeeId());
+	}
+	
+	public void setEmployeeName(String name) {
+		this.employee.setName(name);
+	}
+	
+	public String getEmployeeName() {
+		return String.valueOf(employee.getName());
 	}
 	
 	public void setEmployeeByName(String name) {

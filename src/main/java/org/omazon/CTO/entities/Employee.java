@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "employee")
 @SessionScoped
-@ManagedBean
+@ManagedBean(name="employee", eager=true)
 public class Employee extends UserAbstract {
 
     @Id
@@ -92,9 +92,14 @@ public class Employee extends UserAbstract {
 
     @Override
     public int hashCode() {
-        int result = (int) (employeeId ^ (employeeId >>> 32));
-        result = 31 * result + surname.hashCode();
-        result = 31 * result + name.hashCode();
-        return result;
+    	try {
+	        int result = (int) (employeeId ^ (employeeId >>> 32));
+	        result = 31 * result + surname.hashCode();
+	        result = 31 * result + name.hashCode();
+	        return result;
+    	}
+    	catch (NullPointerException e) {
+    		return 0;
+    	}
     }
 }

@@ -17,8 +17,11 @@ public class EmployeeDAOImpl extends GenericDAO<Employee> implements EmployeeDAO
 
     @Override
     public Employee getEmployeeByLogin(String login, String password) {
+    	if (!isSessionOpen()) {
+    		startSession();
+    	}
     	Transaction tx = getSession().beginTransaction();
-    	Query query = getSession().createQuery("select e from Employee e where e.employeeId=:login and e.psw=:pass")
+    	Query query = getSession().createQuery("select e from Employee e where e.username=:login and e.psw=:pass")
                 .setParameter("login", login)
                 .setParameter("pass", password);
     	tx.commit();
@@ -28,6 +31,12 @@ public class EmployeeDAOImpl extends GenericDAO<Employee> implements EmployeeDAO
     
     @Override
     public Employee getBySurname(String surname) {
-        return (Employee) getSession().createCriteria(Employee.class).add(Restrictions.eqProperty("surname", surname)).uniqueResult();
+    	if (!isSessionOpen()) {
+    		startSession();
+    	}
+    	Transaction tx = getSession().beginTransaction();
+        Employee employee = (Employee) getSession().createCriteria(Employee.class).add(Restrictions.eqProperty("surname", surname)).uniqueResult();
+    	tx.commit();
+    	return employee;
     }
 }

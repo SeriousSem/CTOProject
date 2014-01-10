@@ -17,11 +17,20 @@ public class CustomerDAOImpl extends GenericDAO<Customer> implements CustomerDAO
 
     @Override
     public Customer getBySurname(String surname) {
-        return (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eqProperty("surname", surname)).uniqueResult();
+    	if (!isSessionOpen()) {
+    		startSession();
+    	}
+    	Transaction tx = getSession().beginTransaction();
+        Customer customer = (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eqProperty("surname", surname)).uniqueResult();
+        tx.commit();
+        return customer;
     }
 
     @Override
     public Customer getCustomerByLogin(String login, String password) {
+    	if (!isSessionOpen()) {
+    		startSession();
+    	}
     	Transaction tx = getSession().beginTransaction();
     	Query query = getSession().createQuery("select c from Customer c where c.customerId=:login and c.psw=:pass")
                 .setParameter("login", login)
