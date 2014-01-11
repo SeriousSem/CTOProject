@@ -31,7 +31,7 @@ public class EditCustomerController {
 		setCustomer(customerDAO.getBySurname(name));
 	}
 	
-	public String update(Customer name) {
+	public String update(Customer customer) {
 		customerDAO.update(customer);
 		return "startPage";
 	}

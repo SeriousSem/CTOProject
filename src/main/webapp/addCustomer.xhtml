@@ -20,6 +20,10 @@
             <h:inputText value="#{addCustomer.customer.surname}" required="true" label="Surname">
                 <f:validateLength minimum="2" maximum="20"/>
             </h:inputText>
+            <h:outputText value="Password:"/>
+            <h:inputText id="psw" value="#{addCustomer.customer.psw}" required="true" label="password">
+                <f:validateLength minimum="2" maximum="20" />
+            </h:inputText>
             <h:outputText value="Email:"/>
             <h:inputText id="email" value="#{addCustomer.customer.email}" required="true" label="Email">
                 <f:validateRegex
