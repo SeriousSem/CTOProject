@@ -86,14 +86,19 @@ public class EditCustomerController {
 	public void setCustomerByName(String name) {
 		login.setCustomer(customerDAO.getBySurname(name));
 	}
-//
-//	public void setCustomerById(String id) {
-//		login.setCustomer(customerDAO.getById(Long.parseLong(id)));
-//	}
+
+	public void setCustomerById(String id) {
+		login.setCustomer(customerDAO.getById(Long.parseLong(id)));
+	}
 
 	public String update() {
 		customerDAO.update(login.getCustomer());
 		return "editCustomerSucess";
+	}
+	
+	public String updateFromEmployee() {
+		customerDAO.update(login.getCustomer());
+		return "employeeStartPage";
 	}
 
 }
