@@ -25,18 +25,18 @@ public class CustomerDAOImpl extends GenericDAO<Customer> implements CustomerDAO
         tx.commit();
         return customer;
     }
-    
-    @Override
-    public Customer getById(long id) {
-    	if (!isSessionOpen()) {
-    		startSession();
-    	}
-    	Transaction tx = getSession().beginTransaction();
-    	Query query = getSession().createQuery("select c from Customer c where c.customerId=:id")
-                .setParameter("id", id);
-    	tx.commit();
-        return (Customer) query.uniqueResult();
-    }
+//    
+//    @Override
+//    public Customer getById(long id) {
+//    	if (!isSessionOpen()) {
+//    		startSession();
+//    	}
+//    	Transaction tx = getSession().beginTransaction();
+//    	Query query = getSession().createQuery("select c from Customer c where c.customerId=:id")
+//                .setParameter("id", id);
+//    	tx.commit();
+//        return (Customer) query.uniqueResult();
+//    }
 
     @Override
     public Customer getCustomerByLogin(long login, String password) {
