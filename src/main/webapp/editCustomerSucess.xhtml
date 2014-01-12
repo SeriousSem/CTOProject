@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<body>
+<h:outputText value = "Sucess changed, your current information as belwo"></h:outputText><br />
+<h:outputText value = "CustomerId"></h:outputText>
+<h:outputText value = "#{customer.customerId}"></h:outputText>
+<br />
+<h:outputText value = "Name"></h:outputText>
+<h:outputText value = "#{customer.name}"></h:outputText>
+<br />
+<h:outputText value = "Surname"></h:outputText>
+<h:outputText value = "#{customer.surname}"></h:outputText>
+<br />
+<h:outputText value = "Address"></h:outputText>
+<h:outputText value = "#{customer.addresss}"></h:outputText>
+<br />
+<h:outputText value = "Email"></h:outputText>
+<h:outputText value = "#{customer.email}"></h:outputText>
+<br />
+<h:outputText value = "Password"></h:outputText>
+<h:outputText value = "#{customer.pwd}"></h:outputText>
+<br />
+<h:form>
+<h:commandButton value = "Confirm" action = "products"></h:commandButton>
+</h:form>
+</body>
+</html>

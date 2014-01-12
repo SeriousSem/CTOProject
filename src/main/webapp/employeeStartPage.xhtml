@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+        >
+
+<h:head>
+</h:head>
+<h:body>
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="title">Customers table</ui:define>
+
+		<ui:define name="body">
+			<h:form>
+				<h:dataTable value="#{startPageController.employees}"
+					var="employeeVar">
+					<h:column>
+						<f:facet name="header">employeeId</f:facet>
+                        #{employeeVar.employeeId}
+                    </h:column>
+					<h:column>
+						<f:facet name="header">name</f:facet>
+                        #{employeeVar.name}
+                    </h:column>
+					<h:column>
+						<f:facet name="header">surname</f:facet>
+                        #{employeeVar.surname}
+                    </h:column>
+					<h:column>
+						<f:facet name="header">psw</f:facet>
+                        #{employeeVar.psw}
+                    </h:column>
+				</h:dataTable>
+				<h:commandButton value="add new employee" action="addEmployee" />
+			</h:form>
+			<h:form>
+				<h:dataTable value="#{startPageController.customers}"
+					var="customerVar">
+					<h:column>
+						<f:facet name="header">csutomerId</f:facet>
+                        #{customerVar.customerId}
+                    </h:column>
+					<h:column>
+						<f:facet name="header">name</f:facet>
+                        #{customerVar.name}
+                    </h:column>
+					<h:column>
+						<f:facet name="header">surname</f:facet>
+                        #{customerVar.surname}
+                    </h:column>
+					<h:column>
+						<f:facet name="header">psw</f:facet>
+                        #{customerVar.psw}
+                    </h:column>
+                    <h:column>
+						<f:facet name="header">address</f:facet>
+                        #{customerVar.address}
+                    </h:column>
+				</h:dataTable>
+				<h:commandButton value="add new employee" action="addEmployee" />
+			</h:form>
+			<h:form>
+				<h:commandButton value="edit your data" action="editEmployee"/>
+	        </h:form>
+	        <h:form>
+	        	<h:outputText value="Set Customer ID to edit:"/>
+	        	<h:inputText value="0" required="true" binding="#{custId}">
+	        	</h:inputText>
+	        	<h:commandButton value="set customer ID" action="#{editCustomer.setCustomerById(custId.value)}"/>
+				<h:commandButton value="edit customer data" action="editCustomer"/>
+	        </h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
