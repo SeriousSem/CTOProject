@@ -27,7 +27,7 @@ public class AddCustomerController {
 
     public String doAdd(Customer name) {
         customerDAO.save(customer);
-        return "products";
+        return "addCustomerSucess";
     }
 
     public Customer getCustomer() {

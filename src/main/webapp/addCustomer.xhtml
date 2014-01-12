@@ -21,9 +21,9 @@
                 <f:validateLength minimum="2" maximum="20"/>
             </h:inputText>
             <h:outputText value="Password:"/>
-            <h:inputText id="psw" value="#{addCustomer.customer.psw}" required="true" label="password">
+            <h:inputSecret id="psw" value="#{addCustomer.customer.psw}" required="true" label="password">
                 <f:validateLength minimum="2" maximum="20" />
-            </h:inputText>
+            </h:inputSecret>
             <h:outputText value="Email:"/>
             <h:inputText id="email" value="#{addCustomer.customer.email}" required="true" label="Email">
                 <f:validateRegex
