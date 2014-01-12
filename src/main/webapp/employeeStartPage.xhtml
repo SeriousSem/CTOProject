@@ -41,7 +41,7 @@
 				<h:dataTable value="#{startPageController.customers}"
 					var="customerVar">
 					<h:column>
-						<f:facet name="header">csutomerId</f:facet>
+						<f:facet name="header">customerId</f:facet>
                         #{customerVar.customerId}
                     </h:column>
 					<h:column>
@@ -61,7 +61,29 @@
                         #{customerVar.address}
                     </h:column>
 				</h:dataTable>
-				<h:commandButton value="add new employee" action="addEmployee" />
+				<h:commandButton value="add new customer" action="addCustomer" />
+			</h:form>
+			<h:form>
+				<h:dataTable value="#{showAllProductController.products}"
+					var="productVar">
+					<h:column>
+                        <f:facet name="header">name</f:facet>
+                        #{productVar.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">productId</f:facet>
+                        #{productVar.productId}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">description</f:facet>
+                        #{productVar.description}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">price</f:facet>
+                        #{productVar.price}
+                    </h:column>
+				</h:dataTable>
+				<h:commandButton value="add new product" action="addProduct" />
 			</h:form>
 			<h:form>
 				<h:commandButton value="edit your data" action="editEmployee"/>

@@ -17,7 +17,7 @@
         <ui:define name="body">
             <h:form>
                 <h:dataTable value="#{showAllProductController.products}" var="productVar">
-                  <h:selectManyCheckbox>
+<!--                   <h:selectManyCheckbox> -->
                     <h:column>
                         <f:facet name="header">name</f:facet>
                         #{productVar.name}
@@ -34,7 +34,7 @@
                         <f:facet name="header">price</f:facet>
                         #{productVar.price}
                     </h:column>
-                    </h:selectManyCheckbox>
+<!--                     </h:selectManyCheckbox> -->
                 </h:dataTable>
                 <h:commandButton value="Buy Now" action="#{showAllProductController.addOrder}"/>
             </h:form>
