@@ -5,10 +5,9 @@ import org.omazon.CTO.DAO.interfaces.EmployeeDAO;
 import org.omazon.CTO.entities.Customer;
 import org.omazon.CTO.entities.Employee;
 
-import javax.enterprise.inject.Produces;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 
 /**
@@ -18,7 +17,7 @@ import javax.inject.Inject;
  * Time: 13:03
  */
 @ManagedBean(name = "login")
-@RequestScoped
+@SessionScoped
 public class LoginController {
 	private String userId;
 	private String password;
@@ -92,23 +91,23 @@ public class LoginController {
 //    		return "index";
 //    	}
 //    	return "index";
-        customer = customerDAO.getCustomerByLogin(userId, password);
+        customer = customerDAO.getCustomerByLogin(Long.parseLong(userId), password);
 
         if (customer != null) {
             //thats ok. you have now customer or employee which you can get on all pages by annotate your object with  @ManagedProperty("#{customer or employee}")
             //here you decide which page will be shown furhther: for employees or for customers
-        	return "customerStartPage";
+        	return "startPage";
         } else {
         	return null;
         }
     }
     
     public String doEmployeeLogin() {
-        employee = employeeDAO.getEmployeeByLogin(username, password);
+    	employee = employeeDAO.getEmployeeByLogin(username, password);
         if (employee != null) {
             //thats ok. you have now customer or employee which you can get on all pages by annotate your object with  @ManagedProperty("#{customer or employee}")
             //here you decide which page will be shown furhther: for employees or for customers
-            return "editEmployee";
+            return "employeeStartPage";
         } else {
         	return null;
         }

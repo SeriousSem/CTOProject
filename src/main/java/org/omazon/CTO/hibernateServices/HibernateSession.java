@@ -25,4 +25,12 @@ public abstract class HibernateSession {
     public void startSession() {
     	session = HibernateFacroryProvider.getSessionFactory().openSession();
     }
+    
+    public void flushSession() {
+    	session.flush();
+    }
+    
+    public void closeSession() {
+    	session.close();
+    }
 }
