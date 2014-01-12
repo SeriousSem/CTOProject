@@ -13,44 +13,66 @@ import org.omazon.CTO.entities.Employee;
 @RequestScoped
 public class EditEmployeeController {
 	
+//	@ManagedProperty("#{employee}")
+//    public Employee employee;
 	
-	@ManagedProperty("#{employee}")
-    public Employee employee;
+	@ManagedProperty("#{login}")
+    public LoginController login;
 
-    @Inject
+	@Inject
     private EmployeeDAO employeeDAO;
 
+	public void setLogin(LoginController login) {
+		this.login = login;
+	}
+	
 	public Employee getEmployee() {
-		return employee;
+		return login.getEmployee();
 	}
 
 	public void setEmployee(Employee employee) {
-		this.employee = employee;
+		login.setEmployee(employee);
 	}
 	
 	public void setEmployeeId(String id) {
-		this.employee.setEmployeeId(Long.parseLong(id, 10));
+		login.getEmployee().setEmployeeId(Long.parseLong(id, 10));
 	}
 	
 	public String getEmployeeId() {
-		return String.valueOf(employee.getEmployeeId());
+		return String.valueOf(login.getEmployee().getEmployeeId());
 	}
 	
-	public void setEmployeeName(String name) {
-		this.employee.setName(name);
+	public void setName(String name) {
+		login.getEmployee().setName(name);
 	}
 	
-	public String getEmployeeName() {
-		return String.valueOf(employee.getName());
+	public String getName() {
+		return String.valueOf(login.getEmployee().getName());
+	}
+	
+	public void setSurname(String surname) {
+		login.getEmployee().setSurname(surname);
+	}
+	
+	public String getSurname() {
+		return String.valueOf(login.getEmployee().getSurname());
+	}
+	
+	public void setPsw(String psw) {
+		login.getEmployee().setPsw(psw);
+	}
+	
+	public String getPsw() {
+		return String.valueOf(login.getEmployee().getPsw());
 	}
 	
 	public void setEmployeeByName(String name) {
-		setEmployee(employeeDAO.getBySurname(name));
+		login.setEmployee(employeeDAO.getBySurname(name));
 	}
 	
-	public String update(Employee name) {
-		employeeDAO.update(employee);
-		return "employeeStartPage";
+	public String update() {
+		employeeDAO.update(login.getEmployee());
+		return "startPage";
 	}
 
 }
