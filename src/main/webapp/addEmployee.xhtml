@@ -22,8 +22,8 @@
             </h:inputText>
             <h:outputText value="Password:"/>
             <h:inputSecret id="psw" value="#{addEmployee.employee.psw}" required="true" label="Password">
-                <f:validateRegex
-                        pattern="((?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{4,10})"/>
+              <!--   <f:validateRegex
+                        pattern="((?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{4,10})"/> -->
             </h:inputSecret>
         </h:panelGrid>
     </h:panelGrid>

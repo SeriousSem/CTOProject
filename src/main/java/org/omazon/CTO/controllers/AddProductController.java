@@ -20,7 +20,7 @@ public class AddProductController {
 
     public String doAdd(Product name) {
         productDAO.save(product);
-        return "startPage";
+        return "employeeStartPage";
     }
 
     public Product getProduct() {

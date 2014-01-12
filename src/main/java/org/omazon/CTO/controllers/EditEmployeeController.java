@@ -50,7 +50,7 @@ public class EditEmployeeController {
 	
 	public String update(Employee name) {
 		employeeDAO.update(employee);
-		return "startPage";
+		return "employeeStartPage";
 	}
 
 }

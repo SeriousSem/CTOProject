@@ -23,17 +23,15 @@ public class EditCustomerController {
 		return customer;
 	}
 
+
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	
-	public void setCustomerByName(String name) {
-		setCustomer(customerDAO.getBySurname(name));
-	}
-	
+
+
 	public String update(Customer customer) {
 		customerDAO.update(customer);
-		return "startPage";
+		return "editCustomerSucess";
 	}
 
 }
