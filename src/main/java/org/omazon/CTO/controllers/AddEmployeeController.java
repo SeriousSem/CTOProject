@@ -20,7 +20,7 @@ public class AddEmployeeController {
 
     public String doAdd(Employee name) {
         employeeDAO.save(employee);
-        return "startPage";
+        return "employeeStartPage";
     }
 
     public Employee getemployee() {
