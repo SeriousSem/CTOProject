@@ -72,7 +72,7 @@ public class EditEmployeeController {
 	
 	public String update() {
 		employeeDAO.update(login.getEmployee());
-		return "startPage";
+		return "employeeStartPage";
 	}
 
 }
