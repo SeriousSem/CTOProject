@@ -16,7 +16,19 @@ public class EditCustomerController {
 	@ManagedProperty("#{login}")
     public LoginController login;
 
-    @Inject
+    public CustomerDAO getCustomerDAO() {
+		return customerDAO;
+	}
+
+	public void setCustomerDAO(CustomerDAO customerDAO) {
+		this.customerDAO = customerDAO;
+	}
+
+	public LoginController getLogin() {
+		return login;
+	}
+
+	@Inject
     private CustomerDAO customerDAO;
     
     public void setLogin(LoginController login) {
@@ -81,7 +93,7 @@ public class EditCustomerController {
 	
 	public String update() {
 		customerDAO.update(login.getCustomer());
-		return "startPage";
+		return "editCustomerSucess";
 	}
 
 }

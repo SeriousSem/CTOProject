@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<body>
+	<h:form>
+		<f:facet name="header">
+			<h:outputText value="Customer Details Panel" />
+		</f:facet>
+		<h:panelGrid columns="2">
+			<h:panelGrid columns="2">
+				<h:outputText value="Name:" />
+				<h:inputText value="#{editCustomer.name}" required="true" label="Name">
+					<f:validateLength minimum="2" maximum="20" />
+				</h:inputText>
+				<h:outputText value="Surname:" />
+				<h:inputText value="#{editCustomer.surname}" required="true"
+					label="Surname">
+					<f:validateLength minimum="2" maximum="20" />
+				</h:inputText>
+						<h:outputText value="Password:" />
+				<h:inputText id="psw" value="#{editCustomer.psw}" required="true"
+					label="Password">
+				</h:inputText>
+				<h:outputText value="Email:" />
+				<h:inputText value="#{editCustomer.email}" required="true" label="email">
+					<f:validateLength minimum="2" maximum="20" />
+				</h:inputText>
+				<h:outputText value="Address" />
+				<h:inputText value="#{editCustomer.address}" required="true" label="Address">
+					<f:validateLength minimum="2" maximum="20" />
+				</h:inputText>
+			</h:panelGrid>
+		</h:panelGrid>
+		<h:commandButton id="subm" value="Save"
+			action="#{editCustomer.update}" />
+	</h:form>
+</body>
+</html>
