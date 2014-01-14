@@ -1,13 +1,26 @@
 package org.omazon.CTO.entities;
 
-import org.hibernate.annotations.Cascade;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+
+import enums.Status;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,8 +50,9 @@ public class Order implements Serializable {
     @Column(name = "trackId")
     private long trackId;
     
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private Status status;
 
     public long getOrderId() {
         return orderId;
@@ -72,11 +86,11 @@ public class Order implements Serializable {
         this.trackId = trackId;
     }
     
-    public String getShipmentStatus() {
+    public Status getShipmentStatus() {
     	return status;
     }
     
-    public void setShipmentStatus(String status) {
+    public void setShipmentStatus(Status status) {
     	this.status = status;
     }
 

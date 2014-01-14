@@ -96,7 +96,7 @@ public class LoginController {
         if (customer != null) {
             //thats ok. you have now customer or employee which you can get on all pages by annotate your object with  @ManagedProperty("#{customer or employee}")
             //here you decide which page will be shown furhther: for employees or for customers
-        	return "products";
+        	return "addOrder";
         } else {
         	return null;
         }

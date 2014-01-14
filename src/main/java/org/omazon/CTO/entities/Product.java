@@ -41,6 +41,9 @@ public class Product extends UserAbstract implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
 	private Set<OrderProducts> productOrders = new HashSet<OrderProducts>();
+	
+	@Transient
+	private boolean checked = false;
 
 	public long getProductId() {
 		return productId;
@@ -129,5 +132,15 @@ public class Product extends UserAbstract implements Serializable {
 			return false;
 		return true;
 	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+	
+	
 
 }

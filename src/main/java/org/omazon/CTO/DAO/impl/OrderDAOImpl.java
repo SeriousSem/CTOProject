@@ -23,5 +23,16 @@ public class OrderDAOImpl extends GenericDAO<Order> implements OrderDAO {
 		transaction.commit();
 		return products;
 	}
+	
+	public List<Order> getAllByCustomerId(long customerId){
+		Transaction transaction = getSession().beginTransaction();
+
+		List<Order> orderList = getSession().createQuery("SELECT * FROM Order as o WHERE o.customer.id=:customerId")
+				.setParameter("customerId", customerId).list();
+		
+		transaction.commit();
+		
+		return orderList;
+	}
 
 }

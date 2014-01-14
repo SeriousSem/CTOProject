@@ -8,5 +8,7 @@ import org.omazon.CTO.entities.Product;
 public interface OrderDAO extends IDao<Order> {
 	
 	public List<Product> getOrderProducts(long orderId);
+	
+	public List<Order> getAllByCustomerId(long customerId);
 
 }

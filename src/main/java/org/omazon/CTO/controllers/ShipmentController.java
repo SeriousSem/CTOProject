@@ -6,6 +6,8 @@ import javax.faces.bean.RequestScoped;
 
 import org.omazon.CTO.entities.Order;
 
+import enums.Status;
+
 
 @ManagedBean(name = "updateShipment")
 @RequestScoped
@@ -24,13 +26,13 @@ public class ShipmentController {
 	}
 	
 	public String getShipmentStatus() {
-		String status = order.getShipmentStatus();
+		Status status = order.getShipmentStatus();
 		System.out.println("TEST");
 		System.out.println(status);
 		return "startPage";
 	}
 	
-	public void setShipmentStatus(String status) {
+	public void setShipmentStatus(Status status) {
 		order.setShipmentStatus(status);
 	}
 	
