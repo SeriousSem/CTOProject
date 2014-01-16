@@ -20,10 +20,6 @@
             <h:inputText value="#{addCustomer.customer.surname}" required="true" label="Surname">
                 <f:validateLength minimum="2" maximum="20"/>
             </h:inputText>
-            <h:outputText value="Password:"/>
-            <h:inputSecret id="psw" value="#{addCustomer.customer.psw}" required="true" label="password">
-                <f:validateLength minimum="2" maximum="20" />
-            </h:inputSecret>
             <h:outputText value="Email:"/>
             <h:inputText id="email" value="#{addCustomer.customer.email}" required="true" label="Email">
                 <f:validateRegex
@@ -34,9 +30,19 @@
                              rows="2">
                 <f:validateLength maximum="100"/>
             </h:inputTextarea>
+            <h:outputText value="Login:"/>
+            <h:inputText value="#{addCustomer.customer.userLogin}" required="true" label="Login">
+                <f:validateLength minimum="2" maximum="20"/>
+            </h:inputText>
+            <h:outputText value="Password:"/>
+            <h:inputSecret id="password" value="#{addCustomer.customer.password}" required="true" label="Password">
+                <f:validateLength minimum="2" maximum="20"/>
+            </h:inputSecret>
+
+
         </h:panelGrid>
     </h:panelGrid>
-    <h:commandButton id="subm" value="Submit" action="#{addCustomer.doAdd(customer)}"/>
+    <h:commandButton id="subm" value="Submit" action="#{addCustomer.doAdd()}"/>
 </h:form>
 </body>
 </html>

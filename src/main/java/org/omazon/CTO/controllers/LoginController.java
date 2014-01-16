@@ -19,9 +19,8 @@ import javax.inject.Inject;
 @ManagedBean(name = "login")
 @SessionScoped
 public class LoginController {
-	private String userId;
-	private String password;
-	private String username;
+    private String password;
+    private String userLogin;
 
     @ManagedProperty("#{employee}")
     public Employee employee;
@@ -31,86 +30,49 @@ public class LoginController {
 
     @Inject
     private CustomerDAO customerDAO;
-	@Inject
+    @Inject
     private EmployeeDAO employeeDAO;
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-
-	public Employee getEmployee() {
-		return employee;
-	}
-
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-	
-	public String getUserId() {
-		return userId;
-	}
-
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-
-	public String getPassword() {
-		return password;
-	}
-
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public String getUsername() {
-		return username;
-	}
-
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-    public String doCustomerLogin() {
-//    	System.out.println("Username = "+userId+"password = "+password);
-//    	if(customerDAO.getById(Long.valueOf(userId)) != null){
-//    		return "products";
-//    	}
-//    	// go to employee first page
-//    	else if(employeeDAO.getById(Long.valueOf(userId)) != null){
-//    		return "index";
-//    	}
-//    	return "index";
-        customer = customerDAO.getCustomerByLogin(Long.parseLong(userId), password);
-
+    public String doUserLogin() {
+        customer = customerDAO.getCustomerByLogin(userLogin, password);
+        employee = employeeDAO.getEmployeeByLogin(userLogin, password);
         if (customer != null) {
-            //thats ok. you have now customer or employee which you can get on all pages by annotate your object with  @ManagedProperty("#{customer or employee}")
-            //here you decide which page will be shown furhther: for employees or for customers
-        	return "addOrder";
-        } else {
-        	return null;
-        }
-    }
-    
-    public String doEmployeeLogin() {
-    	employee = employeeDAO.getEmployeeByLogin(username, password);
-        if (employee != null) {
-            //thats ok. you have now customer or employee which you can get on all pages by annotate your object with  @ManagedProperty("#{customer or employee}")
-            //here you decide which page will be shown furhther: for employees or for customers
+            return "addOrder";
+        } else if (employee != null) {
             return "employeeStartPage";
-        } else {
-        	return null;
-        }
+        } else
+            return null;
     }
 
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }

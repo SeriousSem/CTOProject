@@ -20,14 +20,16 @@
             <h:inputText value="#{addEmployee.employee.surname}" required="true" label="Surname">
                 <f:validateLength minimum="2" maximum="20"/>
             </h:inputText>
+            <h:outputText value="Login:"/>
+            <h:inputText value="#{addEmployee.employee.userLogin}" required="true" label="Login">
+                <f:validateLength minimum="2" maximum="20"/>
+            </h:inputText>
             <h:outputText value="Password:"/>
-            <h:inputSecret id="psw" value="#{addEmployee.employee.psw}" required="true" label="Password">
-              <!--   <f:validateRegex
-                        pattern="((?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{4,10})"/> -->
+            <h:inputSecret id="password" value="#{addEmployee.employee.password}" required="true" label="Password">
             </h:inputSecret>
         </h:panelGrid>
     </h:panelGrid>
-    <h:commandButton id="subm" value="Submit" action="#{addEmployee.doAdd(employee)}"/>
+    <h:commandButton id="subm" value="Submit" action="#{addEmployee.doAdd()}"/>
 </h:form>
 </body>
 </html>

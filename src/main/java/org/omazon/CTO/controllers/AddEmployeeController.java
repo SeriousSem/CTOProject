@@ -18,16 +18,16 @@ public class AddEmployeeController {
     @Inject
     private EmployeeDAO employeeDAO;
 
-    public String doAdd(Employee name) {
+    public String doAdd() {
         employeeDAO.save(employee);
         return "employeeStartPage";
     }
 
-    public Employee getemployee() {
+    public Employee getEmployee() {
         return employee;
     }
 
-    public void setemployee(Employee employee) {
+    public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 }

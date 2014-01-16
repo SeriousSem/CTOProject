@@ -25,9 +25,9 @@ public class AddCustomerController {
     @Inject
     private CustomerDAO customerDAO;
 
-    public String doAdd(Customer name) {
+    public String doAdd() {
         customerDAO.save(customer);
-        return "addCustomerSucess";
+        return "showAllOrders";
     }
 
     public Customer getCustomer() {

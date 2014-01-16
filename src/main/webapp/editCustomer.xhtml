@@ -12,25 +12,25 @@
 		<h:panelGrid columns="2">
 			<h:panelGrid columns="2">
 				<h:outputText value="Name:" />
-				<h:inputText value="#{editCustomer.name}" required="true" label="Name">
-					<f:validateLength minimum="2" maximum="20" />
+                <h:inputText value="#{editCustomer.login.customer.name}" required="true" label="Name">
+                <f:validateLength minimum="2" maximum="20" />
 				</h:inputText>
 				<h:outputText value="Surname:" />
-				<h:inputText value="#{editCustomer.surname}" required="true"
-					label="Surname">
+                <h:inputText value="#{editCustomer.login.customer.surname}" required="true"
+                             label="Surname">
 					<f:validateLength minimum="2" maximum="20" />
 				</h:inputText>
 						<h:outputText value="Password:" />
-				<h:inputText id="psw" value="#{editCustomer.psw}" required="true"
-					label="Password">
+                <h:inputText id="password" value="#{editCustomer.login.customer.password}" required="true"
+                             label="Password">
 				</h:inputText>
 				<h:outputText value="Email:" />
-				<h:inputText value="#{editCustomer.email}" required="true" label="email">
-					<f:validateLength minimum="2" maximum="20" />
+                <h:inputText value="#{editCustomer.login.customer.email}" required="true" label="email">
+                <f:validateLength minimum="2" maximum="20" />
 				</h:inputText>
 				<h:outputText value="Address" />
-				<h:inputTextarea value="#{editCustomer.address}" label="Address" required="true"
-                             rows="2">
+                <h:inputTextarea value="#{editCustomer.login.customer.address}" label="Address" required="true"
+                                 rows="2">
                 <f:validateLength maximum="100"/>
             </h:inputTextarea>
 			</h:panelGrid>

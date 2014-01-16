@@ -14,59 +14,50 @@
 
         <ui:define name="title">Customers table</ui:define>
 
-		<ui:define name="body">
-			<h:form>
-				<h:dataTable value="#{startPageController.employees}"
-					var="employeeVar">
-					<h:column>
-						<f:facet name="header">employeeId</f:facet>
+        <ui:define name="body">
+            <h:form>
+                <h:dataTable value="#{startPageController.employees}"
+                             var="employeeVar">
+                    <h:column>
+                        <f:facet name="header">employeeId</f:facet>
                         #{employeeVar.employeeId}
                     </h:column>
-					<h:column>
-						<f:facet name="header">name</f:facet>
+                    <h:column>
+                        <f:facet name="header">name</f:facet>
                         #{employeeVar.name}
                     </h:column>
-					<h:column>
-						<f:facet name="header">surname</f:facet>
+                    <h:column>
+                        <f:facet name="header">surname</f:facet>
                         #{employeeVar.surname}
                     </h:column>
-					<h:column>
-						<f:facet name="header">psw</f:facet>
-                        #{employeeVar.psw}
-                    </h:column>
-				</h:dataTable>
-				<h:commandButton value="add new employee" action="addEmployee" />
-			</h:form>
-			<h:form>
-				<h:dataTable value="#{startPageController.customers}"
-					var="customerVar">
-					<h:column>
-						<f:facet name="header">customerId</f:facet>
+                </h:dataTable>
+                <h:commandButton value="add new employee" action="addEmployee"/>
+
+                <hr/>
+                <h:dataTable value="#{startPageController.customers}"
+                             var="customerVar">
+                    <h:column>
+                        <f:facet name="header">customerId</f:facet>
                         #{customerVar.customerId}
                     </h:column>
-					<h:column>
-						<f:facet name="header">name</f:facet>
+                    <h:column>
+                        <f:facet name="header">name</f:facet>
                         #{customerVar.name}
                     </h:column>
-					<h:column>
-						<f:facet name="header">surname</f:facet>
+                    <h:column>
+                        <f:facet name="header">surname</f:facet>
                         #{customerVar.surname}
                     </h:column>
-					<h:column>
-						<f:facet name="header">psw</f:facet>
-                        #{customerVar.psw}
-                    </h:column>
                     <h:column>
-						<f:facet name="header">address</f:facet>
+                        <f:facet name="header">address</f:facet>
                         #{customerVar.address}
                     </h:column>
-				</h:dataTable>
-				<h:commandButton value="add new customer" action="addCustomer" />
-			</h:form>
-			<h:form>
-				<h:dataTable value="#{showAllProductController.products}"
-					var="productVar">
-					<h:column>
+                </h:dataTable>
+                <h:commandButton value="add new customer" action="addCustomer"/>
+                <hr/>
+                <h:dataTable value="#{showAllProductController.products}"
+                             var="productVar">
+                    <h:column>
                         <f:facet name="header">name</f:facet>
                         #{productVar.name}
                     </h:column>
@@ -82,20 +73,16 @@
                         <f:facet name="header">price</f:facet>
                         #{productVar.price}
                     </h:column>
-				</h:dataTable>
-				<h:commandButton value="add new product" action="addProduct" />
-			</h:form>
-			<h:form>
-				<h:commandButton value="edit your data" action="editEmployee"/>
-	        </h:form>
-	        <h:form>
-	        	<h:outputText value="Set Customer ID to edit:"/>
-	        	<h:inputText value="0" required="true" binding="#{custId}">
-	        	</h:inputText>
-	        	<h:commandButton value="set customer ID" action="#{editCustomer.setCustomerById(custId.value)}"/>
-				<h:commandButton value="edit customer data" action="editCustomerFromEmployee"/>
-	        </h:form>
-		</ui:define>
-	</ui:composition>
+                </h:dataTable>
+                <h:commandButton value="add new product" action="addProduct"/>
+                <h:commandButton value="edit your data" action="editEmployee"/>
+                <hr/>
+                <h:outputText value="Set Customer ID to edit:"/>
+                <h:inputText value="0" required="true" binding="#{custId}">
+                </h:inputText>
+                <h:commandButton value="set customer ID" action="#{editCustomer.setCustomerById(custId.value)}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

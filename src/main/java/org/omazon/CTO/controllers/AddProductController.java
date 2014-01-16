@@ -13,12 +13,12 @@ import javax.inject.Inject;
 public class AddProductController {
 
     @ManagedProperty("#{product}")
-	public Product product;
+    public Product product;
 
     @Inject
     private ProductDAO productDAO;
 
-    public String doAdd(Product name) {
+    public String doAdd() {
         productDAO.save(product);
         return "employeeStartPage";
     }

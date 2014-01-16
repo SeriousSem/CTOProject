@@ -17,26 +17,27 @@ public class EmployeeDAOImpl extends GenericDAO<Employee> implements EmployeeDAO
 
     @Override
     public Employee getEmployeeByLogin(String login, String password) {
-    	if (!isSessionOpen()) {
-    		startSession();
-    	}
-    	Transaction tx = getSession().beginTransaction();
-    	Query query = getSession().createQuery("select e from Employee e where e.username=:login and e.psw=:pass")
-                .setParameter("login", login)
+        if (!isSessionOpen()) {
+            startSession();
+        }
+        Transaction tx = getSession().beginTransaction();
+        Query query = getSession().createQuery("select e from Employee e where e.userLogin=:lg and e.password=:pass")
+                .setParameter("lg", login)
                 .setParameter("pass", password);
-    	tx.commit();
+        Employee employee = (Employee) query.uniqueResult();
+        tx.commit();
 
-        return (Employee) query.uniqueResult();
+        return employee;
     }
-    
+
     @Override
     public Employee getBySurname(String surname) {
-    	if (!isSessionOpen()) {
-    		startSession();
-    	}
-    	Transaction tx = getSession().beginTransaction();
+        if (!isSessionOpen()) {
+            startSession();
+        }
+        Transaction tx = getSession().beginTransaction();
         Employee employee = (Employee) getSession().createCriteria(Employee.class).add(Restrictions.eqProperty("surname", surname)).uniqueResult();
-    	tx.commit();
-    	return employee;
+        tx.commit();
+        return employee;
     }
 }

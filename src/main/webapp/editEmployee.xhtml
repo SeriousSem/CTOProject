@@ -13,15 +13,15 @@
     <h:panelGrid columns="2">
         <h:panelGrid columns="2">
             <h:outputText value="Name:"/>
-            <h:inputText value="#{editEmployee.name}" required="true" label="Name">
+            <h:inputText value="#{editEmployee.login.employee.name}" required="true" label="Name">
                 <f:validateLength minimum="2" maximum="20"/>
             </h:inputText>
             <h:outputText value="Surname:"/>
-            <h:inputText value="#{editEmployee.surname}" required="true" label="Surname">
+            <h:inputText value="#{editEmployee.login.employee.surname}" required="true" label="Surname">
                 <f:validateLength minimum="2" maximum="20"/>
             </h:inputText>
             <h:outputText value="Password:"/>
-            <h:inputText id="psw" value="#{editEmployee.psw}" required="true" label="Password">
+            <h:inputText id="password" value="#{editEmployee.login.employee.password}" required="true" label="Password">
                 <f:validateRegex
                         pattern="((?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{4,10})"/>
             </h:inputText>

@@ -1,25 +1,23 @@
 package org.omazon.CTO.controllers;
 
-import java.util.List;
+import org.omazon.CTO.DAO.interfaces.OrderDAO;
+import org.omazon.CTO.DAO.interfaces.ProductDAO;
+import org.omazon.CTO.entities.Order;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
-
-import org.omazon.CTO.DAO.interfaces.OrderDAO;
-import org.omazon.CTO.DAO.interfaces.ProductDAO;
-import org.omazon.CTO.entities.Order;
-import org.omazon.CTO.entities.Product;
+import java.util.List;
 
 @ManagedBean(name = "showOrdersController")
 @RequestScoped
 public class ShowOrdersController {
 
-	@ManagedProperty("#{order}")
-	private Order order;
-	
-	@Inject
+    //@ManagedProperty("#{order}")
+    //private Order order;
+
+    @Inject
 	private OrderDAO orderDAO;
 	
 	@Inject

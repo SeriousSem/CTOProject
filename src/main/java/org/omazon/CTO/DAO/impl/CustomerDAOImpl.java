@@ -17,38 +17,27 @@ public class CustomerDAOImpl extends GenericDAO<Customer> implements CustomerDAO
 
     @Override
     public Customer getBySurname(String surname) {
-    	if (!isSessionOpen()) {
-    		startSession();
-    	}
-    	Transaction tx = getSession().beginTransaction();
+        if (!isSessionOpen()) {
+            startSession();
+        }
+        Transaction tx = getSession().beginTransaction();
         Customer customer = (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eqProperty("surname", surname)).uniqueResult();
         tx.commit();
         return customer;
     }
-//    
-//    @Override
-//    public Customer getById(long id) {
-//    	if (!isSessionOpen()) {
-//    		startSession();
-//    	}
-//    	Transaction tx = getSession().beginTransaction();
-//    	Query query = getSession().createQuery("select c from Customer c where c.customerId=:id")
-//                .setParameter("id", id);
-//    	tx.commit();
-//        return (Customer) query.uniqueResult();
-//    }
 
     @Override
-    public Customer getCustomerByLogin(long login, String password) {
-    	if (!isSessionOpen()) {
-    		startSession();
-    	}
-    	Transaction tx = getSession().beginTransaction();
-    	Query query = getSession().createQuery("select c from Customer c where c.customerId=:login and c.psw=:pass")
-                .setParameter("login", login)
+    public Customer getCustomerByLogin(String userLogin, String password) {
+        if (!isSessionOpen()) {
+            startSession();
+        }
+        Transaction tx = getSession().beginTransaction();
+        Query query = getSession().createQuery("select c from Customer c where c.userLogin=:lg and c.password=:pass")
+                .setParameter("lg", userLogin)
                 .setParameter("pass", password);
-    	tx.commit();
+        Customer customer = (Customer) query.uniqueResult();
+        tx.commit();
 
-        return (Customer) query.uniqueResult();
+        return customer;
     }
 }

@@ -1,26 +1,14 @@
 package org.omazon.CTO.entities;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import org.hibernate.annotations.Cascade;
+import org.omazon.CTO.enums.Status;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
-
-import enums.Status;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -85,13 +73,13 @@ public class Order implements Serializable {
     public void setTrackId(long trackId) {
         this.trackId = trackId;
     }
-    
-    public Status getShipmentStatus() {
-    	return status;
+
+    public Status getStatus() {
+        return status;
     }
-    
-    public void setShipmentStatus(Status status) {
-    	this.status = status;
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override

@@ -14,19 +14,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "employee")
 @SessionScoped
-@ManagedBean(name="employee", eager=true)
-public class Employee extends UserAbstract {
+@ManagedBean(name = "employee", eager = true)
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "employeeId")
     private long employeeId;
-    
-    @Column(name = "username")
-    private String username;
-    
-    @Column(name = "psw")
-    private String psw;
 
     @Column(name = "surname")
     private String surname;
@@ -34,20 +28,35 @@ public class Employee extends UserAbstract {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "userLogin")
+    String userLogin;
+
+    @Column(name = "password")
+    String password;
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
     public long getEmployeeId() {
         return employeeId;
     }
 
     public void setEmployeeId(long employeeId) {
         this.employeeId = employeeId;
-    }
-    
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getSurname() {
@@ -65,16 +74,7 @@ public class Employee extends UserAbstract {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public String getPsw() {
-        return psw;
-    }
 
-    public void setPsw(String psw) {
-        this.psw = psw;
-    }
-    
-    
 
     @Override
     public boolean equals(Object o) {
@@ -92,14 +92,13 @@ public class Employee extends UserAbstract {
 
     @Override
     public int hashCode() {
-    	try {
-	        int result = (int) (employeeId ^ (employeeId >>> 32));
-	        result = 31 * result + surname.hashCode();
-	        result = 31 * result + name.hashCode();
-	        return result;
-    	}
-    	catch (NullPointerException e) {
-    		return 0;
-    	}
+        try {
+            int result = (int) (employeeId ^ (employeeId >>> 32));
+            result = 31 * result + surname.hashCode();
+            result = 31 * result + name.hashCode();
+            return result;
+        } catch (NullPointerException e) {
+            return 0;
+        }
     }
 }
