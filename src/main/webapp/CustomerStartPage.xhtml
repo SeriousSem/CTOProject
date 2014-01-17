@@ -6,19 +6,22 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
         >
 
-<h:head>
-</h:head>
 <h:body>
     <ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="title">Employee's Main Page</ui:define>
+        <ui:define name="title">Customer's Main Page</ui:define>
 
         <ui:define name="body">
             <h:form>
-                <h:link value="Edit my Data" outcome="editEmployee"/>
-                <h:link value="Add new Product" outcome="addProuct"/>
-                <h:link value="Show all products" outcome="showAllProducts"/>
-                <h:link value="Show all orders" outcome="showAllOrders"/>
+                <h:link value="Edit my Data" outcome="EditCustomer"/>
+                <br/>
+                <br/>
+                <h:link value="Add new order" outcome="addOrder"/>
+                <br/>
+                <br/>
+                <h:link value="Show my orders" outcome="showAllOrders"/>
+                <br/>
+                <br/>
                 <h:link value="Find order" outcome="findOrder"/>
             </h:form>
         </ui:define>

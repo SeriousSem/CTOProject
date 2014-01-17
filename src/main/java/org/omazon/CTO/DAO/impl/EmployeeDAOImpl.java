@@ -6,6 +6,8 @@ import org.hibernate.criterion.Restrictions;
 import org.omazon.CTO.DAO.interfaces.EmployeeDAO;
 import org.omazon.CTO.entities.Employee;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: vishn_000
@@ -24,10 +26,10 @@ public class EmployeeDAOImpl extends GenericDAO<Employee> implements EmployeeDAO
         Query query = getSession().createQuery("select e from Employee e where e.userLogin=:lg and e.password=:pass")
                 .setParameter("lg", login)
                 .setParameter("pass", password);
-        Employee employee = (Employee) query.uniqueResult();
+        List<Employee> employees = query.list();
         tx.commit();
 
-        return employee;
+        return employees.isEmpty() ? null : employees.get(0);
     }
 
     @Override
@@ -36,8 +38,8 @@ public class EmployeeDAOImpl extends GenericDAO<Employee> implements EmployeeDAO
             startSession();
         }
         Transaction tx = getSession().beginTransaction();
-        Employee employee = (Employee) getSession().createCriteria(Employee.class).add(Restrictions.eqProperty("surname", surname)).uniqueResult();
+        List<Employee> employees = getSession().createCriteria(Employee.class).add(Restrictions.eqProperty("surname", surname)).list();
         tx.commit();
-        return employee;
+        return employees.isEmpty() ? null : employees.get(0);
     }
 }

@@ -20,7 +20,7 @@ public class EditCustomerController {
 
     public String update() {
         customerDAO.update(login.getCustomer());
-        return "showAllOrders";
+        return "CustomerStartPage";
     }
 
     public LoginController getLogin() {

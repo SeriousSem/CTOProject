@@ -6,6 +6,8 @@ import org.hibernate.criterion.Restrictions;
 import org.omazon.CTO.DAO.interfaces.CustomerDAO;
 import org.omazon.CTO.entities.Customer;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: vishn_000
@@ -21,9 +23,9 @@ public class CustomerDAOImpl extends GenericDAO<Customer> implements CustomerDAO
             startSession();
         }
         Transaction tx = getSession().beginTransaction();
-        Customer customer = (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eqProperty("surname", surname)).uniqueResult();
+        List<Customer> customers = getSession().createCriteria(Customer.class).add(Restrictions.eqProperty("surname", surname)).list();
         tx.commit();
-        return customer;
+        return customers.isEmpty() ? null : customers.get(0);
     }
 
     @Override
@@ -35,9 +37,9 @@ public class CustomerDAOImpl extends GenericDAO<Customer> implements CustomerDAO
         Query query = getSession().createQuery("select c from Customer c where c.userLogin=:lg and c.password=:pass")
                 .setParameter("lg", userLogin)
                 .setParameter("pass", password);
-        Customer customer = (Customer) query.uniqueResult();
+        List<Customer> customers = query.list();
         tx.commit();
 
-        return customer;
+        return customers.isEmpty() ? null : customers.get(0);
     }
 }

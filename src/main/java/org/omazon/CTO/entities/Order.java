@@ -32,12 +32,12 @@ public class Order implements Serializable {
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Customer customer;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "order")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pkorder")
     private Set<OrderProducts> orderProductses = new HashSet<OrderProducts>();
 
     @Column(name = "trackId")
     private long trackId;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
@@ -82,6 +82,10 @@ public class Order implements Serializable {
         this.status = status;
     }
 
+    public Status[] getStatusValues() {
+        return Status.values();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -91,9 +95,8 @@ public class Order implements Serializable {
 
         if (orderId != order.orderId) return false;
         if (trackId != order.trackId) return false;
-        if (!customer.equals(order.customer)) return false;
-        if (orderProductses != null ? !orderProductses.equals(order.orderProductses) : order.orderProductses != null)
-            return false;
+        if (customer != null ? !customer.equals(order.customer) : order.customer != null) return false;
+        if (status != order.status) return false;
 
         return true;
     }
@@ -101,9 +104,9 @@ public class Order implements Serializable {
     @Override
     public int hashCode() {
         int result = (int) (orderId ^ (orderId >>> 32));
-        result = 31 * result + customer.hashCode();
-        result = 31 * result + (orderProductses != null ? orderProductses.hashCode() : 0);
+        result = 31 * result + (customer != null ? customer.hashCode() : 0);
         result = 31 * result + (int) (trackId ^ (trackId >>> 32));
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
 }

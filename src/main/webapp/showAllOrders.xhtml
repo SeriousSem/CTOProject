@@ -6,31 +6,40 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core">
 
-<h:head>
-</h:head>
-<h:body>
-    <ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="title">Order table</ui:define>
+<ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="body">
-            <h:form>
-                <h:dataTable value="#{showOrdersController.orders}" var="orderVar">
-                    <h:column>
-                        <f:facet name="header">Suranme</f:facet>
-                        #{orderVar.customer.surname}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">TrackId</f:facet>
-                        #{orderVar.trackId}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Status</f:facet>
-                        #{orderVar.status}
-                    </h:column>
-                </h:dataTable>
-            </h:form>
-        </ui:define>
-    </ui:composition>
-</h:body>
+    <ui:define name="title">Order table</ui:define>
+
+    <ui:define name="body">
+        <h:form>
+            <h:dataTable value="#{showOrdersController.orders}" var="orderVar">
+                <h:column>
+                    <f:facet name="header">Suranme</f:facet>
+                    #{orderVar.customer.surname}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">TrackId</f:facet>
+                    #{orderVar.trackId}
+                </h:column>
+                <h:column rendered="#{showOrdersController.login.customer != null}">
+                    <f:facet name="header">Status</f:facet>
+                    #{orderVar.status}
+                </h:column>
+                <h:column rendered="#{showOrdersController.login.employee != null}">
+                    <f:facet name="header">Status</f:facet>
+                    <h:selectOneMenu id="atatus" value="#{orderVar.status}">
+                        <f:selectItems value="#{orderVar.statusValues}" var="st"
+                                       itemValue="#{st}" itemLabel="#{st.name}"/>
+                    </h:selectOneMenu>
+                </h:column>
+
+            </h:dataTable>
+            <h:commandButton outcome="showAllOrders" value="Update" action="#{showOrdersController.doUpdate}"
+                             rendered="#{showOrdersController.login.employee != null}"/>
+            <h:button outcome="CustomerStartPage" value="Back"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
 </html>

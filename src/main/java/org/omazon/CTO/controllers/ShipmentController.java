@@ -16,7 +16,6 @@ public class ShipmentController {
     public Order order;
 
     public Order getOrder() {
-        System.out.println("TEST");
         return order;
     }
 
@@ -26,8 +25,6 @@ public class ShipmentController {
 
     public String getShipmentStatus() {
         Status status = order.getStatus();
-        System.out.println("TEST");
-        System.out.println(status);
         return "startPage";
     }
 

@@ -1,6 +1,7 @@
 package org.omazon.CTO.controllers;
 
 import org.omazon.CTO.DAO.interfaces.OrderDAO;
+import org.omazon.CTO.DAO.interfaces.OrderProductsDAO;
 import org.omazon.CTO.DAO.interfaces.ProductDAO;
 import org.omazon.CTO.entities.Order;
 import org.omazon.CTO.entities.OrderProducts;
@@ -11,17 +12,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @ManagedBean(name = "addOrderController")
 @RequestScoped
 public class AddOrderController {
-
-    @ManagedProperty("#{order}")
-    private Order order;
 
     @Inject
     private OrderDAO orderDAO;
@@ -29,26 +24,28 @@ public class AddOrderController {
     @Inject
     private ProductDAO productDAO;
 
+    @Inject
+    private OrderProductsDAO orderProductsDAO;
+
     @ManagedProperty("#{login}")
     public LoginController login;
 
-    private long trackId;
+    @ManagedProperty("#{order}")
+    public Order order;
 
     private List<Product> allProducts;
-
-    public AddOrderController() {
-        allProducts = productDAO.getAll();
-    }
 
     public void addOrder() {
         order.setCustomer(login.getCustomer());
         Set<OrderProducts> selectedProducts = new HashSet();
-        for (Product p : allProducts) {
-            if (p.isChecked()) {
+        Iterator<Product> productIterator = getAllProducts().iterator();
+        while (productIterator.hasNext()) {
+            Product product = productIterator.next();
+            if (product.isChecked()) {
                 OrderProducts orderProducts = new OrderProducts();
                 orderProducts.setOrder(order);
-                orderProducts.setProduct(p);
-                orderProducts.setCount(1);
+                orderProducts.setProduct(product);
+                orderProducts.setCount(product.getCount());
                 selectedProducts.add(orderProducts);
             }
         }
@@ -56,8 +53,20 @@ public class AddOrderController {
         Random random = new Random();
         order.setTrackId(random.nextInt());
         order.setStatus(Status.CREATED);
-        orderDAO.save(order);
+        orderDAO.saveOrUpdate(order);
     }
+
+    public List<Product> getAllProducts() {
+        if (allProducts == null) {
+            allProducts = productDAO.getAll();
+        }
+        return allProducts;
+    }
+
+    public void setAllProducts(List<Product> allProducts) {
+        this.allProducts = allProducts;
+    }
+
 
     public LoginController getLogin() {
         return login;
@@ -67,11 +76,11 @@ public class AddOrderController {
         this.login = login;
     }
 
-    public List<Product> getAllProducts() {
-        return allProducts;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setAllProducts(List<Product> allProducts) {
-        this.allProducts = allProducts;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

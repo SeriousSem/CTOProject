@@ -38,8 +38,8 @@ public class Product implements Serializable {
     @Column(name = "price")
     private Long price;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
-    private Set<OrderProducts> productOrders = new HashSet<OrderProducts>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pkproduct")
+    private Set<OrderProducts> productOrders = new HashSet<>();
 
     @Transient
     private boolean checked = false;

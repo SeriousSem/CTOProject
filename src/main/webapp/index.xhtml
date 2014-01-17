@@ -6,16 +6,16 @@
 
 <body>
 <h:body>
-    <h1>Hello PrimeFaces</h1>
+    <h1>Omazon. We make your dreams come true.</h1>
 
     <h:form>
 
         <h:outputLabel for="Login" value="Login:"/>
         <h:inputText id="Login" value="#{login.userLogin}"/>
-
+        <br/>
         <h:outputLabel value="Password:"/>
         <h:inputSecret value="#{login.password}"/>
-
+        <br/>
         <h:commandButton action="#{login.doUserLogin}" value="Sign in"/>
         <h:commandButton action="addCustomer" value="Registration now!"/>
     </h:form>

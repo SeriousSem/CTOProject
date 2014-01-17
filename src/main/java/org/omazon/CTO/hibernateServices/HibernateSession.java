@@ -9,28 +9,26 @@ import org.hibernate.Session;
  * Time: 01:39
  */
 public abstract class HibernateSession {
-	
-	private Session session = HibernateFacroryProvider.getSessionFactory().openSession();
+
+    private Session session = HibernateFacroryProvider.getSessionFactory().openSession();
 
     public Session getSession() {
-//        return HibernateFacroryProvider.getSessionFactory().getCurrentSession();
-    	return session;
+        return session;
     }
-    
+
     public Boolean isSessionOpen() {
-//    	return HibernateFacroryProvider.getSessionFactory().getCurrentSession().isOpen();
-    	return session.isOpen();
+        return session.isOpen();
     }
-    
+
     public void startSession() {
-    	session = HibernateFacroryProvider.getSessionFactory().openSession();
+        session = HibernateFacroryProvider.getSessionFactory().openSession();
     }
-    
+
     public void flushSession() {
-    	session.flush();
+        session.flush();
     }
-    
+
     public void closeSession() {
-    	session.close();
+        session.close();
     }
 }

@@ -5,11 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
-import org.omazon.CTO.entities.Customer;
-import org.omazon.CTO.entities.Employee;
-import org.omazon.CTO.entities.Order;
-import org.omazon.CTO.entities.OrderProducts;
-import org.omazon.CTO.entities.Product;
+import org.omazon.CTO.entities.*;
 
 /**
  * Created with IntelliJ IDEA.

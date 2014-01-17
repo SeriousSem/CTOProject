@@ -12,39 +12,51 @@ import java.io.Serializable;
  * Time: 13:16
  */
 @Entity
-@Table(name = "order_product")
-@IdClass(OrderProductsId.class)
+@Table(name = "orderProducts")
 @ManagedBean(name = "orderProducts")
 @RequestScoped
 public class OrderProducts implements Serializable {
 
-
-    private static final long serialVersionUID = -3524138307828865918L;
-    @Id
-    @ManyToOne
-    private Order order;
+    private static final long serialVersionUID = 7882955941764904930L;
 
     @Id
+    @Column(name = "orderProductsId")
+    private long orderProductsId;
+
     @ManyToOne
-    private Product product;
+    @JoinColumn(name = "orderId")
+    private Order pkorder;
+
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product pkproduct;
+
 
     @Column(name = "count", nullable = false, length = 10)
-    private int count;
+    private int count = 0;
 
-    public Order getOrder() {
-        return order;
+    public long getOrderProductsId() {
+        return orderProductsId;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderProductsId(long orderProductsId) {
+        this.orderProductsId = orderProductsId;
+    }
+
+    public Order getOrder() {
+        return pkorder;
+    }
+
+    public void setOrder(Order pkorder) {
+        this.pkorder = pkorder;
     }
 
     public Product getProduct() {
-        return product;
+        return pkproduct;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProduct(Product pkproduct) {
+        this.pkproduct = pkproduct;
     }
 
     public int getCount() {
@@ -63,16 +75,18 @@ public class OrderProducts implements Serializable {
         OrderProducts that = (OrderProducts) o;
 
         if (count != that.count) return false;
-        if (order != null ? !order.equals(that.order) : that.order != null) return false;
-        if (product != null ? !product.equals(that.product) : that.product != null) return false;
+        if (orderProductsId != that.orderProductsId) return false;
+        if (pkorder != null ? !pkorder.equals(that.pkorder) : that.pkorder != null) return false;
+        if (pkproduct != null ? !pkproduct.equals(that.pkproduct) : that.pkproduct != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = order != null ? order.hashCode() : 0;
-        result = 31 * result + (product != null ? product.hashCode() : 0);
+        int result = (int) (orderProductsId ^ (orderProductsId >>> 32));
+        result = 31 * result + (pkorder != null ? pkorder.hashCode() : 0);
+        result = 31 * result + (pkproduct != null ? pkproduct.hashCode() : 0);
         result = 31 * result + count;
         return result;
     }

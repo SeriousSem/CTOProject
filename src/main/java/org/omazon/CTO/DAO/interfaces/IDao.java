@@ -15,7 +15,9 @@ public interface IDao<T> {
 
     public void update(T object);
 
-    public  void delete(T object);
+    public void delete(T object);
+
+    public void saveOrUpdate(T object);
 
     public T getById(long id);
 

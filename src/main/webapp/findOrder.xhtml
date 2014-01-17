@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+</h:head>
+<h:body>
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="title">Order table</ui:define>
+
+        <ui:define name="body">
+            <h:form>
+                <h:dataTable value="#{showOrdersController.orders}" var="orderVar">
+                    <h:column>
+                        <f:facet name="header">Suranme</f:facet>
+                        #{orderVar.customer.surname}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">TrackId</f:facet>
+                        #{orderVar.trackId}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Status</f:facet>
+                        #{orderVar.status}
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
