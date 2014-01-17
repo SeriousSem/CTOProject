@@ -36,7 +36,10 @@ public class Order implements Serializable {
     private Set<OrderProducts> orderProductses = new HashSet<OrderProducts>();
 
     @Column(name = "trackId")
-    private long trackId;
+    private long trackId = 0;
+
+    @Column(name = "shipmentId")
+    private int shipmentId = 0;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -82,6 +85,14 @@ public class Order implements Serializable {
         this.status = status;
     }
 
+    public int getShipmentId() {
+        return shipmentId;
+    }
+
+    public void setShipmentId(int shipmentId) {
+        this.shipmentId = shipmentId;
+    }
+
     public Status[] getStatusValues() {
         return Status.values();
     }
@@ -94,6 +105,7 @@ public class Order implements Serializable {
         Order order = (Order) o;
 
         if (orderId != order.orderId) return false;
+        if (shipmentId != order.shipmentId) return false;
         if (trackId != order.trackId) return false;
         if (customer != null ? !customer.equals(order.customer) : order.customer != null) return false;
         if (status != order.status) return false;
@@ -106,6 +118,7 @@ public class Order implements Serializable {
         int result = (int) (orderId ^ (orderId >>> 32));
         result = 31 * result + (customer != null ? customer.hashCode() : 0);
         result = 31 * result + (int) (trackId ^ (trackId >>> 32));
+        result = 31 * result + shipmentId;
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }

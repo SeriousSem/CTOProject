@@ -1,7 +1,6 @@
 package org.omazon.CTO.controllers;
 
 import org.omazon.CTO.DAO.interfaces.OrderDAO;
-import org.omazon.CTO.DAO.interfaces.ProductDAO;
 import org.omazon.CTO.entities.Order;
 
 import javax.faces.bean.ManagedBean;
@@ -17,9 +16,6 @@ public class ShowOrdersController {
 
     @Inject
     private OrderDAO orderDAO;
-
-    @Inject
-    private ProductDAO productDAO;
 
     private List<Order> orders;
 

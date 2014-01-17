@@ -34,4 +34,15 @@ public class OrderDAOImpl extends GenericDAO<Order> implements OrderDAO {
         return orderList;
     }
 
+    @Override
+    public Order getByShipmentId(int shipmentId) {
+        Transaction transaction = getSession().beginTransaction();
+
+        Order order = (Order) getSession().createQuery("SELECT o FROM Order AS o WHERE o.shipmentId=:id")
+                .setParameter("id", shipmentId).uniqueResult();
+
+        transaction.commit();
+        return order;
+    }
+
 }

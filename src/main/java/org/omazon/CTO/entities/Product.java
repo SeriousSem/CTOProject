@@ -105,7 +105,7 @@ public class Product implements Serializable {
         result = prime * result + ((price == null) ? 0 : price.hashCode());
         result = prime * result + (int) (productId ^ (productId >>> 32));
         result = prime * result
-                + ((productOrders == null) ? 0 : productOrders.hashCode());
+                + ((getProductOrders() == null) ? 0 : getProductOrders().hashCode());
         return result;
     }
 

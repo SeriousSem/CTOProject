@@ -20,6 +20,7 @@ public class OrderProducts implements Serializable {
     private static final long serialVersionUID = 7882955941764904930L;
 
     @Id
+    @GeneratedValue
     @Column(name = "orderProductsId")
     private long orderProductsId;
 
@@ -84,10 +85,7 @@ public class OrderProducts implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = (int) (orderProductsId ^ (orderProductsId >>> 32));
-        result = 31 * result + (pkorder != null ? pkorder.hashCode() : 0);
-        result = 31 * result + (pkproduct != null ? pkproduct.hashCode() : 0);
-        result = 31 * result + count;
+        int result = (int) (getOrderProductsId() ^ (getOrderProductsId() >>> 32));
         return result;
     }
 }

@@ -34,16 +34,7 @@
                         #{productVar.price}
                     </h:column>
                 </h:dataTable>
-                <h:commandButton value="Buy Now" action="#{showAllProductController.addOrder}"/>
-            </h:form>
-            <h:form>
-                <h:commandButton action="showShipmentStatus" value="Show my shipment status"></h:commandButton>
-            </h:form>
-            <h:form>
-                <h:commandButton action="EditCustomer" value="Edit personal information"></h:commandButton>
-            </h:form>
-            <h:form>
-                <h:commandButton action="index" value="Logout"></h:commandButton>
+                <h:button outcome="employeeStartPage" value="Back"/>
             </h:form>
         </ui:define>
     </ui:composition>

@@ -51,9 +51,15 @@ public class AddOrderController {
         }
         order.setOrderProductses(selectedProducts);
         Random random = new Random();
-        order.setTrackId(random.nextInt());
+        order.setTrackId(random.nextInt(10000));
+        order.setShipmentId(random.nextInt(10000));
         order.setStatus(Status.CREATED);
-        orderDAO.saveOrUpdate(order);
+        orderDAO.save(order);
+        Iterator<OrderProducts> orderProductsIterator = selectedProducts.iterator();
+        while (orderProductsIterator.hasNext()) {
+            OrderProducts orderProducts = orderProductsIterator.next();
+            orderProductsDAO.saveOrUpdate(orderProducts);
+        }
     }
 
     public List<Product> getAllProducts() {

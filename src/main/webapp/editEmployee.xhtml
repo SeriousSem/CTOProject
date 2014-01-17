@@ -22,12 +22,12 @@
             </h:inputText>
             <h:outputText value="Password:"/>
             <h:inputText id="password" value="#{editEmployee.login.employee.password}" required="true" label="Password">
-                <f:validateRegex
-                        pattern="((?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{4,10})"/>
+                minimum="6"
             </h:inputText>
         </h:panelGrid>
     </h:panelGrid>
     <h:commandButton id="subm" value="Save" action="#{editEmployee.update}"/>
+    <h:button outcome="employeeStartPage" value="Back"/>
 </h:form>
 </body>
 </html>

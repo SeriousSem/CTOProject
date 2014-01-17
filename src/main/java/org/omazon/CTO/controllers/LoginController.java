@@ -37,9 +37,9 @@ public class LoginController {
         customer = customerDAO.getCustomerByLogin(userLogin, password);
         employee = employeeDAO.getEmployeeByLogin(userLogin, password);
         if (customer != null) {
-            return "CustomerStartPage";
+            return "customerStartPage";
         } else if (employee != null) {
-            return "EmployeeStartPage";
+            return "employeeStartPage";
         } else
             return null;
     }

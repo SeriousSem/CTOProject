@@ -19,7 +19,11 @@
                     #{orderVar.customer.surname}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">TrackId</f:facet>
+                    <f:facet name="header">ShipmentId</f:facet>
+                    #{orderVar.shipmentId}
+                </h:column>
+                <h:column>
+                <f:facet name="header">TrackId</f:facet>
                     #{orderVar.trackId}
                 </h:column>
                 <h:column rendered="#{showOrdersController.login.customer != null}">
@@ -30,14 +34,17 @@
                     <f:facet name="header">Status</f:facet>
                     <h:selectOneMenu id="atatus" value="#{orderVar.status}">
                         <f:selectItems value="#{orderVar.statusValues}" var="st"
-                                       itemValue="#{st}" itemLabel="#{st.name}"/>
+                                       itemValue="#{st}" itemLabel="#{st}"/>
                     </h:selectOneMenu>
                 </h:column>
 
             </h:dataTable>
             <h:commandButton outcome="showAllOrders" value="Update" action="#{showOrdersController.doUpdate}"
                              rendered="#{showOrdersController.login.employee != null}"/>
-            <h:button outcome="CustomerStartPage" value="Back"/>
+            <h:button outcome="customerStartPage" value="Back"
+                      rendered="#{showOrdersController.login.customer != null}"/>
+            <h:button outcome="employeeStartPage" value="Back"
+                      rendered="#{showOrdersController.login.employee != null}"/>
         </h:form>
     </ui:define>
 </ui:composition>
