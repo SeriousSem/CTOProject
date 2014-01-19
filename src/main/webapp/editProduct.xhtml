@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+        >
+
+
+<f:view>
+    <f:metadata>
+        <f:viewParam name="productId" value="#{editProduct.productId}"/>
+        <f:event type="preRenderView" listener="#{editProduct.render()}"/>
+    </f:metadata>
+</f:view>
+<h:head>
+</h:head>
+<h:body>
+    <h:form>
+        <f:facet name="header">
+            <h:outputText value="Product edit"/>
+        </f:facet>
+        <h:panelGrid columns="2">
+            <h:panelGrid columns="2">
+                <h:outputText value="Productname:"/>
+                <h:inputText value="#{editProduct.product.name}" required="true" label="Name">
+                    <f:validateLength minimum="2" maximum="20"/>
+                </h:inputText>
+                <h:outputText value="Description:"/>
+                <h:inputTextarea value="#{editProduct.product.description}" label="Description" required="true"
+                                 rows="2">
+                    <f:validateLength maximum="100"/>
+                </h:inputTextarea>
+                <h:outputText value="Price:"/>
+                <h:inputText id="price" value="#{editProduct.product.price}" required="true" label="Price">
+                </h:inputText>
+            </h:panelGrid>
+        </h:panelGrid>
+        <h:commandButton id="subm" value="Submit" action="#{editProduct.doUpdate}"/>
+        <h:button outcome="showAllProducts" value="Back"/>
+    </h:form>
+</h:body>
+</html>

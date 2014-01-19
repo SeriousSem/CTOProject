@@ -38,7 +38,7 @@
                 </h:column>
 
             </h:dataTable>
-            <h:commandButton outcome="showAllOrders" value="Update" action="#{findOrder.doUpdate}"
+            <h:commandButton outcome="employeeStartPage" value="Update" action="#{findOrder.doUpdate}"
                              rendered="#{findOrder.login.employee != null}"/>
             <h:button outcome="customerStartPage" value="Back"
                       rendered="#{findOrder.login.customer != null}"/>

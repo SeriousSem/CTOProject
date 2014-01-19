@@ -5,18 +5,15 @@ import org.omazon.CTO.entities.Order;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by vishn_000 on 17.01.14.
- */
 @ManagedBean(name = "findOrder")
-@RequestScoped
-public class FindOrder {
+@ViewScoped
+public class FindOrderController {
 
     @Inject
     private OrderDAO orderDAO;
@@ -28,7 +25,7 @@ public class FindOrder {
     @ManagedProperty("#{login}")
     public LoginController login;
 
-    public void doUpdate() {
+    public String doUpdate() {
         if (orders != null && !orders.isEmpty()) {
             Iterator<Order> iterator = orders.iterator();
             while (iterator.hasNext()) {
@@ -36,6 +33,7 @@ public class FindOrder {
                 orderDAO.update(order);
             }
         }
+        return "employeeStartPage";
     }
 
     public LoginController getLogin() {

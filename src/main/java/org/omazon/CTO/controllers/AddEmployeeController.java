@@ -13,7 +13,7 @@ import javax.inject.Inject;
 public class AddEmployeeController {
 
     @ManagedProperty("#{employee}")
-	public Employee employee;
+    public Employee employee;
 
     @Inject
     private EmployeeDAO employeeDAO;

@@ -35,7 +35,7 @@ public class AddOrderController {
 
     private List<Product> allProducts;
 
-    public void addOrder() {
+    public String addOrder() {
         order.setCustomer(login.getCustomer());
         Set<OrderProducts> selectedProducts = new HashSet();
         Iterator<Product> productIterator = getAllProducts().iterator();
@@ -60,6 +60,7 @@ public class AddOrderController {
             OrderProducts orderProducts = orderProductsIterator.next();
             orderProductsDAO.saveOrUpdate(orderProducts);
         }
+        return "customerStartPage";
     }
 
     public List<Product> getAllProducts() {

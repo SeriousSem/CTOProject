@@ -22,12 +22,13 @@ public class ShowOrdersController {
     @ManagedProperty("#{login}")
     public LoginController login;
 
-    public void doUpdate() {
+    public String doUpdate() {
         Iterator<Order> iterator = orders.iterator();
         while (iterator.hasNext()) {
             Order order = iterator.next();
             orderDAO.update(order);
         }
+        return "employeeStartPage";
     }
 
     public LoginController getLogin() {

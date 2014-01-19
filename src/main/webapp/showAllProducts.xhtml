@@ -7,36 +7,34 @@
       xmlns:f="http://java.sun.com/jsf/core"
         >
 
-<h:head>
-</h:head>
-<h:body>
-    <ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="title">Product table</ui:define>
+<ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="body">
-            <h:form>
-                <h:dataTable value="#{showAllProductController.products}" var="productVar">
-                    <h:column>
-                        <f:facet name="header">name</f:facet>
-                        #{productVar.name}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">productId</f:facet>
-                        #{productVar.productId}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">description</f:facet>
-                        #{productVar.description}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">price</f:facet>
-                        #{productVar.price}
-                    </h:column>
-                </h:dataTable>
-                <h:button outcome="employeeStartPage" value="Back"/>
-            </h:form>
-        </ui:define>
-    </ui:composition>
-</h:body>
+    <ui:define name="title">Product table</ui:define>
+    <ui:define name="body">
+        <h:form>
+            <h:dataTable value="#{showAllProductController.products}" var="productVar">
+                <h:column>
+                    <f:facet name="header">name</f:facet>
+                    #{productVar.name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">description</f:facet>
+                    #{productVar.description}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">price</f:facet>
+                    #{productVar.price}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">edit</f:facet>
+                    <h:link outcome="editProduct" value="edit">
+                        <f:param name="productId" value="#{productVar.productId}"/>
+                    </h:link>
+                </h:column>
+            </h:dataTable>
+            <h:button outcome="employeeStartPage" value="Back"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
 </html>
