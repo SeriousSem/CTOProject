@@ -22,7 +22,7 @@ import java.util.Set;
 @RequestScoped
 public class Order implements Serializable {
 
-    private static final long serialVersionUID = 7294013076862412989L;
+    private static final long serialVersionUID = 3143612974077451357L;
 
     @Id
     @GeneratedValue
@@ -35,8 +35,8 @@ public class Order implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pkorder")
     private Set<OrderProducts> orderProductses = new HashSet<OrderProducts>();
 
-    @Column(name = "trackId")
-    private long trackId = 0;
+    @Column(name = "truckId")
+    private long truckId = 0;
 
     @Column(name = "shipmentId")
     private int shipmentId = 0;
@@ -44,6 +44,15 @@ public class Order implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
+
+    @Column(name = "longitude")
+    private String longitude;
+
+    @Column(name = "latitude")
+    private String latitude;
+
+    @Column(name = "exceptionDescription")
+    private String exceptionDescription;
 
     public long getOrderId() {
         return orderId;
@@ -69,12 +78,12 @@ public class Order implements Serializable {
         this.orderProductses = orderProductses;
     }
 
-    public long getTrackId() {
-        return trackId;
+    public long getTruckId() {
+        return truckId;
     }
 
-    public void setTrackId(long trackId) {
-        this.trackId = trackId;
+    public void setTruckId(long truckId) {
+        this.truckId = truckId;
     }
 
     public Status getStatus() {
@@ -97,6 +106,30 @@ public class Order implements Serializable {
         return Status.values();
     }
 
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getExceptionDescription() {
+        return exceptionDescription;
+    }
+
+    public void setExceptionDescription(String exceptionDescription) {
+        this.exceptionDescription = exceptionDescription;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,7 +139,7 @@ public class Order implements Serializable {
 
         if (orderId != order.orderId) return false;
         if (shipmentId != order.shipmentId) return false;
-        if (trackId != order.trackId) return false;
+        if (truckId != order.truckId) return false;
         if (customer != null ? !customer.equals(order.customer) : order.customer != null) return false;
         if (status != order.status) return false;
 
@@ -117,7 +150,7 @@ public class Order implements Serializable {
     public int hashCode() {
         int result = (int) (orderId ^ (orderId >>> 32));
         result = 31 * result + (customer != null ? customer.hashCode() : 0);
-        result = 31 * result + (int) (trackId ^ (trackId >>> 32));
+        result = 31 * result + (int) (truckId ^ (truckId >>> 32));
         result = 31 * result + shipmentId;
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;

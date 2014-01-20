@@ -3,19 +3,21 @@ package org.omazon.CTO.entities;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
  * User: vishn_000
  * Date: 04.11.13
  * Time: 12:54
- * To change this template use File | Settings | File Templates.
  */
 @Entity
 @Table(name = "employee")
 @SessionScoped
 @ManagedBean(name = "employee", eager = true)
-public class Employee {
+public class Employee implements Serializable {
+
+    private static final long serialVersionUID = -275778745567102251L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

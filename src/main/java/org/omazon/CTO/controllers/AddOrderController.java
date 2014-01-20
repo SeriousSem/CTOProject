@@ -51,7 +51,7 @@ public class AddOrderController {
         }
         order.setOrderProductses(selectedProducts);
         Random random = new Random();
-        order.setTrackId(random.nextInt(10000));
+        order.setTruckId(random.nextInt(10000));
         order.setShipmentId(random.nextInt(10000));
         order.setStatus(Status.CREATED);
         orderDAO.save(order);

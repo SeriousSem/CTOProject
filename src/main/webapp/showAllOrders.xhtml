@@ -23,12 +23,24 @@
                     #{orderVar.shipmentId}
                 </h:column>
                 <h:column>
-                <f:facet name="header">TrackId</f:facet>
-                    #{orderVar.trackId}
+                    <f:facet name="header">TruckId</f:facet>
+                    #{orderVar.truckId}
                 </h:column>
                 <h:column rendered="#{showOrdersController.login.customer != null}">
                     <f:facet name="header">Status</f:facet>
                     #{orderVar.status}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Exceptions</f:facet>
+                    #{orderVar.exceptionDescription}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Longitude </f:facet>
+                    #{orderVar.longitude}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Latitude</f:facet>
+                    #{orderVar.latitude}
                 </h:column>
                 <h:column rendered="#{showOrdersController.login.employee != null}">
                     <f:facet name="header">Status</f:facet>

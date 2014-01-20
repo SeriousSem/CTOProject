@@ -13,4 +13,6 @@ public interface OrderDAO extends IDao<Order> {
 
     public Order getByShipmentId(int shipmentId);
 
+    public List<Order> getOrdersByTruckId(long truckId);
+
 }

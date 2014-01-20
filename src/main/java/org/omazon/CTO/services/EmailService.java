@@ -14,8 +14,8 @@ import javax.naming.InitialContext;
  * Time: 11:50
  */
 public class EmailService {
-    static String fromEmail = "email@domain.com";
-    static String fromName = "YourName";
+    static String fromEmail = "middlewareTest@yandex.ru";
+    static String fromName = "CTO";
 
     public void sendMessage(String emailRecepient, String nameOfRecepient, String subject, String text) throws Exception {
         InitialContext ctx = new InitialContext();

@@ -1,5 +1,4 @@
 import javax.jms.*;
-import javax.naming.Context;
 import javax.naming.InitialContext;
 import java.util.Properties;
 
@@ -11,13 +10,17 @@ import java.util.Properties;
  */
 public class JMSProducer {
     public static void main(String[] args) {
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.produceMessages("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL");
+        TruckMenuForm truckMenuForm = new TruckMenuForm();
     }
 }
 
 class SendMessage {
-    public void produceMessages(String message) {
+
+    public static String DELIVERY_QUEUE = "deliveryQueue";
+    public static String POSITION_QUEUE = "positionQueue";
+    public static String EXCEPTION_QUEUE = "exceptionQueue";
+
+    public void produceMessages(String queueName, String message) {
         try {
             Properties ctx = new Properties();
             ctx.setProperty("java.naming.factory.initial", "com.sun.enterprise.naming.SerialInitContextFactory");
@@ -27,8 +30,9 @@ class SendMessage {
             ctx.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
             InitialContext initialContext = new InitialContext(ctx);
             try {
-                QueueConnectionFactory qcf = (QueueConnectionFactory)initialContext.lookup("queueFactory");
-                Queue q = (Queue) initialContext.lookup("shipmentQueue");
+                System.out.println("op op");
+                QueueConnectionFactory qcf = (QueueConnectionFactory) initialContext.lookup("queueFactory");
+                Queue q = (Queue) initialContext.lookup(queueName);
                 QueueConnection qc = qcf.createQueueConnection();
                 QueueSession qs = qc.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
                 QueueSender queueSender = qs.createSender(q);
