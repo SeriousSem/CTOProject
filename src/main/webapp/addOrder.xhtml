@@ -40,6 +40,7 @@
                         <h:selectBooleanCheckbox value="#{productVar.checked}"/>
                     </h:column>
                 </h:dataTable>
+                <h:button outcome="customerStartPage" value="Back"/>
                 <h:commandButton value="Buy Now"
                                  action="#{addOrderController.addOrder}"/>
             </h:form>

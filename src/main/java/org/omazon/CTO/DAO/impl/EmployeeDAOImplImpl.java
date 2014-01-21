@@ -15,7 +15,7 @@ import java.util.List;
  * Time: 13:11
  * To change this template use File | Settings | File Templates.
  */
-public class EmployeeDAOImpl extends GenericDAO<Employee> implements EmployeeDAO {
+public class EmployeeDAOImplImpl extends GenericDAOImpl<Employee> implements EmployeeDAO {
 
     @Override
     public Employee getEmployeeByLogin(String login, String password) {

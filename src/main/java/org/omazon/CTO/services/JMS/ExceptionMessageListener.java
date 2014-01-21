@@ -1,7 +1,8 @@
-package org.omazon.CTO.services;
+package org.omazon.CTO.services.JMS;
 
 import org.omazon.CTO.DAO.interfaces.OrderDAO;
 import org.omazon.CTO.entities.Order;
+import org.omazon.CTO.services.email.EmailService;
 import org.w3c.dom.Document;
 
 import javax.ejb.ActivationConfigProperty;
@@ -23,13 +24,13 @@ import java.util.List;
  * Time: 18:05
  */
 @MessageDriven(
-        mappedName = "positionQueue",
-        name = "PositionMessageListener",
+        mappedName = "exceptionQueue",
+        name = "ExceptionMessageListener",
         activationConfig = {
                 @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-                @ActivationConfigProperty(propertyName = "destination", propertyValue = "positionQueue"),
+                @ActivationConfigProperty(propertyName = "destination", propertyValue = "exceptionQueue"),
                 @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge")})
-public class PositionMessageListener implements MessageListener {
+public class ExceptionMessageListener implements MessageListener {
 
     @Inject
     private OrderDAO orderDAO;
@@ -42,24 +43,28 @@ public class PositionMessageListener implements MessageListener {
             DocumentBuilder newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document parse = newDocumentBuilder.parse(new ByteArrayInputStream(txt.getBytes()));
 
-            String truckId = parse.getChildNodes().item(0).getChildNodes().item(0).getTextContent();
-            String longitude = parse.getChildNodes().item(0).getChildNodes().item(1).getTextContent();
-            String lat = parse.getChildNodes().item(0).getChildNodes().item(2).getTextContent();
-
-            System.out.println("POSITION Got message:" + truckId + "  |  " + longitude + "  |  " + lat);
+            String truckId = parse.getChildNodes().item(0).getFirstChild().getTextContent();
+            String description = parse.getChildNodes().item(0).getLastChild().getTextContent();
+            System.out.println("EXCEPTION Got message:" + truckId + "  |  " + description);
 
             List<Order> orderList = orderDAO.getOrdersByTruckId(Integer.parseInt(truckId));
+
+            EmailService emailService = new EmailService();
 
             if (orderList != null && !orderList.isEmpty()) {
                 Iterator<Order> orderIterator = orderList.iterator();
                 while (orderIterator.hasNext()) {
                     Order order = orderIterator.next();
-                    order.setLatitude(lat);
-                    order.setLongitude(longitude);
-                    System.out.println("UPDATE ORDER WITH SHIPMENT ID: " + order.getShipmentId());
+                    order.setExceptionDescription(description);
+
+                    //send exception email to customer
+                    emailService.sendMessage(order.getCustomer().getEmail(), order.getCustomer().getSurname() + " " + order.getCustomer().getSurname(), "Delivery Exception. Shipment N" + order.getShipmentId(), description);
+
                     orderDAO.update(order);
                 }
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

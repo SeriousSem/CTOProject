@@ -9,7 +9,7 @@ import org.omazon.CTO.entities.Customer;
  * Time: 14:12
  * To change this template use File | Settings | File Templates.
  */
-public interface CustomerDAO extends IDao<Customer> {
+public interface CustomerDAO extends GenericDAO<Customer> {
     public Customer getBySurname(String name);
 
     public Customer getCustomerByLogin(String userLogin, String password);

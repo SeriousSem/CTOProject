@@ -9,7 +9,7 @@ import org.omazon.CTO.entities.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDAOImpl extends GenericDAO<Order> implements OrderDAO {
+public class OrderDAOImplImpl extends GenericDAOImpl<Order> implements OrderDAO {
 
     @Override
     public List<Product> getOrderProducts(long orderId) {

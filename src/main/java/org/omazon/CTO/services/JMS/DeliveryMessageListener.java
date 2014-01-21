@@ -1,4 +1,4 @@
-package org.omazon.CTO.services;
+package org.omazon.CTO.services.JMS;
 
 import org.omazon.CTO.DAO.interfaces.OrderDAO;
 import org.omazon.CTO.entities.Order;

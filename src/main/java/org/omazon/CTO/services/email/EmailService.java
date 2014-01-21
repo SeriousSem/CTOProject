@@ -1,4 +1,4 @@
-package org.omazon.CTO.services;
+package org.omazon.CTO.services.email;
 
 import javax.mail.Message;
 import javax.mail.Session;

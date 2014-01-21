@@ -9,7 +9,8 @@ import org.omazon.CTO.entities.Employee;
  * Time: 13:09
  * To change this template use File | Settings | File Templates.
  */
-public interface EmployeeDAO extends IDao<Employee> {
+public interface EmployeeDAO extends GenericDAO<Employee> {
     public Employee getEmployeeByLogin(String login, String password);
+
     public Employee getBySurname(String name);
 }

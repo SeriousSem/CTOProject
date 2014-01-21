@@ -5,7 +5,7 @@ import org.omazon.CTO.entities.Product;
 
 import java.util.List;
 
-public interface OrderDAO extends IDao<Order> {
+public interface OrderDAO extends GenericDAO<Order> {
 
     public List<Product> getOrderProducts(long orderId);
 

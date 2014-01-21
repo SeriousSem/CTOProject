@@ -2,7 +2,7 @@ package org.omazon.CTO.DAO.impl;
 
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
-import org.omazon.CTO.DAO.interfaces.IDao;
+import org.omazon.CTO.DAO.interfaces.GenericDAO;
 import org.omazon.CTO.hibernateServices.HibernateSession;
 
 import java.lang.reflect.ParameterizedType;
@@ -14,11 +14,11 @@ import java.util.List;
  * Date: 23.10.13
  * Time: 13:52
  */
-public abstract class GenericDAO<T> extends HibernateSession implements IDao<T> {
+public abstract class GenericDAOImpl<T> extends HibernateSession implements GenericDAO<T> {
 
     private Class<T> persistentClass;
 
-    public GenericDAO() {
+    public GenericDAOImpl() {
         this.persistentClass = (Class<T>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }

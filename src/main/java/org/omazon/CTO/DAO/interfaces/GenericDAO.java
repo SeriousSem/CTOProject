@@ -9,7 +9,7 @@ import java.util.List;
  * Time: 14:03
  * To change this template use File | Settings | File Templates.
  */
-public interface IDao<T> {
+public interface GenericDAO<T> {
 
     public void save(T object);
 

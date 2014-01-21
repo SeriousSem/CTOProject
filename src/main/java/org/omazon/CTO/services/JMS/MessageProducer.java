@@ -1,4 +1,4 @@
-package org.omazon.CTO.services;
+package org.omazon.CTO.services.JMS;
 
 import javax.ejb.Stateless;
 import javax.jms.*;
