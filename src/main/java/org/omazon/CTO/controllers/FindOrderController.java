@@ -46,9 +46,8 @@ public class FindOrderController {
 
     public void doFind(int shipmentId) {
         Order order = orderDAO.getByShipmentId(shipmentIdToSearch);
-        if (order != null) {
-            orders.add(order);
-        }
+        orders = new ArrayList<>();
+        orders.add(order);
     }
 
     public List<Order> getOrders() {
