@@ -3,7 +3,8 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>All orders</title>
     <h:outputStylesheet library="css" name="tableStyle.css"/>
@@ -11,61 +12,50 @@
 <h:body>
     <h:form>
         <h2>All orders</h2>
-        <h:dataTable value="#{showOrdersController.orders}" var="orderVar"
-                     styleClass="jsfTable"
-                     headerClass="jsfTableHeader"
-                     rowClasses="jsfTableOddRow,jsfTableEvenRow" rendered="#{!showOrdersController.ordersEmpty}">
-            <h:column>
-                <f:facet name="header">Suranme</f:facet>
-                #{orderVar.customer.surname}
-            </h:column>
-            <h:column>
-                <f:facet name="header">ShipmentId</f:facet>
-                #{orderVar.shipmentId}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Products</f:facet>
-                #{orderVar.allProductsAsString}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Total $</f:facet>
-                #{orderVar.sumPrice}
-            </h:column>
-            <h:column>
-                <f:facet name="header">TruckId</f:facet>
-                #{orderVar.truckId}
-            </h:column>
-            <h:column rendered="#{showOrdersController.login.customer != null}">
-                <f:facet name="header">Status</f:facet>
-                #{orderVar.status}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Exceptions</f:facet>
-                #{orderVar.exceptionDescription}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Longitude </f:facet>
-                #{orderVar.longitude}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Latitude</f:facet>
-                #{orderVar.latitude}
-            </h:column>
-            <h:column rendered="#{showOrdersController.login.employee != null}">
-                <f:facet name="header">Status</f:facet>
-                <h:selectOneMenu id="atatus" value="#{orderVar.status}">
-                    <f:selectItems value="#{orderVar.statusValues}" var="st"
+        <p:dataTable value="#{showOrdersController.orders}" var="orderVar"
+                     rendered="#{!showOrdersController.ordersEmpty}">
+            <p:column headerText="Surname">
+                <h:outputText value="#{orderVar.customer.surname}"/>
+            </p:column>
+            <p:column headerText="Shipment ID">
+                <h:outputText value="#{orderVar.shipmentId}"/>
+            </p:column>
+            <p:column headerText="Truck ID">
+                <h:outputText value="#{orderVar.truckId}"/>
+            </p:column>
+            <p:column headerText="Products">
+                <h:outputText value="#{orderVar.allProductsAsString}"/>
+            </p:column>
+            <p:column headerText="Total $">
+                <h:outputText value="#{orderVar.sumPrice}"/>
+            </p:column>
+            <p:column headerText="Status" rendered="#{showOrdersController.login.customer != null}">
+                <h:outputText value="#{orderVar.status}"/>
+            </p:column>
+            <p:column headerText="Exception">
+                <h:outputText value="#{orderVar.exceptionDescription}"/>
+            </p:column>
+            <p:column headerText="Longitude">
+                <h:outputText value="#{orderVar.longitude}"/>
+            </p:column>
+            <p:column headerText="Latitude">
+                <h:outputText value="#{orderVar.latitude}"/>
+            </p:column>
+            <p:column headerText="Status" rendered="#{showOrdersController.login.employee != null}">
+                <p:selectOneMenu id="atatus" value="#{orderVar.status}">
+                <f:selectItems value="#{orderVar.statusValues}" var="st"
                                    itemValue="#{st}" itemLabel="#{st}"/>
-                </h:selectOneMenu>
-            </h:column>
+                </p:selectOneMenu>
+            </p:column>
 
-        </h:dataTable>
+        </p:dataTable>
         <h:outputText rendered="#{showOrdersController.ordersEmpty}" value="Nothing to show. Please, buy something"/>
-        <h:commandButton outcome="employeeStartPage" value="Update" action="#{showOrdersController.doUpdate}"
+        <p:commandButton ajax="false" outcome="employeeStartPage" value="Update"
+                         action="#{showOrdersController.doUpdate}"
                          rendered="#{showOrdersController.login.employee != null}"/>
-        <h:button outcome="customerStartPage" value="Back"
+        <p:button outcome="customerStartPage" value="Back"
                   rendered="#{showOrdersController.login.customer != null}"/>
-        <h:button outcome="employeeStartPage" value="Back"
+        <p:button outcome="employeeStartPage" value="Back"
                   rendered="#{showOrdersController.login.employee != null}"/>
     </h:form>
 </h:body>

@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
         >
 
 
@@ -22,21 +23,20 @@
         <h:panelGrid columns="2">
             <h:panelGrid columns="2">
                 <h:outputText value="Productname:"/>
-                <h:inputText value="#{editProduct.product.name}" required="true" label="Name">
-                    <f:validateLength minimum="2" maximum="20"/>
-                </h:inputText>
+                <p:inputText value="#{editProduct.product.name}" required="true" label="Name">
+                <f:validateLength minimum="2" maximum="20"/>
+                </p:inputText>
                 <h:outputText value="Description:"/>
-                <h:inputTextarea value="#{editProduct.product.description}" label="Description" required="true"
+                <p:inputTextarea value="#{editProduct.product.description}" label="Description" required="true"
                                  rows="2">
                     <f:validateLength maximum="100"/>
-                </h:inputTextarea>
+                </p:inputTextarea>
                 <h:outputText value="Price:"/>
-                <h:inputText id="price" value="#{editProduct.product.price}" required="true" label="Price">
-                </h:inputText>
+                <p:inputText id="price" value="#{editProduct.product.price}" required="true" label="Price"/>
             </h:panelGrid>
         </h:panelGrid>
-        <h:commandButton id="subm" value="Submit" action="#{editProduct.doUpdate}"/>
-        <h:button outcome="showAllProducts" value="Back"/>
+        <p:commandButton id="subm" value="Submit" ajax="false" action="#{editProduct.doUpdate}"/>
+        <p:button outcome="showAllProducts" value="Back"/>
     </h:form>
 </h:body>
 </html>

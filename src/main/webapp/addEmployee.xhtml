@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
         >
 
 <body>
@@ -13,24 +14,24 @@
     <h:panelGrid columns="2">
         <h:panelGrid columns="2">
             <h:outputText value="Name:"/>
-            <h:inputText value="#{addEmployee.employee.name}" required="true" label="Name">
+            <p:inputText value="#{addEmployee.employee.name}" required="true" label="Name">
                 <f:validateLength minimum="2" maximum="20"/>
-            </h:inputText>
+            </p:inputText>
             <h:outputText value="Surname:"/>
-            <h:inputText value="#{addEmployee.employee.surname}" required="true" label="Surname">
+            <p:inputText value="#{addEmployee.employee.surname}" required="true" label="Surname">
                 <f:validateLength minimum="2" maximum="20"/>
-            </h:inputText>
+            </p:inputText>
             <h:outputText value="Login:"/>
-            <h:inputText value="#{addEmployee.employee.userLogin}" required="true" label="Login">
+            <p:inputText value="#{addEmployee.employee.userLogin}" required="true" label="Login">
                 <f:validateLength minimum="2" maximum="20"/>
-            </h:inputText>
+            </p:inputText>
             <h:outputText value="Password:"/>
             <h:inputSecret id="password" value="#{addEmployee.employee.password}" required="true" label="Password">
             </h:inputSecret>
         </h:panelGrid>
     </h:panelGrid>
-    <h:commandButton id="subm" value="Submit" action="#{addEmployee.doAdd()}"/>
-    <h:button outcome="employeeStartPage" value="Back"/>
+    <p:commandButton id="subm" value="Submit" ajax="false" action="#{addEmployee.doAdd()}"/>
+    <p:button outcome="employeeStartPage" value="Back"/>
 </h:form>
 </body>
 </html>

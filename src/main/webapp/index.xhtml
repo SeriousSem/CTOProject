@@ -2,6 +2,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
         >
 
 <body>
@@ -12,13 +13,13 @@
         <h:panelGrid columns="2">
             <h:panelGrid columns="2">
                 <h:outputLabel for="Login" value="Login:"/>
-                <h:inputText id="Login" value="#{login.userLogin}"/>
+                <p:inputText id="Login" value="#{login.userLogin}"/>
                 <h:outputLabel value="Password:"/>
                 <h:inputSecret value="#{login.password}"/>
             </h:panelGrid>
         </h:panelGrid>
-        <h:commandButton action="#{login.doUserLogin}" value="Sign in"/>
-        <h:commandButton action="addCustomer" value="Registration now!"/>
+        <p:commandButton ajax="false" action="#{login.doUserLogin}" value="Sign in"/>
+        <p:commandButton ajax="false" action="addCustomer" value="Registration now!"/>
     </h:form>
 
 </h:body>

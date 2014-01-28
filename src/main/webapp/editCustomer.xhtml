@@ -2,7 +2,8 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 <body>
 <h:form>
@@ -12,31 +13,31 @@
     <h:panelGrid columns="2">
         <h:panelGrid columns="2">
             <h:outputText value="Name:"/>
-            <h:inputText value="#{editCustomer.login.customer.name}" required="true" label="Name">
+            <p:inputText value="#{editCustomer.login.customer.name}" required="true" label="Name">
                 <f:validateLength minimum="2" maximum="20"/>
-            </h:inputText>
+            </p:inputText>
             <h:outputText value="Surname:"/>
-            <h:inputText value="#{editCustomer.login.customer.surname}" required="true"
+            <p:inputText value="#{editCustomer.login.customer.surname}" required="true"
                          label="Surname">
                 <f:validateLength minimum="2" maximum="50"/>
-            </h:inputText>
+            </p:inputText>
             <h:outputText value="Password:"/>
-            <h:inputText id="password" value="#{editCustomer.login.customer.password}" required="true"
+            <p:inputText id="password" value="#{editCustomer.login.customer.password}" required="true"
                          label="Password">
-            </h:inputText>
+            </p:inputText>
             <h:outputText value="Email:"/>
-            <h:inputText value="#{editCustomer.login.customer.email}" required="true" label="email">
+            <p:inputText value="#{editCustomer.login.customer.email}" required="true" label="email">
                 <f:validateRegex
                         pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
-            </h:inputText>
+            </p:inputText>
             <h:outputText value="Address"/>
-            <h:inputTextarea value="#{editCustomer.login.customer.address}" label="Address" required="true"
+            <p:inputTextarea value="#{editCustomer.login.customer.address}" label="Address" required="true"
                              rows="2">
                 <f:validateLength maximum="100"/>
-            </h:inputTextarea>
+            </p:inputTextarea>
         </h:panelGrid>
     </h:panelGrid>
-    <h:commandButton id="subm" value="Save"
+    <p:commandButton id="subm" value="Save" ajax="false"
                      action="#{editCustomer.update}"/>
     <h:button outcome="customerStartPage" value="Back"/>
 </h:form>

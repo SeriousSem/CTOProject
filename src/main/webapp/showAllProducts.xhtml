@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
         >
 
 
@@ -14,30 +15,23 @@
 <h:body>
     <h:form>
         <h2>Find order</h2>
-        <h:dataTable value="#{showAllProductController.products}" var="productVar"
-                     styleClass="jsfTable"
-                     headerClass="jsfTableHeader"
-                     rowClasses="jsfTableOddRow,jsfTableEvenRow">
-            <h:column>
-                <f:facet name="header">name</f:facet>
-                #{productVar.name}
-            </h:column>
-            <h:column>
-                <f:facet name="header">description</f:facet>
-                #{productVar.description}
-            </h:column>
-            <h:column>
-                <f:facet name="header">price</f:facet>
-                #{productVar.price}
-            </h:column>
-            <h:column>
-                <f:facet name="header">edit</f:facet>
-                <h:link outcome="editProduct" value="edit">
+        <p:dataTable value="#{showAllProductController.products}" var="productVar">
+            <p:column headerText="Name">
+                <h:outputText value="#{productVar.name}"/>
+            </p:column>
+            <p:column headerText="Description">
+                <h:outputText value="#{productVar.description}"/>
+            </p:column>
+            <p:column headerText="Price">
+                <h:outputText value="#{productVar.price}"/>
+            </p:column>
+            <p:column headerText="Edit">
+            <h:link outcome="editProduct" value="edit">
                     <f:param name="productId" value="#{productVar.productId}"/>
                 </h:link>
-            </h:column>
-        </h:dataTable>
-        <h:button outcome="employeeStartPage" value="Back"/>
+            </p:column>
+        </p:dataTable>
+        <p:button outcome="employeeStartPage" value="Back"/>
     </h:form>
 </h:body>
 </html>

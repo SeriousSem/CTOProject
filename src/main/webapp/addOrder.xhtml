@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 </h:head>
@@ -14,35 +15,30 @@
 
         <ui:define name="body">
             <h:form>
-                <h:dataTable value="#{addOrderController.allProducts}"
+                <p:dataTable value="#{addOrderController.allProducts}"
                              var="productVar">
-                    <!--                   <h:selectManyCheckbox> -->
-                    <h:column>
-                        <f:facet name="header">name</f:facet>
-                        #{productVar.name}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">description</f:facet>
-                        #{productVar.description}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">price</f:facet>
-                        #{productVar.price}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">count</f:facet>
-                        <h:inputText value="#{productVar.count}" required="true" label="Count">
+                    <p:column headerText="Name">
+                        <h:outputText value="#{productVar.name}"/>
+                    </p:column>
+                    <p:column headerText="Description">
+                        <h:outputText value="#{productVar.description}"/>
+                    </p:column>
+                    <p:column headerText="Price">
+                        <h:outputText value="#{productVar.price}"/>
+                    </p:column>
+                    <p:column headerText="Count">
+                        <p:inputText value="#{productVar.count}" required="true" label="Count">
                             <f:validateLength minimum="1" maximum="3"/>
-                        </h:inputText>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">add to basket</f:facet>
+                        </p:inputText>
+                    </p:column>
+                    <p:column headerText="Add to basket">
                         <h:selectBooleanCheckbox value="#{productVar.checked}"/>
-                    </h:column>
-                </h:dataTable>
-                <h:button outcome="customerStartPage" value="Back"/>
-                <h:commandButton value="Buy Now"
-                                 action="#{addOrderController.addOrder}"/>
+                    </p:column>
+                </p:dataTable>
+                <p:button outcome="customerStartPage" value="Back"/>
+                <p:commandButton value="Buy Now"
+                                 action="#{addOrderController.addOrder}"
+                                 ajax="false"/>
             </h:form>
         </ui:define>
     </ui:composition>

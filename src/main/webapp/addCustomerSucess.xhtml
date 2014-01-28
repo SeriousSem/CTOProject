@@ -3,13 +3,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
         >
 
 <body>
 <h:form>
-    <h:outputText value="Please remeber your loginID: "></h:outputText>
-    <h:outputText value="#{customer.customerId}"></h:outputText>
-    <h:commandButton value="Go to shopping" action="showAllProducts"></h:commandButton>
+    <h:outputText value="Please remeber your loginID: "/>
+    <h:outputText value="#{customer.customerId}"/>
+    <p:commandButton value="Go to shopping" action="showAllProducts" ajax="false"/>
 </h:form>
 </body>
 
