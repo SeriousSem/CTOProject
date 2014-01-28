@@ -6,29 +6,31 @@
       xmlns:p="http://primefaces.org/ui"
         >
 
-<body>
-<h:form>
-    <f:facet name="header">
-        <h:outputText value="Employee Details Panel"/>
-    </f:facet>
-    <h:panelGrid columns="2">
+<h:head></h:head>
+<h:body>
+    <h:form>
+        <f:facet name="header">
+            <h:outputText value="Employee Details Panel"/>
+        </f:facet>
         <h:panelGrid columns="2">
-            <h:outputText value="Name:"/>
-            <p:inputText value="#{editEmployee.login.employee.name}" required="true" label="Name">
-            <f:validateLength minimum="2" maximum="20"/>
-            </p:inputText>
-            <h:outputText value="Surname:"/>
-            <p:inputText value="#{editEmployee.login.employee.surname}" required="true" label="Surname">
-            <f:validateLength minimum="2" maximum="20"/>
-            </p:inputText>
-            <h:outputText value="Password:"/>
-            <p:inputText id="password" value="#{editEmployee.login.employee.password}" required="true" label="Password">
-                <f:validateLength minimum="6"/>
-            </p:inputText>
+            <h:panelGrid columns="2">
+                <h:outputText value="Name:"/>
+                <p:inputText value="#{editEmployee.login.employee.name}" required="true" label="Name">
+                    <f:validateLength minimum="2" maximum="20"/>
+                </p:inputText>
+                <h:outputText value="Surname:"/>
+                <p:inputText value="#{editEmployee.login.employee.surname}" required="true" label="Surname">
+                    <f:validateLength minimum="2" maximum="20"/>
+                </p:inputText>
+                <h:outputText value="Password:"/>
+                <p:inputText id="password" value="#{editEmployee.login.employee.password}" required="true"
+                             label="Password">
+                    <f:validateLength minimum="6"/>
+                </p:inputText>
+            </h:panelGrid>
         </h:panelGrid>
-    </h:panelGrid>
-    <p:commandButton id="subm" value="Save" ajax="false" action="#{editEmployee.update}"/>
-    <p:button outcome="employeeStartPage" value="Back"/>
-</h:form>
-</body>
+        <p:commandButton id="subm" value="Save" ajax="false" action="#{editEmployee.update}"/>
+        <p:button outcome="employeeStartPage" value="Back"/>
+    </h:form>
+</h:body>
 </html>

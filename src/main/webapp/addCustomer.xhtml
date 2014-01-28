@@ -6,44 +6,45 @@
       xmlns:p="http://primefaces.org/ui"
         >
 
-<body>
-<h:form>
-    <f:facet name="header">
-        <h:outputText value="User Details Panel"/>
-    </f:facet>
-    <h:panelGrid columns="2">
+<h:head>
+    <h:outputText>Registration</h:outputText>
+</h:head>
+<h:body>
+    <h:form>
+        <h2>Registration</h2>
         <h:panelGrid columns="2">
-            <h:outputText value="Name:"/>
-            <p:inputText value="#{addCustomer.customer.name}" required="true" label="Name">
-            <f:validateLength minimum="2" maximum="20"/>
-            </p:inputText>
-            <h:outputText value="Surname:"/>
-            <p:inputText value="#{addCustomer.customer.surname}" required="true" label="Surname">
-            <f:validateLength minimum="2" maximum="50"/>
-            </p:inputText>
-            <h:outputText value="Email:"/>
-            <p:inputText id="email" value="#{addCustomer.customer.email}" required="true" label="Email">
-            <f:validateRegex
-                        pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
-            </p:inputText>
-            <h:outputText value="Address:"/>
-            <p:inputTextarea value="#{addCustomer.customer.address}" label="Address" required="true"
-                             rows="2">
-                <f:validateLength maximum="100"/>
-            </p:inputTextarea>
-            <h:outputText value="Login:"/>
-            <p:inputText value="#{addCustomer.customer.userLogin}" required="true" label="Login">
-            <f:validateLength minimum="2" maximum="20"/>
-            </p:inputText>
-            <h:outputText value="Password:"/>
-            <h:inputSecret id="password" value="#{addCustomer.customer.password}" required="true" label="Password">
-                <f:validateLength minimum="2" maximum="20"/>
-            </h:inputSecret>
+            <h:panelGrid columns="2">
+                <h:outputText value="Name:"/>
+                <p:inputText value="#{addCustomer.customer.name}" required="true" label="Name">
+                    <f:validateLength minimum="2" maximum="20"/>
+                </p:inputText>
+                <h:outputText value="Surname:"/>
+                <p:inputText value="#{addCustomer.customer.surname}" required="true" label="Surname">
+                    <f:validateLength minimum="2" maximum="50"/>
+                </p:inputText>
+                <h:outputText value="Email:"/>
+                <p:inputText id="email" value="#{addCustomer.customer.email}" required="true" label="Email">
+                    <f:validateRegex
+                            pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                </p:inputText>
+                <h:outputText value="Address:"/>
+                <p:inputTextarea value="#{addCustomer.customer.address}" label="Address" required="true"
+                                 rows="2">
+                    <f:validateLength maximum="100"/>
+                </p:inputTextarea>
+                <h:outputText value="Login:"/>
+                <p:inputText value="#{addCustomer.customer.userLogin}" required="true" label="Login">
+                    <f:validateLength minimum="2" maximum="20"/>
+                </p:inputText>
+                <h:outputText value="Password:"/>
+                <h:inputSecret id="password" value="#{addCustomer.customer.password}" required="true" label="Password">
+                    <f:validateLength minimum="2" maximum="20"/>
+                </h:inputSecret>
 
 
+            </h:panelGrid>
         </h:panelGrid>
-    </h:panelGrid>
-    <p:commandButton id="subm" value="Submit" action="#{addCustomer.doAdd()}" ajax="false"/>
-</h:form>
-</body>
+        <p:commandButton id="subm" value="Submit" action="#{addCustomer.doAdd()}" ajax="false"/>
+    </h:form>
+</h:body>
 </html>

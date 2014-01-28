@@ -5,41 +5,44 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<body>
-<h:form>
-    <f:facet name="header">
-        <h:outputText value="Customer Details Panel"/>
-    </f:facet>
-    <h:panelGrid columns="2">
+<h:head>
+
+</h:head>
+<h:body>
+    <h:form>
+        <f:facet name="header">
+            <h:outputText value="Customer Details Panel"/>
+        </f:facet>
         <h:panelGrid columns="2">
-            <h:outputText value="Name:"/>
-            <p:inputText value="#{editCustomer.login.customer.name}" required="true" label="Name">
-                <f:validateLength minimum="2" maximum="20"/>
-            </p:inputText>
-            <h:outputText value="Surname:"/>
-            <p:inputText value="#{editCustomer.login.customer.surname}" required="true"
-                         label="Surname">
-                <f:validateLength minimum="2" maximum="50"/>
-            </p:inputText>
-            <h:outputText value="Password:"/>
-            <p:inputText id="password" value="#{editCustomer.login.customer.password}" required="true"
-                         label="Password">
-            </p:inputText>
-            <h:outputText value="Email:"/>
-            <p:inputText value="#{editCustomer.login.customer.email}" required="true" label="email">
-                <f:validateRegex
-                        pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
-            </p:inputText>
-            <h:outputText value="Address"/>
-            <p:inputTextarea value="#{editCustomer.login.customer.address}" label="Address" required="true"
-                             rows="2">
-                <f:validateLength maximum="100"/>
-            </p:inputTextarea>
+            <h:panelGrid columns="2">
+                <h:outputText value="Name:"/>
+                <p:inputText value="#{editCustomer.login.customer.name}" required="true" label="Name">
+                    <f:validateLength minimum="2" maximum="20"/>
+                </p:inputText>
+                <h:outputText value="Surname:"/>
+                <p:inputText value="#{editCustomer.login.customer.surname}" required="true"
+                             label="Surname">
+                    <f:validateLength minimum="2" maximum="50"/>
+                </p:inputText>
+                <h:outputText value="Password:"/>
+                <p:inputText id="password" value="#{editCustomer.login.customer.password}" required="true"
+                             label="Password">
+                </p:inputText>
+                <h:outputText value="Email:"/>
+                <p:inputText value="#{editCustomer.login.customer.email}" required="true" label="email">
+                    <f:validateRegex
+                            pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                </p:inputText>
+                <h:outputText value="Address"/>
+                <p:inputTextarea value="#{editCustomer.login.customer.address}" label="Address" required="true"
+                                 rows="2">
+                    <f:validateLength maximum="100"/>
+                </p:inputTextarea>
+            </h:panelGrid>
         </h:panelGrid>
-    </h:panelGrid>
-    <p:commandButton id="subm" value="Save" ajax="false"
-                     action="#{editCustomer.update}"/>
-    <h:button outcome="customerStartPage" value="Back"/>
-</h:form>
-</body>
+        <p:commandButton id="subm" value="Save" ajax="false"
+                         action="#{editCustomer.update}"/>
+        <p:button outcome="customerStartPage" value="Back"/>
+    </h:form>
+</h:body>
 </html>

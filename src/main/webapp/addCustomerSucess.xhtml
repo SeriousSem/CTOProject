@@ -6,12 +6,15 @@
       xmlns:p="http://primefaces.org/ui"
         >
 
-<body>
-<h:form>
-    <h:outputText value="Please remeber your loginID: "/>
-    <h:outputText value="#{customer.customerId}"/>
-    <p:commandButton value="Go to shopping" action="showAllProducts" ajax="false"/>
-</h:form>
-</body>
+<h:body>
+    <h:head>
+        <h:outputText>Success</h:outputText>
+    </h:head>
+    <h:form>
+        <h:outputText value="Please remeber your loginID: "/>
+        <h:outputText value="#{customer.customerId}"/>
+        <p:commandButton value="Go to shopping" action="showAllProducts" ajax="false"/>
+    </h:form>
+</h:body>
 
 </html>

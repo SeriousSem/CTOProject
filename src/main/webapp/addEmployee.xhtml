@@ -6,32 +6,33 @@
       xmlns:p="http://primefaces.org/ui"
         >
 
-<body>
-<h:form>
-    <f:facet name="header">
-        <h:outputText value="Employee Details Panel"/>
-    </f:facet>
-    <h:panelGrid columns="2">
+<h:head>
+    <h:outputText>Add new Employee</h:outputText>
+</h:head>
+<h:body>
+    <h:form>
+        <h2>Add new Employee</h2>
         <h:panelGrid columns="2">
-            <h:outputText value="Name:"/>
-            <p:inputText value="#{addEmployee.employee.name}" required="true" label="Name">
-                <f:validateLength minimum="2" maximum="20"/>
-            </p:inputText>
-            <h:outputText value="Surname:"/>
-            <p:inputText value="#{addEmployee.employee.surname}" required="true" label="Surname">
-                <f:validateLength minimum="2" maximum="20"/>
-            </p:inputText>
-            <h:outputText value="Login:"/>
-            <p:inputText value="#{addEmployee.employee.userLogin}" required="true" label="Login">
-                <f:validateLength minimum="2" maximum="20"/>
-            </p:inputText>
-            <h:outputText value="Password:"/>
-            <h:inputSecret id="password" value="#{addEmployee.employee.password}" required="true" label="Password">
-            </h:inputSecret>
+            <h:panelGrid columns="2">
+                <h:outputText value="Name:"/>
+                <p:inputText value="#{addEmployee.employee.name}" required="true" label="Name">
+                    <f:validateLength minimum="2" maximum="20"/>
+                </p:inputText>
+                <h:outputText value="Surname:"/>
+                <p:inputText value="#{addEmployee.employee.surname}" required="true" label="Surname">
+                    <f:validateLength minimum="2" maximum="20"/>
+                </p:inputText>
+                <h:outputText value="Login:"/>
+                <p:inputText value="#{addEmployee.employee.userLogin}" required="true" label="Login">
+                    <f:validateLength minimum="2" maximum="20"/>
+                </p:inputText>
+                <h:outputText value="Password:"/>
+                <h:inputSecret id="password" value="#{addEmployee.employee.password}" required="true" label="Password">
+                </h:inputSecret>
+            </h:panelGrid>
         </h:panelGrid>
-    </h:panelGrid>
-    <p:commandButton id="subm" value="Submit" ajax="false" action="#{addEmployee.doAdd()}"/>
-    <p:button outcome="employeeStartPage" value="Back"/>
-</h:form>
-</body>
+        <p:commandButton id="subm" value="Submit" ajax="false" action="#{addEmployee.doAdd()}"/>
+        <p:button outcome="employeeStartPage" value="Back"/>
+    </h:form>
+</h:body>
 </html>

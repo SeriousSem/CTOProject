@@ -6,28 +6,31 @@
       xmlns:p="http://primefaces.org/ui"
         >
 
-<body>
-<h:form>
-    <f:facet name="header">
-        <h:outputText value="Product Details Panel"/>
-    </f:facet>
-    <h:panelGrid columns="2">
+<h:head>
+
+</h:head>
+<h:body>
+    <h:form>
+        <f:facet name="header">
+            <h:outputText value="Product Details Panel"/>
+        </f:facet>
         <h:panelGrid columns="2">
-            <h:outputText value="Productname:"/>
-            <p:inputText value="#{addProduct.product.name}" required="true" label="Name">
-            <f:validateLength minimum="2" maximum="20"/>
-            </p:inputText>
-            <h:outputText value="Description:"/>
-            <p:inputTextarea value="#{addProduct.product.description}" label="Description" required="true"
-                             rows="2">
-                <f:validateLength maximum="100"/>
-            </p:inputTextarea>
-            <h:outputText value="Price:"/>
-            <p:inputText id="price" value="#{addProduct.product.price}" required="true" label="Price"/>
+            <h:panelGrid columns="2">
+                <h:outputText value="Productname:"/>
+                <p:inputText value="#{addProduct.product.name}" required="true" label="Name">
+                    <f:validateLength minimum="2" maximum="20"/>
+                </p:inputText>
+                <h:outputText value="Description:"/>
+                <p:inputTextarea value="#{addProduct.product.description}" label="Description" required="true"
+                                 rows="2">
+                    <f:validateLength maximum="100"/>
+                </p:inputTextarea>
+                <h:outputText value="Price:"/>
+                <p:inputText id="price" value="#{addProduct.product.price}" required="true" label="Price"/>
+            </h:panelGrid>
         </h:panelGrid>
-    </h:panelGrid>
-    <p:commandButton id="subm" value="Submit" ajax="false" action="#{addProduct.doAdd()}"/>
-    <p:button outcome="employeeStartPage" value="Back"/>
-</h:form>
-</body>
+        <p:commandButton id="subm" value="Submit" ajax="false" action="#{addProduct.doAdd()}"/>
+        <p:button outcome="employeeStartPage" value="Back"/>
+    </h:form>
+</h:body>
 </html>

@@ -15,8 +15,8 @@
         <h2>Find order</h2>
 
         <h:outputText value="ShipmentId:"/>
-        <h:inputText value="#{findOrder.shipmentIdToSearch}" required="true" label="ShipmentId"/>
-        <h:commandButton value="Search" action="#{findOrder.doFind(findOrder.shipmentIdToSearch)}"/>
+        <p:inputText value="#{findOrder.shipmentIdToSearch}" required="true" label="ShipmentId"/>
+        <p:commandButton value="Search" ajax="false" action="#{findOrder.doFind(findOrder.shipmentIdToSearch)}"/>
         <br/>
 
         <p:dataTable value="#{findOrder.orders}" var="orderVar"
