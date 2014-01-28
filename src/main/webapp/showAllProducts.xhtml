@@ -9,12 +9,12 @@
 
 
 <h:head>
-    <title>All orders</title>
+    <title>All products</title>
     <h:outputStylesheet library="css" name="tableStyle.css"/>
 </h:head>
 <h:body>
     <h:form>
-        <h2>Find order</h2>
+        <h2>All products</h2>
         <p:dataTable value="#{showAllProductController.products}" var="productVar">
             <p:column headerText="Name">
                 <h:outputText value="#{productVar.name}"/>

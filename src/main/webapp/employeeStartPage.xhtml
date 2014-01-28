@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
         >
 
 <h:head>
@@ -15,22 +16,14 @@
 
         <ui:define name="body">
             <h:form>
-                <h:link value="Edit my Data" outcome="editEmployee"/>
-                <br/>
-                <br/>
-                <h:link value="Add new Product" outcome="addProduct"/>
-                <br/>
-                <br/>
-                <h:link value="Show all products" outcome="showAllProducts"/>
-                <br/>
-                <br/>
-                <h:link value="Show all orders" outcome="showAllOrders"/>
-                <br/>
-                <br/>
-                <h:link value="Find order" outcome="findOrder"/>
-                <br/>
-                <br/>
-                <h:link value="Add another employee" outcome="addEmployee"/>
+                <p:menu>
+                    <p:menuitem value="Edit my Data" outcome="editEmployee"/>
+                    <p:menuitem value="Add new Product" outcome="addProduct"/>
+                    <p:menuitem value="Show all products" outcome="showAllProducts"/>
+                    <p:menuitem value="Show all orders" outcome="showAllOrders"/>
+                    <p:menuitem value="Find order" outcome="findOrder"/>
+                    <p:menuitem value="Add another employee" outcome="addEmployee"/>
+                </p:menu>
             </h:form>
         </ui:define>
     </ui:composition>
