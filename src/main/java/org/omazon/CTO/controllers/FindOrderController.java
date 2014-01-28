@@ -65,5 +65,9 @@ public class FindOrderController {
     public void setShipmentIdToSearch(int shipmentIdToSearch) {
         this.shipmentIdToSearch = shipmentIdToSearch;
     }
+
+    public boolean isOrdersEmpty() {
+        return getOrders().isEmpty();
+    }
 }
 

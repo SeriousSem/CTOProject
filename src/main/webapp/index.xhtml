@@ -9,13 +9,14 @@
     <h1>Omazon. We make your dreams come true.</h1>
 
     <h:form>
-
-        <h:outputLabel for="Login" value="Login:"/>
-        <h:inputText id="Login" value="#{login.userLogin}"/>
-        <br/>
-        <h:outputLabel value="Password:"/>
-        <h:inputSecret value="#{login.password}"/>
-        <br/>
+        <h:panelGrid columns="2">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="Login" value="Login:"/>
+                <h:inputText id="Login" value="#{login.userLogin}"/>
+                <h:outputLabel value="Password:"/>
+                <h:inputSecret value="#{login.password}"/>
+            </h:panelGrid>
+        </h:panelGrid>
         <h:commandButton action="#{login.doUserLogin}" value="Sign in"/>
         <h:commandButton action="addCustomer" value="Registration now!"/>
     </h:form>

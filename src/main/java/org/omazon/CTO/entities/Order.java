@@ -130,6 +130,22 @@ public class Order implements Serializable {
         this.exceptionDescription = exceptionDescription;
     }
 
+    public String getAllProductsAsString() {
+        StringBuilder productsString = new StringBuilder("");
+        for (OrderProducts orderProductse : orderProductses) {
+            productsString.append(orderProductse.getProduct().getName() + " count: " + orderProductse.getCount() + ";\n");
+        }
+        return productsString.toString();
+    }
+
+    public long getSumPrice() {
+        long price = 0;
+        for (OrderProducts orderProductse : orderProductses) {
+            price += orderProductse.getProduct().getPrice() * orderProductse.getCount();
+        }
+        return price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -3,61 +3,65 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core">
 
-<ui:composition template="/templates/template.xhtml">
+<h:head>
+    <title>All orders</title>
+    <h:outputStylesheet library="css" name="tableStyle.css"/>
+</h:head>
+<h:body>
+    <h:form>
+        <h2>Find order</h2>
 
-    <ui:define name="title">Find order</ui:define>
+        <h:outputText value="ShipmentId:"/>
+        <h:inputText value="#{findOrder.shipmentIdToSearch}" required="true" label="ShipmentId"/>
+        <h:commandButton value="Search" action="#{findOrder.doFind(findOrder.shipmentIdToSearch)}"/>
+        <br/>
 
-    <ui:define name="body">
-        <h:form>
-            <h:outputText value="ShipmentId:"/>
-            <h:inputText value="#{findOrder.shipmentIdToSearch}" required="true" label="ShipmentId"/>
-            <h:commandButton value="Search" action="#{findOrder.doFind(findOrder.shipmentIdToSearch)}"/>
-            <br/>
-            <h:dataTable value="#{findOrder.orders}" var="orderVar">
-                <h:column>
-                    <f:facet name="header">Suranme</f:facet>
-                    #{orderVar.customer.surname}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">TruckId</f:facet>
-                    #{orderVar.truckId}
-                </h:column>
-                <h:column rendered="#{findOrder.login.customer != null}">
-                    <f:facet name="header">Status</f:facet>
-                    #{orderVar.status}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Exceptions</f:facet>
-                    #{orderVar.exceptionDescription}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Longitude </f:facet>
-                    #{orderVar.longitude}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Latitude</f:facet>
-                    #{orderVar.latitude}
-                </h:column>
-                <h:column rendered="#{findOrder.login.employee != null}">
-                    <f:facet name="header">Status</f:facet>
-                    <h:selectOneMenu id="atatus" value="#{orderVar.status}">
-                        <f:selectItems value="#{orderVar.statusValues}" var="st"
-                                       itemValue="#{st}" itemLabel="#{st}"/>
-                    </h:selectOneMenu>
-                </h:column>
+        <h:dataTable value="#{findOrder.orders}" var="orderVar"
+                     styleClass="jsfTable"
+                     headerClass="jsfTableHeader"
+                     rowClasses="jsfTableOddRow,jsfTableEvenRow" rendered="#{!findOrder.ordersEmpty}">
+            <h:column>
+                <f:facet name="header">Suranme</f:facet>
+                #{orderVar.customer.surname}
+            </h:column>
+            <h:column>
+                <f:facet name="header">TruckId</f:facet>
+                #{orderVar.truckId}
+            </h:column>
+            <h:column rendered="#{findOrder.login.customer != null}">
+                <f:facet name="header">Status</f:facet>
+                #{orderVar.status}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Exceptions</f:facet>
+                #{orderVar.exceptionDescription}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Longitude </f:facet>
+                #{orderVar.longitude}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Latitude</f:facet>
+                #{orderVar.latitude}
+            </h:column>
+            <h:column rendered="#{findOrder.login.employee != null}">
+                <f:facet name="header">Status</f:facet>
+                <h:selectOneMenu id="atatus" value="#{orderVar.status}">
+                    <f:selectItems value="#{orderVar.statusValues}" var="st"
+                                   itemValue="#{st}" itemLabel="#{st}"/>
+                </h:selectOneMenu>
+            </h:column>
 
-            </h:dataTable>
-            <h:commandButton outcome="employeeStartPage" value="Update" action="#{findOrder.doUpdate}"
-                             rendered="#{findOrder.login.employee != null}"/>
-            <h:button outcome="customerStartPage" value="Back"
-                      rendered="#{findOrder.login.customer != null}"/>
-            <h:button outcome="employeeStartPage" value="Back"
-                      rendered="#{findOrder.login.employee != null}"/>
+        </h:dataTable>
+        <h:commandButton outcome="employeeStartPage" value="Update" action="#{findOrder.doUpdate}"
+                         rendered="#{findOrder.login.employee != null}"/>
+        <h:button outcome="customerStartPage" value="Back"
+                  rendered="#{findOrder.login.customer != null}"/>
+        <h:button outcome="employeeStartPage" value="Back"
+                  rendered="#{findOrder.login.employee != null}"/>
 
-        </h:form>
-    </ui:define>
-</ui:composition>
+    </h:form>
+</h:body>
 </html>
