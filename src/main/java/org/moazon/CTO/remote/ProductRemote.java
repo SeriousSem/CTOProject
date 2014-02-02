@@ -1,9 +1,8 @@
-package org.omazon.CTO.controllers;
+package org.moazon.CTO.remote;
 
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.omazon.CTO.DAO.interfaces.ProductDAO;
@@ -11,33 +10,55 @@ import org.omazon.CTO.entities.Product;
 import org.omazon.CTO.remote.interfaces.ProductRemoteInter;
 
 
-/**
- * @author ashleeeeee
- */
-@ManagedBean(name = "showAllProductController")
-@RequestScoped
-public class GetAllProductController {
+@Stateless
+public class ProductRemote implements ProductRemoteInter {
 
 
-    @Inject
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+    public Product product;
+
+	@Inject
     private ProductDAO productDAO;
 
     private long productId;
 
+    @Override
     public List<Product> getProducts() {
         return productDAO.getAll();
     }
 
+    @Override
     public String goToEdit(long productId) {
         setProductId(productId);
         return "editProduct";
     }
 
+    @Override
     public long getProductId() {
         return productId;
     }
 
+    @Override
     public void setProductId(long productId) {
         this.productId = productId;
+    }
+    
+    @Override
+    public void doAdd() {
+        productDAO.save(product);
+    }
+
+    @Override
+    public Product getProduct() {
+        return product;
+    }
+
+    @Override
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }
