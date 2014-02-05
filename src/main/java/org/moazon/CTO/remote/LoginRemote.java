@@ -28,10 +28,10 @@ public class LoginRemote implements LoginRemoteInter {
     public String doUserLogin() {
         employee = employeeDAO.getEmployeeByLogin(userLogin, password);
         if (employee != null) {
-            return "success";
+            return "Login success";
         }
         else
-            return null;
+            return "Login fail";
     }
 
     @Override

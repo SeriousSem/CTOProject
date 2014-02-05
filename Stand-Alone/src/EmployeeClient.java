@@ -8,7 +8,9 @@ import javax.naming.NameClassPair;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 
+import org.omazon.CTO.entities.Employee;
 import org.omazon.CTO.entities.Product;
+import org.omazon.CTO.remote.interfaces.EmployeeRemoteInter;
 import org.omazon.CTO.remote.interfaces.LoginRemoteInter;
 import org.omazon.CTO.remote.interfaces.ProductRemoteInter;
 
@@ -17,6 +19,7 @@ public class EmployeeClient {
 	private Context ctx;
 	private ProductRemoteInter allProducts;
 	private LoginRemoteInter login;
+	private EmployeeRemoteInter employee;
 
 	public EmployeeClient() {
 		try {
@@ -34,6 +37,7 @@ public class EmployeeClient {
 //            }
     		allProducts = (ProductRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.ProductRemoteInter");
     		login = (LoginRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.LoginRemoteInter");
+    		employee = (EmployeeRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.EmployeeRemoteInter");
         } catch (Exception e) {
         	System.out.println(e);
         }
@@ -61,6 +65,20 @@ public class EmployeeClient {
 		product.setPrice(Long.parseLong(price));
 		allProducts.setProduct(product);
 		allProducts.doAdd();
+	}
+	
+	public Employee getEmployee() {
+		return login.getEmployee();
+	}
+	
+	public void updateEmployee(String name, String surname, String psw, String username) {
+		Employee em = login.getEmployee();
+		em.setName(name);
+		em.setPassword(psw);
+		em.setSurname(surname);
+		em.setUserLogin(username);
+		login.setEmployee(em);
+		employee.update();
 	}
 
 }
