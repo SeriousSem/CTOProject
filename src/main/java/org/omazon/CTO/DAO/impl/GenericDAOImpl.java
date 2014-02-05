@@ -51,6 +51,13 @@ public abstract class GenericDAOImpl<T> extends HibernateSession implements Gene
         getSession().delete(object);
         transaction.commit();
     }
+    
+    @Override
+    public void merge(T object) {
+    	Transaction transaction = getSession().beginTransaction();
+        getSession().merge(object);
+        transaction.commit();
+    }
 
     @Override
     public T getById(long id) {

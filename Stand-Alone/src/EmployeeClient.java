@@ -2,6 +2,7 @@ package src;
 
 import java.util.Properties;
 
+import javax.ejb.EJB;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NameClassPair;
@@ -19,6 +20,7 @@ public class EmployeeClient {
 	private Context ctx;
 	private ProductRemoteInter allProducts;
 	private LoginRemoteInter login;
+	
 	private EmployeeRemoteInter employee;
 
 	public EmployeeClient() {
@@ -48,6 +50,7 @@ public class EmployeeClient {
 		login.setUserLogin(loginname);
 		login.setPassword(psw);
 		System.out.println(login.doUserLogin());
+		employee.setEmployee(login.getEmployee());
 	}
 	
 	public String getProducts() {
@@ -68,16 +71,16 @@ public class EmployeeClient {
 	}
 	
 	public Employee getEmployee() {
-		return login.getEmployee();
+		return employee.getEmployee();
 	}
 	
 	public void updateEmployee(String name, String surname, String psw, String username) {
-		Employee em = login.getEmployee();
+		Employee em = employee.getEmployee();
 		em.setName(name);
 		em.setPassword(psw);
 		em.setSurname(surname);
 		em.setUserLogin(username);
-		login.setEmployee(em);
+		employee.setEmployee(em);
 		employee.update();
 	}
 

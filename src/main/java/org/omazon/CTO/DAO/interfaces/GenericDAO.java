@@ -18,6 +18,8 @@ public interface GenericDAO<T> {
     public void delete(T object);
 
     public void saveOrUpdate(T object);
+    
+    public void merge (T object);
 
     public T getById(long id);
 

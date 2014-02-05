@@ -19,29 +19,24 @@ public class EmployeeRemote implements EmployeeRemoteInter {
 	private static final long serialVersionUID = 1L;
 
     
-    @ManagedProperty("#{login}")
-    public LoginController login;
+	private Employee employee;
 
     @Inject
     private EmployeeDAO employeeDAO;
 
     @Override
     public void update() {
-    	employeeDAO.update(login.getEmployee());
+    	employeeDAO.merge(employee);
     }
 
     @Override
     public Employee getEmployee() {
-        return login.getEmployee();
+        return employee;
     }
 
     @Override
     public void setEmployee(Employee employee) {
-        login.setEmployee(employee);
-    }
-
-    public void setLogin(LoginController login) {
-        this.login = login;
+        this.employee = employee;
     }
 
 }
