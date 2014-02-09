@@ -164,11 +164,15 @@ public class Order implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = (int) (orderId ^ (orderId >>> 32));
-        result = 31 * result + (customer != null ? customer.hashCode() : 0);
-        result = 31 * result + (int) (truckId ^ (truckId >>> 32));
-        result = 31 * result + shipmentId;
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        return result;
+    	try {
+	        int result = (int) (orderId ^ (orderId >>> 32));
+	        result = 31 * result + (customer != null ? customer.hashCode() : 0);
+	        result = 31 * result + (int) (truckId ^ (truckId >>> 32));
+	        result = 31 * result + shipmentId;
+	        result = 31 * result + (status != null ? status.hashCode() : 0);
+	        return result;
+    	} catch (Exception e) {
+    		return 0;
+    	}
     }
 }

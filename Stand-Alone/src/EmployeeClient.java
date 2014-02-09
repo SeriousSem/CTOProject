@@ -3,20 +3,23 @@ package src;
 import java.util.List;
 import java.util.Properties;
 
-import javax.ejb.EJB;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NameClassPair;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 
+import org.omazon.CTO.entities.Customer;
 import org.omazon.CTO.entities.Employee;
 import org.omazon.CTO.entities.Order;
 import org.omazon.CTO.entities.Product;
+import org.omazon.CTO.remote.interfaces.CustomerRemoteInter;
 import org.omazon.CTO.remote.interfaces.EmployeeRemoteInter;
 import org.omazon.CTO.remote.interfaces.LoginRemoteInter;
 import org.omazon.CTO.remote.interfaces.OrderRemoteInter;
 import org.omazon.CTO.remote.interfaces.ProductRemoteInter;
+
+import org.omazon.CTO.enums.Status;
 
 public class EmployeeClient {
 	
@@ -24,8 +27,8 @@ public class EmployeeClient {
 	private ProductRemoteInter allProducts;
 	private LoginRemoteInter login;
 	private OrderRemoteInter orders;
-	
 	private EmployeeRemoteInter employee;
+	private CustomerRemoteInter customer;
 
 	public EmployeeClient() {
 		try {
@@ -44,6 +47,7 @@ public class EmployeeClient {
     		allProducts = (ProductRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.ProductRemoteInter");
     		login = (LoginRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.LoginRemoteInter");
     		employee = (EmployeeRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.EmployeeRemoteInter");
+    		customer = (CustomerRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.CustomerRemoteInter");
     		orders = (OrderRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.OrderRemoteInter");
         } catch (Exception e) {
         	System.out.println(e);
@@ -94,6 +98,20 @@ public class EmployeeClient {
 		return employee.getEmployee();
 	}
 	
+	public Customer getCustomerById(long id) {
+		return customer.getCustomerById(id);
+	}
+	
+	public String getCustomerUsername(long customerId) {
+		Customer customer = getCustomerById(customerId);
+		return customer.getUserLogin();
+	}
+	
+	public long getCustomerId(Order order) {
+		orders.setOrder(order);
+		return orders.getCustomerId();
+	}
+	
 	public void updateEmployee(String name, String surname, String psw, String username) {
 		Employee em = employee.getEmployee();
 		em.setName(name);
@@ -105,11 +123,22 @@ public class EmployeeClient {
 	}
 	
 	public List<Order> getOrders() {
+		List<Order> or = orders.getOrders();
+		or.clear();
 		return orders.getOrders();
+	}
+	
+	public void setOrderById(long orderId) {
+		orders.setOrder(orders.getOrderById(orderId));
 	}
 	
 	public int ordersCount() {
 		return orders.getOrders().size();
+	}
+	
+	public void setOrderStatus(Status status) {
+		orders.setStatus(status);
+		orders.update();
 	}
 
 }

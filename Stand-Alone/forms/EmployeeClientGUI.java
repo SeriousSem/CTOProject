@@ -1,46 +1,38 @@
 package forms;
 
-import java.awt.Component;
 import java.awt.EventQueue;
-
-
-
-
-
-
-
-
-
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JTextPane;
-
-import src.EmployeeClient;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JLabel;
-
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
-import org.omazon.CTO.entities.Customer;
+import org.eclipse.persistence.annotations.ChangeTrackingType;
 import org.omazon.CTO.entities.Order;
 import org.omazon.CTO.entities.Product;
+
+import src.EmployeeClient;
+
+import java.awt.Choice;
+
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+
+import org.omazon.CTO.enums.Status;
 
 public class EmployeeClientGUI extends JFrame {
 
@@ -86,6 +78,9 @@ public class EmployeeClientGUI extends JFrame {
 	private JTable showOrdersTable;
 	private Vector<String> ordersColumns = new Vector<String>();
 	private Vector<Vector<Object>> ordersTableData = new Vector<Vector<Object>>();
+	private JTextField editOrderField;
+	
+	private JComboBox selectStatusBox = new JComboBox();
 
 	/**
 	 * Launch the application.
@@ -117,6 +112,7 @@ public class EmployeeClientGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("serial")
 	public EmployeeClientGUI() {
 		
 		productColumns.add("ID");
@@ -186,6 +182,12 @@ public class EmployeeClientGUI extends JFrame {
 				for (int i = 0;i<rowCount;i++) {
 					model.removeRow(0);
 				}
+				Vector<Object> columnTitle = new Vector<Object>();
+				columnTitle.add("ID");
+				columnTitle.add("Name");
+				columnTitle.add("Description");
+				columnTitle.add("Price");
+				productTableData.add(columnTitle);
 				for (int i=0;i<emClient.productsCount();i++) {
 					Product p = products.get(i);
 					Vector<Object> data = new Vector<Object>();
@@ -214,11 +216,21 @@ public class EmployeeClientGUI extends JFrame {
 				for (int i = 0;i<rowCount;i++) {
 					model.removeRow(0);
 				}
+				Vector<Object> columnTitle = new Vector<Object>();
+				columnTitle.add("ID");
+				columnTitle.add("Customer Username");
+				columnTitle.add("Status");
+				columnTitle.add("Exception");
+				columnTitle.add("Lat");
+				columnTitle.add("Long");
+				columnTitle.add("Shipment ID");
+				columnTitle.add("Truck ID");
+				ordersTableData.add(columnTitle);
 				for (int i=0;i<emClient.ordersCount();i++) {
 					Order p = orders.get(i);
 					Vector<Object> data = new Vector<Object>();
 					data.add(p.getOrderId());
-					data.add("Customer"); //TODO add real customer
+					data.add(emClient.getCustomerUsername(emClient.getCustomerId(p))); //TODO add real customer
 					data.add(p.getStatus().name());
 					if (p.getExceptionDescription() == null) {
 						data.add("");
@@ -240,7 +252,7 @@ public class EmployeeClientGUI extends JFrame {
 					}
 					data.add(p.getShipmentId());
 					data.add(p.getTruckId());
-					productTableData.add(data);
+					ordersTableData.add(data);
 				}
 				
 				showOrdersPanel.setVisible(true);
@@ -290,6 +302,36 @@ public class EmployeeClientGUI extends JFrame {
 		});
 		showOrdersTable.setBounds(0, 0, 756, 318);
 		showOrdersPanel.add(showOrdersTable);
+		
+		editOrderField = new JTextField();
+		editOrderField.setBounds(101, 359, 86, 20);
+		showOrdersPanel.add(editOrderField);
+		editOrderField.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Order ID");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setBounds(21, 362, 70, 14);
+		showOrdersPanel.add(lblNewLabel);
+		
+		
+		selectStatusBox.setModel(new DefaultComboBoxModel(Status.values()));
+		selectStatusBox.setBounds(309, 359, 86, 20);
+		showOrdersPanel.add(selectStatusBox);
+		
+		JLabel lblNewLabel_1 = new JLabel("Set Status");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_1.setBounds(217, 362, 68, 14);
+		showOrdersPanel.add(lblNewLabel_1);
+		
+		JButton updateOrderBtn = new JButton("Update");
+		updateOrderBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				emClient.setOrderById(Long.parseLong(editOrderField.getText()));
+				emClient.setOrderStatus((Status) selectStatusBox.getSelectedItem());
+			}
+		});
+		updateOrderBtn.setBounds(444, 358, 89, 23);
+		showOrdersPanel.add(updateOrderBtn);
 		contentPane.add(editProductPanel);
 		editProductPanel.setLayout(null);
 		

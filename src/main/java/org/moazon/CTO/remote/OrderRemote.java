@@ -9,6 +9,8 @@ import org.omazon.CTO.DAO.interfaces.OrderDAO;
 import org.omazon.CTO.entities.Order;
 import org.omazon.CTO.remote.interfaces.OrderRemoteInter;
 
+import org.omazon.CTO.enums.Status;
+
 
 @Stateless
 public class OrderRemote implements OrderRemoteInter {
@@ -65,4 +67,19 @@ public class OrderRemote implements OrderRemoteInter {
     public void update() {
     	orderDAO.merge(order);
     }
+
+	@Override
+	public long getCustomerId() {
+		return orderDAO.getCustomerId(order.getOrderId());
+	}
+
+	@Override
+	public String getStatus() {
+		return order.getStatus().name();
+	}
+
+	@Override
+	public void setStatus(Status status) {
+		order.setStatus(status);		
+	}
 }

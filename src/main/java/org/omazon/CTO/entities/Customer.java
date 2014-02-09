@@ -3,6 +3,7 @@ package org.omazon.CTO.entities;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.*;
+
 import java.io.Serializable;
 
 /**
@@ -98,13 +99,17 @@ public class Customer implements Serializable {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result + ((address == null) ? 0 : address.hashCode());
-        result = prime * result + (int) (customerId ^ (customerId >>> 32));
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((surname == null) ? 0 : surname.hashCode());
-        return result;
+        try {
+	        int result = 1;
+	        result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
+	        result = prime * result + (int) (getCustomerId() ^ (getCustomerId() >>> 32));
+	        result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
+	        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+	        result = prime * result + ((getSurname() == null) ? 0 : getSurname().hashCode());
+	        return result;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override
@@ -116,29 +121,30 @@ public class Customer implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Customer other = (Customer) obj;
-        if (address == null) {
-            if (other.address != null)
+        if (getAddress() == null) {
+            if (other.getAddress() != null)
                 return false;
-        } else if (!address.equals(other.address))
+        } else if (!getAddress().equals(other.getAddress()))
             return false;
-        if (customerId != other.customerId)
+        if (getCustomerId() != other.getCustomerId())
             return false;
-        if (email == null) {
-            if (other.email != null)
+        if (getEmail() == null) {
+            if (other.getEmail() != null)
                 return false;
-        } else if (!email.equals(other.email))
+        } else if (!getEmail().equals(other.getEmail()))
             return false;
-        if (name == null) {
-            if (other.name != null)
+        if (getName() == null) {
+            if (other.getName() != null)
                 return false;
-        } else if (!name.equals(other.name))
+        } else if (!getName().equals(other.getName()))
             return false;
-        if (surname == null) {
-            if (other.surname != null)
+        if (getSurname() == null) {
+            if (other.getSurname() != null)
                 return false;
-        } else if (!surname.equals(other.surname))
+        } else if (!getSurname().equals(other.getSurname()))
             return false;
         return true;
     }
+    
 
 }

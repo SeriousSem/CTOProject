@@ -14,5 +14,7 @@ public interface OrderDAO extends GenericDAO<Order> {
     public Order getByShipmentId(int shipmentId);
 
     public List<Order> getOrdersByTruckId(long truckId);
+    
+    public long getCustomerId(long orderId);
 
 }

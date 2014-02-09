@@ -3,6 +3,7 @@ package org.omazon.CTO.DAO.impl;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.omazon.CTO.DAO.interfaces.OrderDAO;
+import org.omazon.CTO.entities.Customer;
 import org.omazon.CTO.entities.Order;
 import org.omazon.CTO.entities.Product;
 
@@ -55,6 +56,18 @@ public class OrderDAOImplImpl extends GenericDAOImpl<Order> implements OrderDAO 
         transaction.commit();
         return orderList;
     }
+
+	@Override
+	public long getCustomerId(long orderId) {
+		Transaction transaction = getSession().beginTransaction();
+
+        Customer customer = (Customer) getSession().createQuery("SELECT o.customer FROM Order AS o WHERE o.orderId=:id")
+                .setParameter("id", orderId).uniqueResult();
+
+        transaction.commit();
+        long customerId = customer.getCustomerId();
+        return customerId;
+	}
 
 
 }

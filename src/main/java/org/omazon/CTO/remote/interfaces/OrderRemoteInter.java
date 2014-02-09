@@ -7,6 +7,8 @@ import javax.ejb.Remote;
 
 import org.omazon.CTO.entities.Order;
 
+import org.omazon.CTO.enums.Status;
+
 @Remote
 public interface OrderRemoteInter extends Serializable {
 	
@@ -25,5 +27,11 @@ public interface OrderRemoteInter extends Serializable {
     public void setOrder(Order order);
  
     public void update();
+    
+    public long getCustomerId();
+    
+    public String getStatus();
+    
+    public void setStatus(Status status);
 
 }
