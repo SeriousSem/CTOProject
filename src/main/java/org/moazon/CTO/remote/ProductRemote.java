@@ -32,12 +32,6 @@ public class ProductRemote implements ProductRemoteInter {
     }
 
     @Override
-    public String goToEdit(long productId) {
-        setProductId(productId);
-        return "editProduct";
-    }
-
-    @Override
     public long getProductId() {
         return productId;
     }
@@ -56,9 +50,19 @@ public class ProductRemote implements ProductRemoteInter {
     public Product getProduct() {
         return product;
     }
+    
+    @Override
+    public Product getProductById(long productId) {
+        return productDAO.getById(productId);
+    }
 
     @Override
     public void setProduct(Product product) {
         this.product = product;
+    }
+    
+    @Override
+    public void update() {
+    	productDAO.merge(product);
     }
 }

@@ -1,5 +1,6 @@
 package src;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.ejb.EJB;
@@ -10,9 +11,11 @@ import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 
 import org.omazon.CTO.entities.Employee;
+import org.omazon.CTO.entities.Order;
 import org.omazon.CTO.entities.Product;
 import org.omazon.CTO.remote.interfaces.EmployeeRemoteInter;
 import org.omazon.CTO.remote.interfaces.LoginRemoteInter;
+import org.omazon.CTO.remote.interfaces.OrderRemoteInter;
 import org.omazon.CTO.remote.interfaces.ProductRemoteInter;
 
 public class EmployeeClient {
@@ -20,6 +23,7 @@ public class EmployeeClient {
 	private Context ctx;
 	private ProductRemoteInter allProducts;
 	private LoginRemoteInter login;
+	private OrderRemoteInter orders;
 	
 	private EmployeeRemoteInter employee;
 
@@ -40,6 +44,7 @@ public class EmployeeClient {
     		allProducts = (ProductRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.ProductRemoteInter");
     		login = (LoginRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.LoginRemoteInter");
     		employee = (EmployeeRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.EmployeeRemoteInter");
+    		orders = (OrderRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.OrderRemoteInter");
         } catch (Exception e) {
         	System.out.println(e);
         }
@@ -53,12 +58,13 @@ public class EmployeeClient {
 		employee.setEmployee(login.getEmployee());
 	}
 	
-	public String getProducts() {
-		String ap = "";
-	    for (Product product: allProducts.getProducts()) {
-	        	ap += product.getName() + "\n";
-	        }
-		return ap;
+	public List<Product> getProducts() {
+		return allProducts.getProducts();
+	}
+	
+	public Product getProduct(int productId) {
+		allProducts.setProduct(allProducts.getProductById(productId));
+		return allProducts.getProduct();
 	}
 	
 	public void addProduct(String name, String desc, String price) {
@@ -68,6 +74,20 @@ public class EmployeeClient {
 		product.setPrice(Long.parseLong(price));
 		allProducts.setProduct(product);
 		allProducts.doAdd();
+	}
+	
+	public int productsCount() {
+//		System.out.println(allProducts.getProducts().size());
+		return allProducts.getProducts().size();
+	}
+	
+	public void updateProduct(String name, String desc, String price) {
+		Product product = allProducts.getProduct();
+		product.setName(name);
+		product.setDescription(desc);
+		product.setPrice(Long.parseLong(price));
+		allProducts.setProduct(product);
+		allProducts.update();
 	}
 	
 	public Employee getEmployee() {
@@ -82,6 +102,14 @@ public class EmployeeClient {
 		em.setUserLogin(username);
 		employee.setEmployee(em);
 		employee.update();
+	}
+	
+	public List<Order> getOrders() {
+		return orders.getOrders();
+	}
+	
+	public int ordersCount() {
+		return orders.getOrders().size();
 	}
 
 }

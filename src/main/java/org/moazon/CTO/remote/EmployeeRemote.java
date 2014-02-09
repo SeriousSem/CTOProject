@@ -1,11 +1,9 @@
 package org.moazon.CTO.remote;
 
 import javax.ejb.Stateless;
-import javax.faces.bean.ManagedProperty;
 import javax.inject.Inject;
 
 import org.omazon.CTO.DAO.interfaces.EmployeeDAO;
-import org.omazon.CTO.controllers.LoginController;
 import org.omazon.CTO.entities.Employee;
 import org.omazon.CTO.remote.interfaces.EmployeeRemoteInter;
 

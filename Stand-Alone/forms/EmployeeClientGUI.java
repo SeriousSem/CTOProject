@@ -6,6 +6,12 @@ import java.awt.EventQueue;
 
 
 
+
+
+
+
+
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,10 +25,22 @@ import src.EmployeeClient;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+import java.util.List;
+import java.util.Vector;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import org.omazon.CTO.entities.Customer;
+import org.omazon.CTO.entities.Order;
+import org.omazon.CTO.entities.Product;
 
 public class EmployeeClientGUI extends JFrame {
 
@@ -30,11 +48,14 @@ public class EmployeeClientGUI extends JFrame {
 
 	private JMenuBar menuBar = new JMenuBar();
 	private JPanel contentPane;
-	private JTextPane showProductsPanel = new JTextPane();
+	private JTextPane showProductPanel = new JTextPane();
 	private JPanel employeePanel = new JPanel();
 	private JPanel loginPanel = new JPanel();
 	private JPanel newProductPanel = new JPanel();
 	private JPanel editEmpanel = new JPanel();
+	private JPanel showProductsPanel = new JPanel();
+	private JPanel editProductPanel = new JPanel();
+	private JPanel showOrdersPanel = new JPanel();
 	
 	private JTextField nPNameField;
 	private JTextField nPDescrField;
@@ -50,6 +71,21 @@ public class EmployeeClientGUI extends JFrame {
 	private JTextField emUpdateUsernameField;
 	private JTextField emUpdateNameField;
 	private JTextField emUpdateSurnameField;
+	private JTable showProcutsTable;
+	private Vector<String> productColumns = new Vector<String>();
+	private Vector<Vector<Object>> productTableData = new Vector<Vector<Object>>();
+	
+	private List<Product> products;
+	private List<Order> orders;
+	
+	private JTextField productIDField;
+	private JTextField editProductName;
+	private JTextField editProductDesc;
+	private JTextField editProductPrice;
+	
+	private JTable showOrdersTable;
+	private Vector<String> ordersColumns = new Vector<String>();
+	private Vector<Vector<Object>> ordersTableData = new Vector<Vector<Object>>();
 
 	/**
 	 * Launch the application.
@@ -68,17 +104,35 @@ public class EmployeeClientGUI extends JFrame {
 	}
 	
 	private void disableAll() {
+		showProductPanel.setVisible(false);
 		showProductsPanel.setVisible(false);
 		newProductPanel.setVisible(false);
 		employeePanel.setVisible(false);
 		loginPanel.setVisible(false);
 		editEmpanel.setVisible(false);
+		editProductPanel.setVisible(false);
+		showOrdersPanel.setVisible(false);
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public EmployeeClientGUI() {
+		
+		productColumns.add("ID");
+		productColumns.add("Name");
+		productColumns.add("Description");
+		productColumns.add("Price");
+		
+		ordersColumns.add("ID");
+		ordersColumns.add("Customer");
+		ordersColumns.add("Status");
+		ordersColumns.add("ExcDesc");
+		ordersColumns.add("Lat");
+		ordersColumns.add("Long");
+		ordersColumns.add("ShipmentID");
+		ordersColumns.add("TruckID");
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 792, 578);
 		
@@ -126,11 +180,74 @@ public class EmployeeClientGUI extends JFrame {
 		mntmShowAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				disableAll();
+				products = emClient.getProducts();
+				DefaultTableModel model = (DefaultTableModel) showProcutsTable.getModel();
+				int rowCount=model.getRowCount();
+				for (int i = 0;i<rowCount;i++) {
+					model.removeRow(0);
+				}
+				for (int i=0;i<emClient.productsCount();i++) {
+					Product p = products.get(i);
+					Vector<Object> data = new Vector<Object>();
+					data.add(p.getProductId());
+					data.add(p.getName());
+					data.add(p.getDescription());
+					data.add(p.getPrice());
+					productTableData.add(data);
+				}
 				showProductsPanel.setVisible(true);
-				showProductsPanel.setText(emClient.getProducts());
 			}
 		});
 		mnProducts.add(mntmShowAll);
+		
+		JMenu mnOrders = new JMenu("Orders");
+		menuBar.add(mnOrders);
+		
+		JMenuItem mntmShowAllOrders = new JMenuItem("show all");
+		mntmShowAllOrders.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				disableAll();
+				
+				orders = emClient.getOrders();
+				DefaultTableModel model = (DefaultTableModel) showOrdersTable.getModel();
+				int rowCount=model.getRowCount();
+				for (int i = 0;i<rowCount;i++) {
+					model.removeRow(0);
+				}
+				for (int i=0;i<emClient.ordersCount();i++) {
+					Order p = orders.get(i);
+					Vector<Object> data = new Vector<Object>();
+					data.add(p.getOrderId());
+					data.add("Customer"); //TODO add real customer
+					data.add(p.getStatus().name());
+					if (p.getExceptionDescription() == null) {
+						data.add("");
+					}
+					else {
+						data.add(p.getExceptionDescription());
+					}
+					if (p.getLatitude() == null) {
+						data.add("");
+					}
+					else {
+						data.add(p.getLatitude());
+					}
+					if (p.getLongitude() == null) {
+						data.add("");
+					}
+					else {
+						data.add(p.getLongitude());
+					}
+					data.add(p.getShipmentId());
+					data.add(p.getTruckId());
+					productTableData.add(data);
+				}
+				
+				showOrdersPanel.setVisible(true);
+				
+			}
+		});
+		mnOrders.add(mntmShowAllOrders);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -147,6 +264,115 @@ public class EmployeeClientGUI extends JFrame {
 		
 		editEmpanel.setBounds(10, 11, 756, 497);
 		editEmpanel.setVisible(false);
+		
+		showProductsPanel.setBounds(10, 11, 756, 497);
+		showProductsPanel.setVisible(false);
+		
+		editProductPanel.setBounds(10, 11, 756, 497);
+		editProductPanel.setVisible(false);
+		
+		showOrdersPanel.setBounds(10, 11, 756, 497);
+		showOrdersPanel.setVisible(false);
+		contentPane.add(showOrdersPanel);
+		showOrdersPanel.setLayout(null);
+		
+		showOrdersTable = new JTable();
+		showOrdersTable.setModel(new DefaultTableModel(
+			ordersTableData,
+			ordersColumns
+		) {
+			Class[] columnTypes = new Class[] {
+				Long.class, String.class, String.class, String.class, String.class, String.class, Integer.class, Long.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		showOrdersTable.setBounds(0, 0, 756, 318);
+		showOrdersPanel.add(showOrdersTable);
+		contentPane.add(editProductPanel);
+		editProductPanel.setLayout(null);
+		
+		JLabel label_4 = new JLabel("Name:");
+		label_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label_4.setBounds(23, 11, 49, 32);
+		editProductPanel.add(label_4);
+		
+		JLabel label_5 = new JLabel("Description:");
+		label_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label_5.setBounds(23, 54, 84, 19);
+		editProductPanel.add(label_5);
+		
+		JLabel label_6 = new JLabel("Price:");
+		label_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label_6.setBounds(23, 84, 49, 19);
+		editProductPanel.add(label_6);
+		
+		editProductName = new JTextField();
+		editProductName.setColumns(10);
+		editProductName.setBounds(136, 19, 86, 20);
+		editProductPanel.add(editProductName);
+		
+		editProductDesc = new JTextField();
+		editProductDesc.setColumns(10);
+		editProductDesc.setBounds(136, 55, 86, 20);
+		editProductPanel.add(editProductDesc);
+		
+		editProductPrice = new JTextField();
+		editProductPrice.setColumns(10);
+		editProductPrice.setBounds(136, 85, 86, 20);
+		editProductPanel.add(editProductPrice);
+		
+		JButton editProductButton = new JButton("Update");
+		editProductButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				emClient.updateProduct(editProductName.getText(), editProductDesc.getText(), editProductPrice.getText());
+			}
+		});
+		editProductButton.setBounds(23, 141, 89, 23);
+		editProductPanel.add(editProductButton);
+		contentPane.add(showProductsPanel);
+		showProductsPanel.setLayout(null);
+		
+		showProcutsTable = new JTable();
+		showProcutsTable.setModel(new DefaultTableModel(
+			productTableData,
+			productColumns
+		) {
+			Class[] columnTypes = new Class[] {
+				Long.class, String.class, String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		showProcutsTable.setBounds(0, 0, 756, 346);
+		showProductsPanel.add(showProcutsTable);
+		
+		JLabel lblCPID = new JLabel("Choose Product ID");
+		lblCPID.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCPID.setBounds(10, 378, 137, 31);
+		showProductsPanel.add(lblCPID);
+		
+		productIDField = new JTextField();
+		productIDField.setBounds(168, 385, 86, 20);
+		showProductsPanel.add(productIDField);
+		productIDField.setColumns(10);
+		
+		JButton editProdcutButton = new JButton("Edit Product");
+		editProdcutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int productID = Integer.parseInt(productIDField.getText());
+				disableAll();
+				Product product = emClient.getProduct(productID);
+				editProductName.setText(product.getName());
+				editProductDesc.setText(product.getDescription());
+				editProductPrice.setText(String.valueOf(product.getPrice()));
+				editProductPanel.setVisible(true);
+			}
+		});
+		editProdcutButton.setBounds(296, 384, 113, 23);
+		showProductsPanel.add(editProdcutButton);
 		contentPane.add(editEmpanel);
 		editEmpanel.setLayout(null);
 		
@@ -320,9 +546,9 @@ public class EmployeeClientGUI extends JFrame {
 		newProductPanel.add(nPSave);
 		
 		
-		showProductsPanel.setEditable(false);
-		showProductsPanel.setBounds(10, 11, 756, 497);
-		showProductsPanel.setVisible(false);
-		contentPane.add(showProductsPanel);
+		showProductPanel.setEditable(false);
+		showProductPanel.setBounds(10, 11, 756, 497);
+		showProductPanel.setVisible(false);
+		contentPane.add(showProductPanel);
 	}
 }
