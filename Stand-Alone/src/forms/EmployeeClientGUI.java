@@ -1,4 +1,4 @@
-package forms;
+package src.forms;
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -21,13 +21,7 @@ import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.eclipse.persistence.annotations.ChangeTrackingType;
-import org.omazon.CTO.entities.Order;
-import org.omazon.CTO.entities.Product;
-
-import src.EmployeeClient;
-
-import java.awt.Choice;
+import src.org.omazon.remote.src.EmployeeClient;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -67,8 +61,8 @@ public class EmployeeClientGUI extends JFrame {
 	private Vector<String> productColumns = new Vector<String>();
 	private Vector<Vector<Object>> productTableData = new Vector<Vector<Object>>();
 	
-	private List<Product> products;
-	private List<Order> orders;
+	private List<List<String>> products;
+	private List<List<String>> orders;
 	
 	private JTextField productIDField;
 	private JTextField editProductName;
@@ -152,10 +146,10 @@ public class EmployeeClientGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				disableAll();
 				editEmpanel.setVisible(true);
-				emUpdateNameField.setText(emClient.getEmployee().getName());
-				emUpdateSurnameField.setText(emClient.getEmployee().getSurname());
-				emUpdatePswField.setText(emClient.getEmployee().getPassword());
-				emUpdateUsernameField.setText(emClient.getEmployee().getUserLogin());
+				emUpdateNameField.setText(emClient.getEmployee().get(1));
+				emUpdateSurnameField.setText(emClient.getEmployee().get(2));
+				emUpdatePswField.setText(emClient.getEmployee().get(3));
+				emUpdateUsernameField.setText(emClient.getEmployee().get(4));
 			}
 		});
 		mnEmployees.add(mntmEditMyData);
@@ -189,12 +183,12 @@ public class EmployeeClientGUI extends JFrame {
 				columnTitle.add("Price");
 				productTableData.add(columnTitle);
 				for (int i=0;i<emClient.productsCount();i++) {
-					Product p = products.get(i);
+					List<String> p = products.get(i);
 					Vector<Object> data = new Vector<Object>();
-					data.add(p.getProductId());
-					data.add(p.getName());
-					data.add(p.getDescription());
-					data.add(p.getPrice());
+					data.add(p.get(0));
+					data.add(p.get(1));
+					data.add(p.get(2));
+					data.add(p.get(3));
 					productTableData.add(data);
 				}
 				showProductsPanel.setVisible(true);
@@ -227,31 +221,31 @@ public class EmployeeClientGUI extends JFrame {
 				columnTitle.add("Truck ID");
 				ordersTableData.add(columnTitle);
 				for (int i=0;i<emClient.ordersCount();i++) {
-					Order p = orders.get(i);
+					List<String> o = orders.get(i);
 					Vector<Object> data = new Vector<Object>();
-					data.add(p.getOrderId());
-					data.add(emClient.getCustomerUsername(emClient.getCustomerId(p))); //TODO add real customer
-					data.add(p.getStatus().name());
-					if (p.getExceptionDescription() == null) {
+					data.add(o.get(0));
+					data.add(o.get(1)); //TODO add real customer
+					data.add(o.get(2));
+					if (o.get(3) == null) {
 						data.add("");
 					}
 					else {
-						data.add(p.getExceptionDescription());
+						data.add(o.get(3));
 					}
-					if (p.getLatitude() == null) {
+					if (o.get(4) == null) {
 						data.add("");
 					}
 					else {
-						data.add(p.getLatitude());
+						data.add(o.get(4));
 					}
-					if (p.getLongitude() == null) {
+					if (o.get(5) == null) {
 						data.add("");
 					}
 					else {
-						data.add(p.getLongitude());
+						data.add(o.get(5));
 					}
-					data.add(p.getShipmentId());
-					data.add(p.getTruckId());
+					data.add(o.get(6));
+					data.add(o.get(6));
 					ordersTableData.add(data);
 				}
 				
@@ -270,21 +264,154 @@ public class EmployeeClientGUI extends JFrame {
 		newProductPanel.setVisible(false);
 		
 		
-		employeePanel.setBounds(10, 11, 756, 497);
-		employeePanel.setVisible(false);
-		
-		
 		editEmpanel.setBounds(10, 11, 756, 497);
 		editEmpanel.setVisible(false);
 		
-		showProductsPanel.setBounds(10, 11, 756, 497);
-		showProductsPanel.setVisible(false);
+		showOrdersPanel.setBounds(10, 11, 756, 497);
+		showOrdersPanel.setVisible(false);
 		
 		editProductPanel.setBounds(10, 11, 756, 497);
 		editProductPanel.setVisible(false);
 		
-		showOrdersPanel.setBounds(10, 11, 756, 497);
-		showOrdersPanel.setVisible(false);
+		showProductsPanel.setBounds(10, 11, 756, 497);
+		showProductsPanel.setVisible(false);
+		
+		
+		employeePanel.setBounds(10, 11, 756, 497);
+		employeePanel.setVisible(false);
+		contentPane.add(employeePanel);
+		employeePanel.setLayout(null);
+		
+		JButton emSave = new JButton("Save");
+		emSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				emClient.addEmployee(emNameField.getText(), emSurnameField.getText(), String.valueOf(emPswField.getPassword()), emUsernameField.getText());
+			}
+		});
+		emSave.setBounds(10, 141, 89, 23);
+		employeePanel.add(emSave);
+		
+		emPswField = new JPasswordField();
+		emPswField.setBounds(113, 102, 86, 19);
+		employeePanel.add(emPswField);
+		
+		emSurnameField = new JTextField();
+		emSurnameField.setBounds(113, 42, 86, 20);
+		employeePanel.add(emSurnameField);
+		emSurnameField.setColumns(10);
+		
+		emNameField = new JTextField();
+		emNameField.setBounds(113, 12, 86, 20);
+		employeePanel.add(emNameField);
+		emNameField.setColumns(10);
+		
+		emUsernameField = new JTextField();
+		emUsernameField.setBounds(113, 72, 86, 20);
+		employeePanel.add(emUsernameField);
+		emUsernameField.setColumns(10);
+		
+		JLabel emSurname = new JLabel("Surname:");
+		emSurname.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		emSurname.setBounds(10, 41, 71, 19);
+		employeePanel.add(emSurname);
+		
+		JLabel emPassword = new JLabel("Password:");
+		emPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		emPassword.setBounds(10, 101, 66, 19);
+		employeePanel.add(emPassword);
+		
+		JLabel emUsername = new JLabel("Username:");
+		emUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		emUsername.setBounds(10, 71, 77, 19);
+		employeePanel.add(emUsername);
+		
+		JLabel emName = new JLabel("Name:");
+		emName.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		emName.setBounds(10, 11, 57, 19);
+		employeePanel.add(emName);
+		contentPane.add(showProductsPanel);
+		showProductsPanel.setLayout(null);
+		
+		showProcutsTable = new JTable();
+		showProcutsTable.setModel(new DefaultTableModel(
+			productTableData,
+			productColumns
+		) {
+			Class[] columnTypes = new Class[] {
+				Long.class, String.class, String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		showProcutsTable.setBounds(0, 0, 756, 346);
+		showProductsPanel.add(showProcutsTable);
+		
+		JLabel lblCPID = new JLabel("Choose Product ID");
+		lblCPID.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCPID.setBounds(10, 378, 137, 31);
+		showProductsPanel.add(lblCPID);
+		
+		productIDField = new JTextField();
+		productIDField.setBounds(168, 385, 86, 20);
+		showProductsPanel.add(productIDField);
+		productIDField.setColumns(10);
+		
+		JButton editProdcutButton = new JButton("Edit Product");
+		editProdcutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int productID = Integer.parseInt(productIDField.getText());
+				disableAll();
+				List<String> product = emClient.getProduct(productID);
+				editProductName.setText(product.get(1));
+				editProductDesc.setText(product.get(2));
+				editProductPrice.setText(product.get(3));
+				editProductPanel.setVisible(true);
+			}
+		});
+		editProdcutButton.setBounds(296, 384, 113, 23);
+		showProductsPanel.add(editProdcutButton);
+		contentPane.add(editProductPanel);
+		editProductPanel.setLayout(null);
+		
+		JLabel label_4 = new JLabel("Name:");
+		label_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label_4.setBounds(23, 11, 49, 32);
+		editProductPanel.add(label_4);
+		
+		JLabel label_5 = new JLabel("Description:");
+		label_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label_5.setBounds(23, 54, 84, 19);
+		editProductPanel.add(label_5);
+		
+		JLabel label_6 = new JLabel("Price:");
+		label_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label_6.setBounds(23, 84, 49, 19);
+		editProductPanel.add(label_6);
+		
+		editProductName = new JTextField();
+		editProductName.setColumns(10);
+		editProductName.setBounds(136, 19, 86, 20);
+		editProductPanel.add(editProductName);
+		
+		editProductDesc = new JTextField();
+		editProductDesc.setColumns(10);
+		editProductDesc.setBounds(136, 55, 86, 20);
+		editProductPanel.add(editProductDesc);
+		
+		editProductPrice = new JTextField();
+		editProductPrice.setColumns(10);
+		editProductPrice.setBounds(136, 85, 86, 20);
+		editProductPanel.add(editProductPrice);
+		
+		JButton editProductButton = new JButton("Update");
+		editProductButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				emClient.updateProduct(editProductName.getText(), editProductDesc.getText(), editProductPrice.getText());
+			}
+		});
+		editProductButton.setBounds(23, 141, 89, 23);
+		editProductPanel.add(editProductButton);
 		contentPane.add(showOrdersPanel);
 		showOrdersPanel.setLayout(null);
 		
@@ -332,89 +459,6 @@ public class EmployeeClientGUI extends JFrame {
 		});
 		updateOrderBtn.setBounds(444, 358, 89, 23);
 		showOrdersPanel.add(updateOrderBtn);
-		contentPane.add(editProductPanel);
-		editProductPanel.setLayout(null);
-		
-		JLabel label_4 = new JLabel("Name:");
-		label_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_4.setBounds(23, 11, 49, 32);
-		editProductPanel.add(label_4);
-		
-		JLabel label_5 = new JLabel("Description:");
-		label_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_5.setBounds(23, 54, 84, 19);
-		editProductPanel.add(label_5);
-		
-		JLabel label_6 = new JLabel("Price:");
-		label_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_6.setBounds(23, 84, 49, 19);
-		editProductPanel.add(label_6);
-		
-		editProductName = new JTextField();
-		editProductName.setColumns(10);
-		editProductName.setBounds(136, 19, 86, 20);
-		editProductPanel.add(editProductName);
-		
-		editProductDesc = new JTextField();
-		editProductDesc.setColumns(10);
-		editProductDesc.setBounds(136, 55, 86, 20);
-		editProductPanel.add(editProductDesc);
-		
-		editProductPrice = new JTextField();
-		editProductPrice.setColumns(10);
-		editProductPrice.setBounds(136, 85, 86, 20);
-		editProductPanel.add(editProductPrice);
-		
-		JButton editProductButton = new JButton("Update");
-		editProductButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				emClient.updateProduct(editProductName.getText(), editProductDesc.getText(), editProductPrice.getText());
-			}
-		});
-		editProductButton.setBounds(23, 141, 89, 23);
-		editProductPanel.add(editProductButton);
-		contentPane.add(showProductsPanel);
-		showProductsPanel.setLayout(null);
-		
-		showProcutsTable = new JTable();
-		showProcutsTable.setModel(new DefaultTableModel(
-			productTableData,
-			productColumns
-		) {
-			Class[] columnTypes = new Class[] {
-				Long.class, String.class, String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		showProcutsTable.setBounds(0, 0, 756, 346);
-		showProductsPanel.add(showProcutsTable);
-		
-		JLabel lblCPID = new JLabel("Choose Product ID");
-		lblCPID.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCPID.setBounds(10, 378, 137, 31);
-		showProductsPanel.add(lblCPID);
-		
-		productIDField = new JTextField();
-		productIDField.setBounds(168, 385, 86, 20);
-		showProductsPanel.add(productIDField);
-		productIDField.setColumns(10);
-		
-		JButton editProdcutButton = new JButton("Edit Product");
-		editProdcutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int productID = Integer.parseInt(productIDField.getText());
-				disableAll();
-				Product product = emClient.getProduct(productID);
-				editProductName.setText(product.getName());
-				editProductDesc.setText(product.getDescription());
-				editProductPrice.setText(String.valueOf(product.getPrice()));
-				editProductPanel.setVisible(true);
-			}
-		});
-		editProdcutButton.setBounds(296, 384, 113, 23);
-		showProductsPanel.add(editProdcutButton);
 		contentPane.add(editEmpanel);
 		editEmpanel.setLayout(null);
 		
@@ -465,51 +509,6 @@ public class EmployeeClientGUI extends JFrame {
 		label_3.setBounds(10, 11, 57, 19);
 		editEmpanel.add(label_3);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		contentPane.add(employeePanel);
-		employeePanel.setLayout(null);
-		
-		JButton emSave = new JButton("Save");
-		emSave.setBounds(10, 141, 89, 23);
-		employeePanel.add(emSave);
-		
-		emPswField = new JPasswordField();
-		emPswField.setBounds(113, 102, 86, 19);
-		employeePanel.add(emPswField);
-		
-		emSurnameField = new JTextField();
-		emSurnameField.setBounds(113, 42, 86, 20);
-		employeePanel.add(emSurnameField);
-		emSurnameField.setColumns(10);
-		
-		emNameField = new JTextField();
-		emNameField.setBounds(113, 12, 86, 20);
-		employeePanel.add(emNameField);
-		emNameField.setColumns(10);
-		
-		emUsernameField = new JTextField();
-		emUsernameField.setBounds(113, 72, 86, 20);
-		employeePanel.add(emUsernameField);
-		emUsernameField.setColumns(10);
-		
-		JLabel emSurname = new JLabel("Surname:");
-		emSurname.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		emSurname.setBounds(10, 41, 71, 19);
-		employeePanel.add(emSurname);
-		
-		JLabel emPassword = new JLabel("Password:");
-		emPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		emPassword.setBounds(10, 101, 66, 19);
-		employeePanel.add(emPassword);
-		
-		JLabel emUsername = new JLabel("Username:");
-		emUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		emUsername.setBounds(10, 71, 77, 19);
-		employeePanel.add(emUsername);
-		
-		JLabel emName = new JLabel("Name:");
-		emName.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		emName.setBounds(10, 11, 57, 19);
-		employeePanel.add(emName);
 		
 		
 		loginPanel.setBounds(10, 11, 756, 497);
@@ -539,8 +538,9 @@ public class EmployeeClientGUI extends JFrame {
 		liButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String psw = String.valueOf(liPswField.getPassword());
-				emClient.login(liNameField.getText(), psw);
-				menuBar.setVisible(true);
+				if (emClient.login(liNameField.getText(), psw).equals("Login success")) {
+					menuBar.setVisible(true);
+				}
 			}
 		});
 		liButton.setBounds(95, 91, 89, 23);

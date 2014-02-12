@@ -1,5 +1,6 @@
-package src;
+package src.org.omazon.remote.src;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -9,22 +10,17 @@ import javax.naming.NameClassPair;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 
-import org.omazon.CTO.entities.Customer;
-import org.omazon.CTO.entities.Employee;
-import org.omazon.CTO.entities.Order;
-import org.omazon.CTO.entities.Product;
 import org.omazon.CTO.remote.interfaces.CustomerRemoteInter;
 import org.omazon.CTO.remote.interfaces.EmployeeRemoteInter;
 import org.omazon.CTO.remote.interfaces.LoginRemoteInter;
 import org.omazon.CTO.remote.interfaces.OrderRemoteInter;
 import org.omazon.CTO.remote.interfaces.ProductRemoteInter;
-
 import org.omazon.CTO.enums.Status;
 
 public class EmployeeClient {
 	
 	private Context ctx;
-	private ProductRemoteInter allProducts;
+	private ProductRemoteInter products;
 	private LoginRemoteInter login;
 	private OrderRemoteInter orders;
 	private EmployeeRemoteInter employee;
@@ -44,7 +40,7 @@ public class EmployeeClient {
 //            while (list.hasMore()) {
 //              System.out.println(list.next().getName());
 //            }
-    		allProducts = (ProductRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.ProductRemoteInter");
+    		products = (ProductRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.ProductRemoteInter");
     		login = (LoginRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.LoginRemoteInter");
     		employee = (EmployeeRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.EmployeeRemoteInter");
     		customer = (CustomerRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.CustomerRemoteInter");
@@ -55,76 +51,91 @@ public class EmployeeClient {
 
 	}
 	
-	public void login(String loginname, String psw) {
+	public String login(String loginname, String psw) {
 		login.setUserLogin(loginname);
 		login.setPassword(psw);
-		System.out.println(login.doUserLogin());
+		String li = login.doUserLogin();
 		employee.setEmployee(login.getEmployee());
+		return li;
 	}
 	
-	public List<Product> getProducts() {
-		return allProducts.getProducts();
+	public List<List<String>> getProducts() {
+		return products.getProducts();
 	}
 	
-	public Product getProduct(int productId) {
-		allProducts.setProduct(allProducts.getProductById(productId));
-		return allProducts.getProduct();
+	public List<String> getProduct(int productId) {
+		products.setProduct(products.getProductById(productId));
+		return products.getProduct();
 	}
 	
 	public void addProduct(String name, String desc, String price) {
-		Product product = new Product();
-		product.setName(name);
-		product.setDescription(desc);
-		product.setPrice(Long.parseLong(price));
-		allProducts.setProduct(product);
-		allProducts.doAdd();
+		List<String> product = new ArrayList<String>();
+		product.add(name);
+		product.add(desc);
+		product.add(price);
+		products.setProduct(product);
+		products.doAdd();
 	}
 	
 	public int productsCount() {
 //		System.out.println(allProducts.getProducts().size());
-		return allProducts.getProducts().size();
+		return products.getProducts().size();
 	}
 	
 	public void updateProduct(String name, String desc, String price) {
-		Product product = allProducts.getProduct();
-		product.setName(name);
-		product.setDescription(desc);
-		product.setPrice(Long.parseLong(price));
-		allProducts.setProduct(product);
-		allProducts.update();
+		List<String> product = products.getProduct();
+		String id = product.get(0);
+		product.clear();
+		product.add(id);
+		product.add(name);
+		product.add(desc);
+		product.add(price);
+		products.setProduct(product);
+		products.update();
 	}
 	
-	public Employee getEmployee() {
+	public List<String> getEmployee() {
 		return employee.getEmployee();
 	}
 	
-	public Customer getCustomerById(long id) {
+	public List<String> getCustomerById(long id) {
 		return customer.getCustomerById(id);
 	}
 	
 	public String getCustomerUsername(long customerId) {
-		Customer customer = getCustomerById(customerId);
-		return customer.getUserLogin();
+		return customer.getCustomerById(customerId).get(6);
 	}
 	
-	public long getCustomerId(Order order) {
-		orders.setOrder(order);
-		return orders.getCustomerId();
+	public long getCustomerId() {
+//		orders.setOrder(order);
+//		return orders.getCustomerId();
+		return 1L;
 	}
 	
 	public void updateEmployee(String name, String surname, String psw, String username) {
-		Employee em = employee.getEmployee();
-		em.setName(name);
-		em.setPassword(psw);
-		em.setSurname(surname);
-		em.setUserLogin(username);
+		List<String> em = employee.getEmployee();
+		String id = em.get(0);
+		em.clear();
+		em.add(id);
+		em.add(name);
+		em.add(surname);
+		em.add(psw);
+		em.add(username);
 		employee.setEmployee(em);
 		employee.update();
 	}
 	
-	public List<Order> getOrders() {
-		List<Order> or = orders.getOrders();
-		or.clear();
+	public void addEmployee(String name, String surname, String psw, String username) {
+		List<String> em = new ArrayList<String>();
+		em.add(name);
+		em.add(surname);
+		em.add(psw);
+		em.add(username);
+		employee.setEmployee(em);
+		employee.update();
+	}
+	
+	public List<List<String>> getOrders() {
 		return orders.getOrders();
 	}
 	
