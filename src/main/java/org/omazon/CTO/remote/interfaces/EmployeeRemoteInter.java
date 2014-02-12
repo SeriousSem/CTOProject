@@ -1,19 +1,19 @@
 package org.omazon.CTO.remote.interfaces;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.Remote;
 
-import org.omazon.CTO.entities.Employee;
 
 @Remote
 public interface EmployeeRemoteInter extends Serializable {
 
     public void update();
 
-    public Employee getEmployee();
+    public List<String> getEmployee();
 
-    public void setEmployee(Employee employee);
+    public void setEmployee(List<String> employee);
 
 
 }

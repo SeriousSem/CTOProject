@@ -5,12 +5,11 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
-import org.omazon.CTO.entities.Product;
 
 @Remote
 public interface ProductRemoteInter extends Serializable {
 	
-	public List<Product> getProducts();
+	public List<List<String>> getProducts();
 
     public long getProductId();
 
@@ -18,12 +17,12 @@ public interface ProductRemoteInter extends Serializable {
     
     public void doAdd();
 
-    public Product getProduct();
+    public List<String> getProduct();
 
-    public void setProduct(Product product);
+    public void setProduct(List<String> product);
     
     public void update();
     
-    public Product getProductById(long productId);
+    public List<String> getProductById(long productId);
 
 }
