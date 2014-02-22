@@ -1,21 +1,16 @@
 package src.org.omazon.remote.src;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import org.omazon.CTO.enums.Status;
+import org.omazon.CTO.remote.interfaces.*;
+import src.db.DbConnector;
+import src.db.SocketDBDump;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NameClassPair;
-import javax.naming.NamingEnumeration;
-import javax.naming.NamingException;
-
-import org.omazon.CTO.remote.interfaces.CustomerRemoteInter;
-import org.omazon.CTO.remote.interfaces.EmployeeRemoteInter;
-import org.omazon.CTO.remote.interfaces.LoginRemoteInter;
-import org.omazon.CTO.remote.interfaces.OrderRemoteInter;
-import org.omazon.CTO.remote.interfaces.ProductRemoteInter;
-import org.omazon.CTO.enums.Status;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 public class EmployeeClient {
 	
@@ -45,6 +40,17 @@ public class EmployeeClient {
     		employee = (EmployeeRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.EmployeeRemoteInter");
     		customer = (CustomerRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.CustomerRemoteInter");
     		orders = (OrderRemoteInter) ctx.lookup("org.omazon.CTO.remote.interfaces.OrderRemoteInter");
+
+            /**
+             * get dump from server and import to local
+             */
+            File dump = SocketDBDump.getDump();
+            if (dump != null){
+                DbConnector dbConnector = new DbConnector();
+                dbConnector.executeDump(dump.getPath(), "clientDB");
+            }
+
+
         } catch (Exception e) {
         	System.out.println(e);
         }
