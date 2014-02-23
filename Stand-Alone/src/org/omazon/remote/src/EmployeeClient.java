@@ -2,8 +2,9 @@ package src.org.omazon.remote.src;
 
 import org.omazon.CTO.enums.Status;
 import org.omazon.CTO.remote.interfaces.*;
-import src.db.DbConnector;
+import src.db.DAO.DbConnector;
 import src.db.SocketDBDump;
+import src.db.twoPC.TwoPCClientSocket;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -44,11 +45,20 @@ public class EmployeeClient {
             /**
              * get dump from server and import to local
              */
+
             File dump = SocketDBDump.getDump();
             if (dump != null){
                 DbConnector dbConnector = new DbConnector();
                 dbConnector.executeDump(dump.getPath(), "clientDB");
             }
+
+            /**
+             * initialize new client socket to send/receive votes and new queries
+             */
+
+            TwoPCClientSocket clientSocket = new TwoPCClientSocket();
+            //test send new query to vote
+            clientSocket.writeToServer("SELECT * FROM users");
 
 
         } catch (Exception e) {

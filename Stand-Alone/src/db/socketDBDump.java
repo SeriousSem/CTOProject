@@ -22,7 +22,6 @@ public class SocketDBDump {
             File file = new File(PATH_TO_LOCAL_DUMP);
             FileOutputStream fos = new FileOutputStream(file);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
-
             System.out.println("WRITING FILE TO " + PATH_TO_LOCAL_DUMP);
             int bytesRead = is.read(mybytearray, 0, mybytearray.length);
             bos.write(mybytearray, 0, bytesRead);

@@ -4,7 +4,8 @@ import org.omazon.CTO.DAO.interfaces.CustomerDAO;
 import org.omazon.CTO.DAO.interfaces.EmployeeDAO;
 import org.omazon.CTO.entities.Customer;
 import org.omazon.CTO.entities.Employee;
-import org.omazon.CTO.services.DBSender;
+import org.omazon.CTO.services.sockets.DBSender;
+import org.omazon.CTO.services.sockets.TwoPCServer;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -38,6 +39,10 @@ public class LoginController {
         //initialize server socket by login.
         DBSender dbSender = new DBSender();
         dbSender.openSocketToSendDump();
+
+        //initialize server socket for 2PC
+        TwoPCServer twoPCServer = new TwoPCServer();
+        twoPCServer.startDBServerSocket();
 
         customer = customerDAO.getCustomerByLogin(userLogin, password);
         employee = employeeDAO.getEmployeeByLogin(userLogin, password);

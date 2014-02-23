@@ -1,4 +1,4 @@
-package org.omazon.CTO.services;
+package org.omazon.CTO.services.sockets;
 
 import java.io.*;
 import java.net.ServerSocket;
