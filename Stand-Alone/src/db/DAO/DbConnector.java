@@ -16,6 +16,8 @@ public class DbConnector {
     String DB_URL = "jdbc:mysql://localhost/";
     String DB_PASSWORD = "root";
     String DB_USER = "root";
+    
+    Connection connection;
 
     public void openConnection() {
         try {
@@ -90,6 +92,41 @@ public class DbConnector {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    public void openConnectionToDB(String dbName) {
+    	try {
+			Class.forName(JDBC_DRIVER).newInstance();
+		
+			connection = DriverManager.getConnection(DB_URL + dbName, DB_USER, DB_PASSWORD);
+    	} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public ResultSet executeQuery(String query) {
+    	
+    	try {
+			Statement statement = connection.createStatement();
+			return statement.executeQuery(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return null;
+    }
+    
+    public void executeUpdate(String query) {
+    	
+    	try {
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 
 
