@@ -28,6 +28,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 import org.omazon.CTO.enums.Status;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class EmployeeClientGUIDBDump extends JFrame {
 
@@ -110,6 +112,12 @@ public class EmployeeClientGUIDBDump extends JFrame {
 	 */
 	@SuppressWarnings("serial")
 	public EmployeeClientGUIDBDump() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				emClientDump.closeConnection();
+			}
+		});
 		
 		productColumns.add("ID");
 		productColumns.add("Name");
@@ -256,6 +264,19 @@ public class EmployeeClientGUIDBDump extends JFrame {
 			}
 		});
 		mnOrders.add(mntmShowAllOrders);
+		
+		JMenu mnNewMenu = new JMenu("Dump");
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("get Dump");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				emClientDump.closeConnection();
+				emClientDump.getDump();
+				emClientDump.openConnection();
+			}
+		});
+		mnNewMenu.add(mntmNewMenuItem);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -281,6 +302,58 @@ public class EmployeeClientGUIDBDump extends JFrame {
 		
 		employeePanel.setBounds(10, 11, 756, 497);
 		employeePanel.setVisible(false);
+		
+		
+		loginPanel.setBounds(10, 11, 756, 497);
+		contentPane.add(loginPanel);
+		loginPanel.setLayout(null);
+		
+		JLabel liName = new JLabel("Login:");
+		liName.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		liName.setBounds(10, 11, 54, 19);
+		loginPanel.add(liName);
+		
+		JLabel liPsw = new JLabel("Password:");
+		liPsw.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		liPsw.setBounds(10, 41, 71, 19);
+		loginPanel.add(liPsw);
+		
+		liNameField = new JTextField();
+		liNameField.setBounds(98, 12, 86, 20);
+		loginPanel.add(liNameField);
+		liNameField.setColumns(10);
+		
+		liPswField = new JPasswordField();
+		liPswField.setBounds(98, 42, 86, 20);
+		loginPanel.add(liPswField);
+		
+		JButton liButton = new JButton("login");
+		liButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String psw = String.valueOf(liPswField.getPassword());
+				if (emClientDump.login(liNameField.getText(), psw).equals("Login success")) {
+					menuBar.setVisible(true);
+				}
+			}
+		});
+		liButton.setBounds(95, 91, 89, 23);
+		loginPanel.add(liButton);
+		
+		JButton btnGetDump = new JButton("GetDump");
+		btnGetDump.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				emClientDump.closeConnection();
+				emClientDump.getDump();
+				emClientDump.openConnection();
+			}
+		});
+		btnGetDump.setBounds(28, 429, 89, 23);
+		loginPanel.add(btnGetDump);
+		
+		JLabel lblNewLabel_2 = new JLabel("Klick on first start");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(18, 404, 129, 14);
+		loginPanel.add(lblNewLabel_2);
 		contentPane.add(employeePanel);
 		employeePanel.setLayout(null);
 		
@@ -511,42 +584,6 @@ public class EmployeeClientGUIDBDump extends JFrame {
 		label_3.setBounds(10, 11, 57, 19);
 		editEmpanel.add(label_3);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
-		
-		loginPanel.setBounds(10, 11, 756, 497);
-		contentPane.add(loginPanel);
-		loginPanel.setLayout(null);
-		
-		JLabel liName = new JLabel("Login:");
-		liName.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		liName.setBounds(10, 11, 54, 19);
-		loginPanel.add(liName);
-		
-		JLabel liPsw = new JLabel("Password:");
-		liPsw.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		liPsw.setBounds(10, 41, 71, 19);
-		loginPanel.add(liPsw);
-		
-		liNameField = new JTextField();
-		liNameField.setBounds(98, 12, 86, 20);
-		loginPanel.add(liNameField);
-		liNameField.setColumns(10);
-		
-		liPswField = new JPasswordField();
-		liPswField.setBounds(98, 42, 86, 20);
-		loginPanel.add(liPswField);
-		
-		JButton liButton = new JButton("login");
-		liButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String psw = String.valueOf(liPswField.getPassword());
-				if (emClientDump.login(liNameField.getText(), psw).equals("Login success")) {
-					menuBar.setVisible(true);
-				}
-			}
-		});
-		liButton.setBounds(95, 91, 89, 23);
-		loginPanel.add(liButton);
 		contentPane.add(newProductPanel);
 		newProductPanel.setLayout(null);
 		

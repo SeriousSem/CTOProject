@@ -1,5 +1,6 @@
 package src.org.omazon.remote.src;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 
 import org.omazon.CTO.enums.Status;
 
+import src.db.SocketDBDump;
 import src.db.DAO.DbConnector;
 
 
@@ -31,10 +33,29 @@ public class EmployeeClientSqlDump {
 		dbc.createDBIfNotExists(DB_NAME);
 		
 		
-		dbc.executeDump(PATH_TO_DUMP, DB_NAME);
+//		dbc.executeDump(PATH_TO_DUMP, DB_NAME);
 		
 		dbc.openConnectionToDB(DB_NAME);
 		
+	}
+	
+	public void getDump() {
+		/**
+         * get dump from server and import to local
+         */
+
+        File dump = SocketDBDump.getDump();
+        if (dump != null){
+            dbc.executeDump(dump.getPath(), DB_NAME);
+        }
+	}
+	
+	public void openConnection() {
+		dbc.openConnectionToDB(DB_NAME);
+	}
+	
+	public void closeConnection() {
+		dbc.closeConnection();
 	}
 	
 	public String login(String loginname, String psw) {
@@ -42,6 +63,8 @@ public class EmployeeClientSqlDump {
 		try {
 			if(rs.first()) {
 				eId = (int) rs.getLong("employeeId");
+				rs.close();
+				dbc.closeStatement();
 				return "Login success";
 			}
 		} catch (SQLException e) {
@@ -63,6 +86,8 @@ public class EmployeeClientSqlDump {
 				product.add(rs.getString("price"));
 				products.add(product);
 			}
+			rs.close();
+			dbc.closeStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,6 +106,8 @@ public class EmployeeClientSqlDump {
 				product.add(rs.getString("description"));
 				product.add(rs.getString("price"));
 			}
+			rs.close();
+			dbc.closeStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,6 +138,8 @@ public class EmployeeClientSqlDump {
 				employee.add(rs.getString("password"));
 				employee.add(rs.getString("userLogin"));
 			}
+			rs.close();
+			dbc.closeStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -159,6 +188,8 @@ public class EmployeeClientSqlDump {
 				order.add(rs.getString("truckId"));
 				orders.add(order);
 			}
+			rs.close();
+			dbc.closeStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

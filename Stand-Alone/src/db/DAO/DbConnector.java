@@ -18,6 +18,7 @@ public class DbConnector {
     String DB_USER = "root";
     
     Connection connection;
+    Statement statement;
 
     public void openConnection() {
         try {
@@ -108,11 +109,20 @@ public class DbConnector {
 		}
     }
     
+    public void closeConnection() {
+    	try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
     public ResultSet executeQuery(String query) {
     	
     	try {
-			Statement statement = connection.createStatement();
-			return statement.executeQuery(query);
+			statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(query);
+			return rs;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -122,12 +132,22 @@ public class DbConnector {
     public void executeUpdate(String query) {
     	
     	try {
-			Statement statement = connection.createStatement();
+			statement = connection.createStatement();
 			statement.executeUpdate(query);
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
     }
+    
+    public void closeStatement() {
+    	try {
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
 
 
 }
