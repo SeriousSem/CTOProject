@@ -35,14 +35,23 @@ public class LoginController {
     @Inject
     private EmployeeDAO employeeDAO;
 
-    public String doUserLogin() {
-        //initialize server socket by login.
-        DBSender dbSender = new DBSender();
-        dbSender.openSocketToSendDump();
+    private TwoPCServer twoPCServer;
+    private DBSender dbSender;
 
-        //initialize server socket for 2PC
-        TwoPCServer twoPCServer = new TwoPCServer();
-        twoPCServer.startDBServerSocket();
+    public String doUserLogin() {
+
+        /**
+         * initialize server socket for dbDump
+         * initialize server socket for 2PC
+         */
+        if (dbSender == null) {
+            dbSender = new DBSender();
+            dbSender.openSocketToSendDump();
+        }
+        if (twoPCServer == null) {
+            twoPCServer = new TwoPCServer();
+            twoPCServer.startDBServerSocket();
+        }
 
         customer = customerDAO.getCustomerByLogin(userLogin, password);
         employee = employeeDAO.getEmployeeByLogin(userLogin, password);

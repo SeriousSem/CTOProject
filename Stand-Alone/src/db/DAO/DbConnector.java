@@ -1,6 +1,7 @@
 package src.db.DAO;
 
 import src.db.ScriptRunner;
+import src.db.twoPC.TwoPCClientSocket;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,25 +13,19 @@ import java.sql.*;
  */
 public class DbConnector {
 
-    String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    String DB_URL = "jdbc:mysql://localhost/";
-    String DB_PASSWORD = "root";
-    String DB_USER = "root";
-    
-    Connection connection;
-    Statement statement;
+    private String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private String DB_URL = "jdbc:mysql://localhost/";
+    private String DB_PASSWORD = "root";
+    private String DB_USER = "root";
 
-    public void openConnection() {
-        try {
-            Class.forName(JDBC_DRIVER).newInstance();
-            Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            Statement statement = connection.createStatement();
-            connection.close();
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    private Connection connection;
+    private Statement statement;
+    private TwoPCClientSocket twoPCClientSocket;
 
+    public DbConnector() {
+        this.twoPCClientSocket = new TwoPCClientSocket(this);
     }
+
 
     public boolean isDBExists(String dbName) {
         try {
@@ -80,6 +75,8 @@ public class DbConnector {
 
             ScriptRunner runner = new ScriptRunner(connection, false, false);
             runner.runScript(new BufferedReader(new FileReader(pathToDump)));
+            connection.close();
+            return true;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -94,60 +91,102 @@ public class DbConnector {
         }
         return false;
     }
-    
+
     public void openConnectionToDB(String dbName) {
-    	try {
-			Class.forName(JDBC_DRIVER).newInstance();
-		
-			connection = DriverManager.getConnection(DB_URL + dbName, DB_USER, DB_PASSWORD);
-    	} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
+        try {
+            Class.forName(JDBC_DRIVER).newInstance();
+
+            connection = DriverManager.getConnection(DB_URL + dbName, DB_USER, DB_PASSWORD);
+
+            //for 2pc: commit or rollback by getting 2pc command
+            connection.setAutoCommit(false);
+
+        } catch (InstantiationException | IllegalAccessException
+                | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    
+
     public void closeConnection() {
-    	try {
-			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    
+
     public ResultSet executeQuery(String query) {
-    	
-    	try {
-			statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(query);
-			return rs;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    	return null;
+
+        try {
+
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    
-    public void executeUpdate(String query) {
-    	
-    	try {
-			statement = connection.createStatement();
-			statement.executeUpdate(query);
-			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
+    public boolean executeUpdate(String query) {
+
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+
+            statement.close();
+
+            return twoPCClientSocket.writeToServer(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
-    
+
+    public boolean executeUpdateWithoutSending(String query) {
+
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+
+            statement.close();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
     public void closeStatement() {
-    	try {
-			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        try {
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    
+
+    public void commitQuery() {
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void rollbackQuery() {
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

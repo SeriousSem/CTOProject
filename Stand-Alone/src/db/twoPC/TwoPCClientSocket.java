@@ -1,5 +1,7 @@
 package src.db.twoPC;
 
+import src.db.DAO.DbConnector;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +15,7 @@ public class TwoPCClientSocket implements Runnable {
     private Socket clientSocket;
     private PrintStream os;
     private BufferedReader br;
+    private DbConnector dbConnector;
 
     private static final String HOST = "127.0.0.1";
     private static final int PORT_NUMBER = 5555;
@@ -24,8 +27,10 @@ public class TwoPCClientSocket implements Runnable {
     private static final String GLOBAL_COMMIT = "GLOBAL_COMMIT";
 
 
-    public TwoPCClientSocket() {
+    public TwoPCClientSocket(DbConnector dbConnector) {
         try {
+            this.dbConnector = dbConnector;
+
             clientSocket = new Socket(HOST, PORT_NUMBER);
 
             os = new PrintStream(clientSocket.getOutputStream());
@@ -47,16 +52,23 @@ public class TwoPCClientSocket implements Runnable {
                 switch (responseLine) {
                     case GLOBAL_COMMIT: {
                         //can execute query
+                        dbConnector.commitQuery();
                         break;
                     }
                     case GLOBAL_ABORT: {
                         //somebody denied query. cannot execute
+                        dbConnector.rollbackQuery();
+                        break;
                     }
                     default: {
                         //in this case we have got a query. Now we should send COMMIT back, if query is ok or ABORT if query is bad
                         //we also should save a query and next time when we will get GLOBAL_COMMIT or GLOBAL_ABORT delete it or execute
-                        //writeToServer(COMMIT);
-                        //writeToServer(ABORT);
+
+                        if (dbConnector.executeUpdateWithoutSending(responseLine)) {
+                            writeToServer(COMMIT);
+                        } else {
+                            writeToServer(ABORT);
+                        }
                     }
                 }
             }

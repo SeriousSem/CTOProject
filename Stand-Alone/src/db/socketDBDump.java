@@ -8,18 +8,16 @@ import java.net.Socket;
  */
 public class SocketDBDump {
     public static File getDump() {
-//        String PATH_TO_LOCAL_DUMP = "E:/dump.sql";
-        String PATH_TO_LOCAL_DUMP = "Stand-Alone/SQLDump/dump.sql";
+        String PATH_TO_LOCAL_DUMP = "E:/dump.sql";
         try {
             System.out.println("CONNECT TO SERVER SOCKET");
             Socket clientSocket = new Socket("127.0.0.1", 3201);
-//            Socket clientSocket = new Socket("127.0.0.1", 1527);
 
             System.out.println("GETTING STREAM");
             InputStream is = clientSocket.getInputStream();
 
             //length of inputstream?? .available() doesn't work :'(
-            byte[] mybytearray = new byte[10000000];
+            byte[] mybytearray = new byte[1000000];
 
             File file = new File(PATH_TO_LOCAL_DUMP);
             FileOutputStream fos = new FileOutputStream(file);

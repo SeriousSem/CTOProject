@@ -39,6 +39,7 @@ public class TwoPCServer {
 
                 //add connection to connection's list
                 connectedClients.add(th);
+                th.numberOfCurrentClient = connectedClients.indexOf(th) + 1;
                 System.out.println("TOTAL CLIENTS ARE: " + connectedClients.size());
 
                 th.start();

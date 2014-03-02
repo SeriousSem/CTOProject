@@ -14,7 +14,8 @@ public class ClientThread extends Thread {
     private PrintStream os;
     private Socket clientSocket;
     private TwoPCServer dbServer;
-    private String data;
+    //private boolean initiator;
+    int numberOfCurrentClient;
 
     private static final String NOT_SENT = "NOT_SENT";
     private static final String ABORT = "ABORT";
@@ -26,7 +27,7 @@ public class ClientThread extends Thread {
     public ClientThread(TwoPCServer dbServer, Socket clientSocket) {
         this.clientSocket = clientSocket;
         this.dbServer = dbServer;
-        this.data = NOT_SENT;
+        // initiator = false;
     }
 
     public void run() {
@@ -37,39 +38,39 @@ public class ClientThread extends Thread {
             os = new PrintStream(clientSocket.getOutputStream());
 
             while (!dbServer.closed) {
-                this.data = br.readLine();
-                System.out.println("GOT LINE: " + data);
+                String line = br.readLine();
+                System.out.println("#------------------------- THIS IS CLIENT №: " + numberOfCurrentClient + "  -----------------------------#");
+                System.out.println("GOT LINE: " + line);
 
-                switch (data) {
+                switch (line) {
                     case ABORT: {
-                        System.out.println("ABORT RECEIVED. SEND ABORT TO ALL CLIENTS.");
-                        clientsIterator(GLOBAL_ABORT);
+                        if (dbServer.connectedClients.contains(this)) {
+                            System.out.println("ABORT RECEIVED. SEND ABORT TO ALL CLIENTS.");
+                            dbServer.inputFromAll = 0;
+                            clientsIterator(GLOBAL_ABORT, true);
+                        }
                         break;
                     }
                     case COMMIT: {
                         System.out.println("COMMIT RECEIVED");
                         if (dbServer.connectedClients.contains(this)) {
-                            System.out.println("DID ALL CLIENTS VOTE?");
-                            dbServer.inputFromAll = 0;
-                            for (ClientThread clientThread : dbServer.connectedClients) {
-                                if (COMMIT.equalsIgnoreCase(clientThread.data)) {
-                                    dbServer.inputFromAll++;
-                                } else {
-                                    System.out.println("SOMEBODY VOTED: " + clientThread.data);
-                                    break;
-                                }
-                            }
-                            if (dbServer.inputFromAll == dbServer.connectedClients.size()) {
-                                System.out.println("ALL CLIENTS VOTED FOR COMMIT. SEND GLOBAL COMMIT.");
-                                clientsIterator(GLOBAL_COMMIT);
-                            }
+                            System.out.println("UPVOTE THIS");
+                            dbServer.inputFromAll++;
                         }
                         break;
                     }
                     default: {
-                        System.out.println("RECEIVED NEW QUERY: " + data);
-                        clientsIterator(data);
+                        System.out.println("RECEIVED NEW QUERY: " + line);
+                        dbServer.inputFromAll = 1;
+                        // initiator = true;
+                        clientsIterator(line, false);
+                        break;
                     }
+                }
+                if (dbServer.inputFromAll == dbServer.connectedClients.size()) {
+                    System.out.println("ALL CLIENTS VOTED FOR COMMIT. SEND GLOBAL COMMIT.");
+                    //initiator = false;
+                    clientsIterator(GLOBAL_COMMIT, true);
                 }
             }
         } catch (IOException e) {
@@ -78,9 +79,11 @@ public class ClientThread extends Thread {
         ;
     }
 
-    private void clientsIterator(String command) throws IOException {
+    private void clientsIterator(String command, boolean sendToThisThread) throws IOException {
         for (ClientThread clientThread : dbServer.connectedClients) {
-            clientThread.os.println(command);
+            if (sendToThisThread || clientThread != this) {
+                clientThread.os.println(command);
+            }
         }
     }
 }
