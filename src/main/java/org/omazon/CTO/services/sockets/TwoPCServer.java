@@ -28,6 +28,7 @@ public class TwoPCServer {
             //open server socket
             serverSocket = new ServerSocket(server_port);
             closed = false;
+            System.out.println("WAITING FOR CLIENT SOCKET TO PARTICIPATE IN 2PC");
         } catch (IOException e) {
             e.printStackTrace();
         }

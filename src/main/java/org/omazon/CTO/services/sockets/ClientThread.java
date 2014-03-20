@@ -37,7 +37,8 @@ public class ClientThread extends Thread {
             //write data to client socket
             os = new PrintStream(clientSocket.getOutputStream());
 
-            while (!dbServer.closed) {
+            while (!dbServer.closed && clientSocket.isConnected()) {
+                System.out.println("Thread " + numberOfCurrentClient + " tries to read input data");
                 String line = br.readLine();
                 System.out.println("#------------------------- THIS IS CLIENT №: " + numberOfCurrentClient + "  -----------------------------#");
                 System.out.println("GOT LINE: " + line);
@@ -76,6 +77,7 @@ public class ClientThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        dbServer.connectedClients.remove(this);
         ;
     }
 

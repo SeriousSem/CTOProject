@@ -94,12 +94,13 @@ public class DbConnector {
 
     public void openConnectionToDB(String dbName) {
         try {
-            Class.forName(JDBC_DRIVER).newInstance();
+            if (connection == null || connection.isClosed()) {
+                Class.forName(JDBC_DRIVER).newInstance();
+                connection = DriverManager.getConnection(DB_URL + dbName, DB_USER, DB_PASSWORD);
 
-            connection = DriverManager.getConnection(DB_URL + dbName, DB_USER, DB_PASSWORD);
-
-            //for 2pc: commit or rollback by getting 2pc command
-            connection.setAutoCommit(false);
+                //for 2pc: commit or rollback by getting 2pc command
+                connection.setAutoCommit(false);
+            }
 
         } catch (InstantiationException | IllegalAccessException
                 | ClassNotFoundException e) {
